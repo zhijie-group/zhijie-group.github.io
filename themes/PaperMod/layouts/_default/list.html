@@ -28,7 +28,7 @@
     <div class="post-details">
       <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
       <time datetime="{{ .Date }}">{{ .Date.Format "January 2, 2006" }}</time>
-      <p>{{ .Summary | markdownify }}</p>
+      <p style="text-align: justify;">{{ .Summary | markdownify }}</p>
     </div>
   </article>
   {{- end -}}
