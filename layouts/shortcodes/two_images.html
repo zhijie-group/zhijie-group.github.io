@@ -1,0 +1,13 @@
+{{ if .Get "title" }}
+    <figure>
+	<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <img src="{{ .Get "src1" }}" alt="{{ .Get "alt1" }}" style="width: {{ .Get "width1" }}; height: auto;"> 
+		<img src="{{ .Get "src2" }}" alt="{{ .Get "alt2" }}" style="width: {{ .Get "width2" }}; height: auto;">
+	</div>
+	<div style="display: grid; place-items: center;">
+		<figcaption><strong>{{ .Get "title" }}</strong></figcaption>
+	</div>
+    </figure>
+{{ else }}
+  <img src="{{ .Get "src1" }}" alt="{{ .Get "alt1" }}" style="width: {{ .Get "width1" }}; height: auto;"> <img src="{{ .Get "src2" }}" alt="{{ .Get "alt2" }}" style="width: {{ .Get "width2" }}; height: auto;">
+{{ end }}

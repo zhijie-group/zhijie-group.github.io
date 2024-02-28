@@ -1,0 +1,13 @@
+{{ $original := .Page.Resources.GetMatch (.Get 0) }}
+{{ $options := .Get 1 }}
+{{ .Scratch.Set "image" ($original.Fit $options) }}
+{{ $image := .Scratch.Get "image" }}
+{{ $title := .Get 2 }}
+{{ if $title }}
+  <figure>
+    <img src="{{ $image.RelPermalink | safeURL }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="{{ $title }}" align="center">
+    <figcaption>{{ $title }}</figcaption>
+  </figure>
+{{ else }}
+  img src="{{ $image.RelPermalink | safeURL  }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="{{ $title }}" align="center">
+{{ end }}

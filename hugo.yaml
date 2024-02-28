@@ -1,0 +1,44 @@
+baseURL: ''
+languageCode: en-us
+title: 'Hao Lab @ UCSD'
+theme: 'PaperMod'
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - $
+            - $
+        enable: true
+params:
+  math: true
+
+menu:
+  main:
+    - identifier: Blogs
+      name: Blogs
+      url: ''
+      weight: 10
+    - identifier: Home
+      name: Home
+      url: /home/
+      weight: 40
+    - identifier: People
+      name: People
+      url: /people/
+      weight: 50
+    - identifier: Publications
+      name: Publications
+      url: /publications/
+      weight: 60
+    - identifier: Contact
+      name: Contact
+      url: /contact/
+      weight: 70	
