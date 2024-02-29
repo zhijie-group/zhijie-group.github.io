@@ -168,6 +168,15 @@
 
 
 
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/cllm_chat_acc_demo.gif" alt="cllm-chat-acc-demo" style="width: 120%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-Vicuna-7B in comparison with baseline Vicuna-7B using Jacobi decoding on conversational query.</strong></figcaption>
+    	</div>
+    </figure>
+
+
 <h2 id="background-jacobi-decoding">Background: Jacobi Decoding<a hidden class="anchor" aria-hidden="true" href="#background-jacobi-decoding">#</a></h2>
 <div style="text-align: justify;">
     Large language models (LLMs) are transforming the landscape of human lives, from programming to offering legal and health advice. However, during inference, LLMs generate responses token by token using AR decoding as shown in Figure 1, leading to high latency for longer responses. Using AR decoding, it often necessitates architectural modifications, auxiliary components, or draft models, to speed up inference by generating more than one token at a time.
@@ -179,7 +188,7 @@
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/clm_objective.png" alt="autoregressive" style="width: 60%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 1: illustration of conventional AR decoding: one token is generated at a time.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 2: illustration of conventional AR decoding: one token is generated at a time.</strong></figcaption>
     	</div>
     </figure>
 
@@ -195,7 +204,7 @@ result under a greedy sampling strategy), thereby accelerating AR decoding poten
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/jacobi_objective.png" alt="jacobi" style="width: 60%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 2: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.</strong></figcaption>
     	</div>
     </figure>
 
@@ -279,7 +288,7 @@ $$
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/cllm_objective.png" alt="training_objective" style="width: 130%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 3: an illustration of consistency training for one-step convergence: refining the target LLM to consistently predict the fixed point given any state along Jacobi trajectory as input.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 4: an illustration of consistency training for one-step convergence: refining the target LLM to consistently predict the fixed point given any state along Jacobi trajectory as input.</strong></figcaption>
     	</div>
     </figure>
 
@@ -346,7 +355,7 @@ $$
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/cllm_speedup.png" alt="speedup" style="width: 70%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 4: CLLM speedup on different downstream tasks.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 5: CLLM speedup on different downstream tasks.</strong></figcaption>
     	</div>
     </figure>
 
@@ -358,7 +367,7 @@ $$
 		<img src="img/specialized_domains.png" alt="mt_bench" style="width: 50%; height: auto;">
 	</div>
 	<div style="display: grid; place-items: center;">
-		<figcaption><strong>Figure 5: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.</strong></figcaption>
+		<figcaption><strong>Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.</strong></figcaption>
 	</div>
     </figure>
 
@@ -376,7 +385,7 @@ $$
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/trajectory_compare_aligned.png" alt="trajectory_compare" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 6: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 7: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.</strong></figcaption>
     	</div>
     </figure>
 
