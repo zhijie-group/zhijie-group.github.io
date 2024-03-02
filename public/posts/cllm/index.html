@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Consistency Large Language Models: A Family of Efficient and Reliable Parallel Decoders | Hao Lab @ UCSD</title>
+<title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao Lab @ UCSD</title>
 <meta name="keywords" content="">
 <meta name="description" content="TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible.">
 <meta name="author" content="">
@@ -147,7 +147,7 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      Consistency Large Language Models: A Family of Efficient and Reliable Parallel Decoders
+      Consistency Large Language Models: A Family of Efficient Parallel Decoders
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
           <path
@@ -171,8 +171,8 @@
 
     <figure>
 	<div style="display: grid; place-items: center;">
-        	<img src="img/cllm_chat_acc_demo.gif" alt="cllm-chat-acc-demo" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-Vicuna-7B in comparison with baseline Vicuna-7B using Jacobi decoding on conversational query.</strong></figcaption>
+        	<img src="img/baseline_vs_cllm_spider.gif" alt="cllm-spider-acc-demo" style="width: 120%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-Deepseek-Coder-7B in comparison with baseline Deepseek-Coder-7B using Jacobi decoding on Text-to-SQL tasks.</strong></figcaption>
     	</div>
     </figure>
 

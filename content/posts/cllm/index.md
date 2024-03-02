@@ -1,5 +1,5 @@
 +++
-title = "Consistency Large Language Models: A Family of Efficient and Reliable Parallel Decoders"
+title = "Consistency Large Language Models: A Family of Efficient Parallel Decoders"
 date = 2024-02-21T12:00:00-08:00
 draft = true
 [cover]
@@ -18,7 +18,7 @@ draft = true
 **TL;DR:** In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called [Jacobi decoding](https://arxiv.org/abs/2305.10427), which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baselines and other SOTA techniques. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
 {{< /justify >}}
 
-{{< image src="img/cllm_chat_acc_demo.gif" alt="cllm-chat-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-Vicuna-7B in comparison with baseline Vicuna-7B using Jacobi decoding on conversational query.">}}
+{{< image src="img/baseline_vs_cllm_spider.gif" alt="cllm-spider-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-Deepseek-Coder-7B in comparison with baseline Deepseek-Coder-7B using Jacobi decoding on Text-to-SQL tasks.">}}
 
 ## Background: Jacobi Decoding
 
