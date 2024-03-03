@@ -1,7 +1,7 @@
 .posts-list {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Space between posts */
+    gap: 30px; /* Space between posts */
 }
 
 .post-preview {
@@ -10,6 +10,11 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
+    background-color: white; /* White background */
+    padding: 15px; /* Padding inside the box */
+    margin: 10px 0; /* Margin around the box for spacing */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
+    border-radius: 5px; /* Optional: rounds the corners of the box */
 }
 
 .post-image img {
@@ -28,10 +33,24 @@
 }
 
 .post-details time {
-    font-size: 0.6rem;
+    font-size: 1.0rem;
     color: #666;
 }
 
 .post-details p {
     margin-top: 10px;
+}
+
+.post-details .post-author {
+    font-size: 1.0rem;
+    color: #666;
+    margin-top: 10px; /* Adjust spacing as needed */
+}
+
+.post-details .post-summary-box {
+    background-color: white; /* White background */
+    padding: 15px; /* Padding inside the box */
+    margin: 10px 0; /* Margin around the box for spacing */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
+    border-radius: 5px; /* Optional: rounds the corners of the box */
 }

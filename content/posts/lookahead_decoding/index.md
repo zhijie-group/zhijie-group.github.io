@@ -1,6 +1,7 @@
 +++
 title = 'Break the Sequential Dependency of LLM Inference Using Lookahead Decoding'
 date = 2023-11-21T12:00:00-08:00
+authors = ["Yichao Fu", "Peter Bailis", "Ion Stoica", "Hao Zhang"]
 draft = false
 [cover]
       image = "img/slider/lookahead_decoding.jpg"

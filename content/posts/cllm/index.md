@@ -1,6 +1,7 @@
 +++
 title = "Consistency Large Language Models: A Family of Efficient Parallel Decoders"
 date = 2024-02-21T12:00:00-08:00
+authors = ["Siqi Kou*", "Lanxiang Hu*", "Zhezhi He", "Zhijie Deng", "Hao Zhang"]
 draft = false
 [cover]
       image = "img/objective_illustration_global.jpg"
