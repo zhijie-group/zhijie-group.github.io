@@ -144,7 +144,23 @@
         </ul>
     </nav>
 </header>
-<main class="main"><div class="posts-list"></div>
+<main class="main"><div class="posts-list"><article class="post-preview">
+    <div class="post-image">
+      <img src="http://localhost:1313/img/objective_illustration_global.jpg" alt=""> 
+    </div><div class="post-details">
+      <h2><a href="http://localhost:1313/posts/cllm/">Consistency Large Language Models: A Family of Efficient Parallel Decoders</a></h2>
+      <time datetime="2024-02-21 12:00:00 -0800 PST">February 21, 2024</time>
+      <p class="post-author"> Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang</p>
+      <p style="text-align: justify;">TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible.</p></div>
+  </article><article class="post-preview">
+    <div class="post-image">
+      <img src="http://localhost:1313/img/slider/lookahead_decoding.jpg" alt=""> 
+    </div><div class="post-details">
+      <h2><a href="http://localhost:1313/posts/lookahead_decoding/">Break the Sequential Dependency of LLM Inference Using Lookahead Decoding</a></h2>
+      <time datetime="2023-11-21 12:00:00 -0800 PST">November 21, 2023</time>
+      <p class="post-author"> Yichao Fu, Peter Bailis, Ion Stoica, Hao Zhang</p>
+      <p style="text-align: justify;">TL;DR: We introduce lookahead decoding, a new, exact, and parallel decoding algorithm to accelerate LLM inference. Lookahead decoding breaks the sequential dependency in autoregressive decoding by concurrently extracting and verifying n-grams directly with the LLM, utilizing the Jacobi iteration method. Lookahead decoding functions without the need for a draft model or a data store. It linearly decreases the number of decoding steps directly correlating with the log(FLOPs) used per decoding step.</p></div>
+  </article></div>
     </main>
     
 <footer class="footer">
