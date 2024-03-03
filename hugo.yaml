@@ -1,7 +1,12 @@
-baseURL: 'http://hao-ai-lab.github.io/home'
+baseURL: 'http://hao-ai-lab.github.io'
 languageCode: en-us
 title: 'Hao Lab @ UCSD'
 theme: 'PaperMod'
+
+[[redirects]]
+  from = "/"
+  to = "/home/"
+  status = 302
 
 markup:
   goldmark:
