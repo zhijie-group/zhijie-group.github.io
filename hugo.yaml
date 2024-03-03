@@ -3,10 +3,10 @@ languageCode: en-us
 title: 'Hao Lab @ UCSD'
 theme: 'PaperMod'
 
-[[redirects]]
-  from = "/"
-  to = "/home/"
-  status = 302
+redirects:
+  from: "/"
+  to: "/home/"
+  status: 302
 
 markup:
   goldmark:

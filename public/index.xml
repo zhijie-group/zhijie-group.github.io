@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Hao Lab @ UCSD</title>
-    <link>http://localhost:1313/home/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Hao Lab @ UCSD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 21 Feb 2024 12:00:00 -0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/home/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Consistency Large Language Models: A Family of Efficient Parallel Decoders</title>
-      <link>http://localhost:1313/home/posts/cllm/</link>
+      <link>http://localhost:1313/posts/cllm/</link>
       <pubDate>Wed, 21 Feb 2024 12:00:00 -0800</pubDate>
-      <guid>http://localhost:1313/home/posts/cllm/</guid>
+      <guid>http://localhost:1313/posts/cllm/</guid>
       <description>TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible.</description>
     </item>
     <item>
       <title>Break the Sequential Dependency of LLM Inference Using Lookahead Decoding</title>
-      <link>http://localhost:1313/home/posts/lookahead_decoding/</link>
+      <link>http://localhost:1313/posts/lookahead_decoding/</link>
       <pubDate>Tue, 21 Nov 2023 12:00:00 -0800</pubDate>
-      <guid>http://localhost:1313/home/posts/lookahead_decoding/</guid>
+      <guid>http://localhost:1313/posts/lookahead_decoding/</guid>
       <description>TL;DR: We introduce lookahead decoding, a new, exact, and parallel decoding algorithm to accelerate LLM inference. Lookahead decoding breaks the sequential dependency in autoregressive decoding by concurrently extracting and verifying n-grams directly with the LLM, utilizing the Jacobi iteration method. Lookahead decoding functions without the need for a draft model or a data store. It linearly decreases the number of decoding steps directly correlating with the log(FLOPs) used per decoding step.</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/home/contact/</link>
+      <link>http://localhost:1313/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/home/contact/</guid>
+      <guid>http://localhost:1313/contact/</guid>
       <description>contact</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/home/home/</link>
+      <link>http://localhost:1313/home/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/home/home/</guid>
+      <guid>http://localhost:1313/home/</guid>
       <description>home page for Hao Lab @ UCSD</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/home/math-examples/</link>
+      <link>http://localhost:1313/math-examples/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/home/math-examples/</guid>
+      <guid>http://localhost:1313/math-examples/</guid>
       <description>This is an inline (a^=x-b^) equation.
 This is an inline $a^*=x-b^*$ equation.
 These are block equations:
@@ -49,16 +49,16 @@ $$a^*=x-b^*$$ $$ a^*=x-b^* $$ $$ a^*=x-b^* $$ </description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/home/people/</link>
+      <link>http://localhost:1313/people/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/home/people/</guid>
+      <guid>http://localhost:1313/people/</guid>
       <description>people</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/home/publications/</link>
+      <link>http://localhost:1313/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/home/publications/</guid>
+      <guid>http://localhost:1313/publications/</guid>
       <description>publications</description>
     </item>
   </channel>
