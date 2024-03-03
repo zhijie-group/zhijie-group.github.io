@@ -2,30 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/cllm/</loc>
+    <loc>//localhost:1313/blogs/</loc>
     <lastmod>2024-02-21T12:00:00-08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>//localhost:1313/blogs/cllm/</loc>
     <lastmod>2024-02-21T12:00:00-08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>//localhost:1313/posts/cllm/</loc>
     <lastmod>2024-02-21T12:00:00-08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/lookahead_decoding/</loc>
+    <loc>//localhost:1313/</loc>
+    <lastmod>2024-02-21T12:00:00-08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/posts/</loc>
+    <lastmod>2024-02-21T12:00:00-08:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/blogs/lookahead_decoding/</loc>
     <lastmod>2023-11-21T12:00:00-08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/contact/</loc>
+    <loc>//localhost:1313/posts/lookahead_decoding/</loc>
+    <lastmod>2023-11-21T12:00:00-08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/home/</loc>
+    <loc>//localhost:1313/contact/</loc>
   </url><url>
-    <loc>http://localhost:1313/math-examples/</loc>
+    <loc>//localhost:1313/home/</loc>
   </url><url>
-    <loc>http://localhost:1313/people/</loc>
+    <loc>//localhost:1313/math-examples/</loc>
   </url><url>
-    <loc>http://localhost:1313/publications/</loc>
+    <loc>//localhost:1313/people/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>//localhost:1313/publications/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>//localhost:1313/categories/</loc>
+  </url><url>
+    <loc>//localhost:1313/tags/</loc>
   </url>
 </urlset>

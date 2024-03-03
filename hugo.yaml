@@ -1,4 +1,4 @@
-baseURL: 'http://hao-ai-lab.github.io'
+bseURL: 'http://hao-ai-lab.github.io'
 languageCode: en-us
 title: 'Hao Lab @ UCSD'
 theme: 'PaperMod'
@@ -28,7 +28,7 @@ menu:
       weight: 10
     - identifier: Blogs
       name: Blogs
-      url: ''
+      url: /blogs/
       weight: 30
     - identifier: People
       name: People

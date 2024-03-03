@@ -1,0 +1,48 @@
+{{- define "main" -}}
+
+{{- if (and site.Params.profileMode.enabled .IsHome) -}}
+{{- partial "index_profile.html" . -}}
+{{- else }}{{/* if not profileMode */}}
+
+{{- if not .IsHome | and .Title -}}
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . -}}
+  <h1>{{ .Title }}</h1>
+  {{- if .Description -}}
+  <div class="page-description">{{ .Description | markdownify }}</div>
+  {{- end -}}
+</header>
+{{- end -}}
+
+{{- $pages := where .Site.RegularPages "Type" "in" (slice "blogs") -}}
+{{- $paginator := .Paginate $pages -}}
+<div class="posts-list">
+  {{- range $paginator.Pages -}}
+  <article class="post-preview">
+    {{- with .Params.cover.image -}} <!-- Updated path to access cover image -->
+    <div class="post-image">
+      <img src="{{ . | absURL }}" alt="{{ $.Params.cover.alt }}"> <!-- Use absURL for proper path resolution -->
+    </div>
+    {{- end -}}
+    <div class="post-details">
+      <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+      <time datetime="{{ .Date }}">{{ .Date.Format "January 2, 2006" }}</time>
+      {{- if .Params.author -}} <!-- Check for single author -->
+      <p class="post-author"> {{ .Params.author }}</p>
+      {{- else if .Params.authors -}} <!-- Check for multiple authors -->
+      <p class="post-author"> {{ delimit .Params.authors ", " }}</p>
+      <p style="text-align: justify;">{{ .Summary | markdownify }}</p>
+      {{- end -}}
+    </div>
+  </article>
+  {{- end -}}
+</div>
+{{- if gt $paginator.TotalPages 1 -}}
+<footer class="pagination-footer">
+  {{ template "_internal/pagination.html" . }}
+</footer>
+{{- end -}}
+
+{{- end }}{{/* end profileMode */}}
+
+{{- end }}{{/* end main */}}
