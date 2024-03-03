@@ -1,4 +1,4 @@
-<div class="publication-reference" style="text-align: justify;">
+<div class="publication-reference" style="text-align: justify;" data-topic="{{ .Params.topic }}">
     <p><strong>{{ .Get "title" }}</strong><br>
     {{ .Inner }}<br>
     <em>{{ .Get "venue" }}</em> (<a href="{{ .Get "paperLink" }}">Paper</a>, <a href="{{ .Get "codeLink" }}">Code</a>)

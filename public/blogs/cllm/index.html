@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/custom.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao Lab @ UCSD</title>
+<meta name="keywords" content="">
+<meta name="description" content="TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/blogs/cllm/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/blogs/cllm/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+    
+    	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)'], ['$', '$']]      
+    }
+  };
+</script>
+
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Hao Lab @ UCSD (Alt + H)">Hao Lab @ UCSD</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/home/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/blogs/" title="Blogs">
+                    <span>Blogs</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/people/" title="People">
+                    <span>People</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/publications/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Consistency Large Language Models: A Family of Efficient Parallel Decoders
+    </h1>
+    <div class="post-meta"><span title='2024-02-21 12:00:00 -0800 PST'>February 21, 2024</span>
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/img/objective_illustration_global.jpg" alt="jacobi trajectory">
+        <p>An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective.</p>
+</figure>
+  <div class="post-content"><div style="text-align: justify;">
+    <strong>TL;DR:</strong> In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baselines and other SOTA techniques. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
+</div>
+
+
+
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/baseline_vs_cllm_spider.gif" alt="cllm-spider-acc-demo" style="width: 120%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-Deepseek-Coder-7B in comparison with baseline Deepseek-Coder-7B using Jacobi decoding on Text-to-SQL tasks.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+<h2 id="background-jacobi-decoding">Background: Jacobi Decoding<a hidden class="anchor" aria-hidden="true" href="#background-jacobi-decoding">#</a></h2>
+<div style="text-align: justify;">
+    Large language models (LLMs) are transforming the landscape of human lives, from programming to offering legal and health advice. However, during inference, LLMs generate responses token by token using AR decoding as shown in Figure 1, leading to high latency for longer responses. Using AR decoding, it often necessitates architectural modifications, auxiliary components, or draft models, to speed up inference by generating more than one token at a time.
+</div>
+
+
+
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/clm_objective.png" alt="autoregressive" style="width: 60%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 2: illustration of conventional AR decoding: one token is generated at a time.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+<div style="text-align: justify;">
+    <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a> originates from the Jacobi and Gauss-Seidel fixed-point iteration for solving nonlinear equations, and is proven identical to AR generation using greedy decoding <a href="https://proceedings.mlr.press/v139/song21a.html">[1]</a>. Jacobi decoding reformulates the sequential generation process into a system of $n$ non-linear equations with $n$ variables solvable in parallel based on Jacobi iteration. Each iteration step might predict more than one correct token (By correctness, we mean alignment with the AR decoding
+result under a greedy sampling strategy), thereby accelerating AR decoding potentially.
+</div>
+
+
+
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/jacobi_objective.png" alt="jacobi" style="width: 60%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+<div style="text-align: justify;">
+    To be specific, Jacobi decoding method first randomly guesses the next $n$ tokens in a sequence (referred to as $n$-token sequence hereinafter unless specified otherwise) from an input prompt. The $n$-token sequence, along with the prompt, is then fed to the LLM to iteratively update itself. This process continues until the $n$-token sequence stabilizes and no further changes occur, reaching a fixed point. Notably, Jacobi decoding requires no more queries to the LLM than auto-regressive (AR) decoding. Eventually, the $n$-token sequence converges to the output that would be generated by AR decoding under a greedy strategy. This progression from an initial random guess to the final AR generation outcome traces what is known as a Jacobi trajectory. An instance of Jacobi decoding iteration process and <strong>Jacobi trajectory</strong> is illustrated in Figure 2.
+</div>
+
+
+
+<h3 id="limitations-of-jacobi-decoding">Limitations of Jacobi Decoding<a hidden class="anchor" aria-hidden="true" href="#limitations-of-jacobi-decoding">#</a></h3>
+<div style="text-align: justify;">
+    However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., an average of $1.05\times$ speedup <a href="https://arxiv.org/abs/2305.10427">[2]</a>. This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 6.
+</div>
+
+
+
+<h2 id="consistency-llms-cllms">Consistency LLMs (CLLMs)<a hidden class="anchor" aria-hidden="true" href="#consistency-llms-cllms">#</a></h2>
+<h3 id="jacobi-decoding-preliminary">Jacobi Decoding Preliminary<a hidden class="anchor" aria-hidden="true" href="#jacobi-decoding-preliminary">#</a></h3>
+<div style="text-align: justify;">
+    Given a prompt $\mathbf x$ and a pre-trained LLM $p(\cdot| \mathbf x)$, LLM typically generates with the standard AR decoding method under the greedy strategy, i.e.
+</div>
+
+
+
+$$
+\begin{align}
+y_i = \underset{y}{\text{arg max }} p(y | \mathbf {y}_{:i}, \mathbf x) \ \ \text{for}\,\, i = 1,\dots,n
+\end{align}
+$$
+<div style="text-align: justify;">
+    Jacobi decoding re-frames the LLM inference process as solving a system of nonlinear equations to transform the decoding process into a parallelizable computation. Consider, $f(y_i, \mathbf y_{:i}, \mathbf x):= y_i- \underset{y}{\text{arg max }} p(y | \mathbf y_{:i}, \mathbf x)$, we can rewrite the above equation as a system of nonlinear equations:
+</div>
+
+
+
+$$
+\begin{align}
+f(y_i, \mathbf y_{:i}, \mathbf x) = 0 \ \ \text{for} \quad i = 1,\dots,n 
+\Longrightarrow 
+\begin{cases}
+y_{1}^{(j+1)} &= \underset{y}{\text{arg max}} \ \ p(y | \mathbf x) \\
+y_{2}^{(j+1)} &= \underset{y}{\text{arg max}} \ \ p(y | \mathbf y_{1}^{(j)}, \mathbf x) \\
+& \vdots \\
+y_{n}^{(j+1)} &= \underset{y}{\text{arg max}} \ \ p(y | \mathbf y_{:n}^{(j)}, \mathbf x)
+\end{cases}
+\end{align}
+$$
+<div style="text-align: justify;">
+    Note that The iteration exits at some k such that $\mathbf y^{(k)} = \mathbf y^{(k−1)}$ and we define $\mathbf y^{∗} := \mathbf y^{(k)}$ as the fixed point, and $\mathcal J := \set{  \mathbf y^{(1)}, \dots, \mathbf y^{(k)} }$ as the Jacobi trajectory.
+</div>
+
+
+
+<h3 id="training-with-jacobi-trajectories">Training with Jacobi Trajectories<a hidden class="anchor" aria-hidden="true" href="#training-with-jacobi-trajectories">#</a></h3>
+<div style="text-align: justify;">
+    To address this, we propose adapting pre-trained LLMs so that they can consistently map any point $\mathbf y$ on the Jacobi trajectory $\mathcal{J}$ to the fixed point $\mathbf y^*$. Surprisingly, we find such an objective is analogous to that of <a href="https://arxiv.org/abs/2303.01469">consistency models</a>, a leading acceleration approach for diffusion models [3, 4]. In our proposed method, we use Jacobi trajectories collected from a target model to train the model with a loss that encourages single-step convergence during Jacobi iterations. For each target model $p$ to be adapted as a CLLM, the training consists of two parts:
+</div>
+
+
+
+<div style="text-align: justify;">
+    <ul>
+<li><strong>Jacobi trajectory preparation:</strong> for each prompt, we sequentially perform Jacobi decoding for every truncation of $n$ tokens until the entire response sequence $\mathbf l$ has been generated, which amounts to a concatenation of all consecutive fixed points. Each sequence generated along a trajectory counts as one data entry. Note that for a lengthy response $\mathbf l$ of $N$ ($N ≫ n$) tokens, such truncation avoids slow model evaluation on lengthy input.</li>
+</ul>
+
+</div>
+
+
+
+<div style="text-align: justify;">
+    <ul>
+<li><strong>Training with consistency and AR loss:</strong> we jointly optimize two losses for tuning CLLMs, the consistency loss guarantees the prediction of multiple tokens at once and the AR loss prevents the CLLM from deviating from the target LLM so as to maintain generation quality.</li>
+</ul>
+
+</div>
+
+
+
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/cllm_objective.png" alt="training_objective" style="width: 130%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 4: an illustration of consistency training for one-step convergence: refining the target LLM to consistently predict the fixed point given any state along Jacobi trajectory as input.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+<h3 id="consistency-and-ar-loss">Consistency and AR Loss<a hidden class="anchor" aria-hidden="true" href="#consistency-and-ar-loss">#</a></h3>
+<h4 id="consistency-loss">Consistency Loss<a hidden class="anchor" aria-hidden="true" href="#consistency-loss">#</a></h4>
+<div style="text-align: justify;">
+    <p>Let $p$ denote the target LLM. Let $q_\theta(\cdot| \mathbf x)$ denote the CLLM with parameters $\theta$ initialized with those of $p$. For a prompt $\mathbf x$ and the corresponding Jacobi trajectory $\mathcal{J}$, let $\mathbf y$ and $\mathbf y^*$ denote a random state and the fixed point on the trajectory respectively.</p>
+<p>We can encourage CLLM to output $\mathbf y^*$ with $\mathbf y$ as the input by minimizing the following loss, termed as the global consistency (GC) loss:</p>
+
+</div>
+
+
+
+$$
+\begin{align}
+   \mathcal L_{\text{GC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, \mathbf y \sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{*}, \mathbf x))  || q_{\theta}(\cdot|\mathbf y_{:i}, \mathbf x)\Big] 
+\end{align}
+$$
+<div style="text-align: justify;">
+    <p>where we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in <a href="https://arxiv.org/abs/2306.13649">[5]</a> and in this paper we primarily experiment with the forward KL.</p>
+<p>Alternatively, local consistency (LC) loss following the formulation in [3], where the adjacent states $(\mathbf y^{(j)}, \mathbf y^{(j+1)}$ in a Jacobi trajectory $\mathcal{J}$ are driven to yield the same outputs:</p>
+
+</div>
+
+
+
+$$
+\begin{align}
+   \mathcal L_{\text{LC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, (\mathbf y^{(j)}, \mathbf y^{(j+1)} )\sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{(j+1)}, \mathbf x)) || q_{\theta}(\cdot|\mathbf y_{:i}^{(j)}, \mathbf x) \Big] 
+\end{align}
+$$
+<h4 id="ar-loss">AR Loss<a hidden class="anchor" aria-hidden="true" href="#ar-loss">#</a></h4>
+<div style="text-align: justify;">
+    To avoid deviating from the distribution of the target LLM, we incorporate the traditional AR loss based on the generation $\mathbf l$ of the target LLM $p$:
+</div>
+
+
+
+$$
+\begin{align}
+    \mathcal L_{\text{AR}} = \underset{ (\mathbf x, \mathbf l) \sim \mathcal D }{\mathbb E} \Big[ - \sum_{i=1}^N \log q_{\theta}(l_i | \mathbf l_{:i}, \mathbf x) \Big]
+\end{align}
+$$
+<p>
+<div style="text-align: justify;">
+    Putting the two loss together, with some weight $w$, the total loss for training a CLLM is:
+</div>
+
+
+</p>
+$$
+\mathcal{L}(\theta) = \mathcal L_{\text{consistency}} + w\mathcal{L}_{\text{AR}}
+$$
+<h2 id="experiments">Experiments<a hidden class="anchor" aria-hidden="true" href="#experiments">#</a></h2>
+<h3 id="results">Results<a hidden class="anchor" aria-hidden="true" href="#results">#</a></h3>
+<div style="text-align: justify;">
+    Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct [6] or LLaMA-2-7B [7] as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
+</div>
+
+
+
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/cllm_speedup.png" alt="speedup" style="width: 70%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 5: CLLM speedup on different downstream tasks.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+
+    <figure>
+	<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <img src="img/mt-bench.png" alt="specialized" style="width: 50%; height: auto;"> 
+		<img src="img/specialized_domains.png" alt="mt_bench" style="width: 50%; height: auto;">
+	</div>
+	<div style="display: grid; place-items: center;">
+		<figcaption><strong>Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.</strong></figcaption>
+	</div>
+    </figure>
+
+
+<div style="text-align: justify;">
+    <p><strong>Specialized domains:</strong> From Figure 5, we can see that in comparison with other baselines including the original target model, Medusa2, and speculative decoding, CLLMs achieve the most significant speedup.</p>
+<p><strong>Open-domain conversational Challenge (MT-bench):</strong> CLLM trained from LLaMA2-7B using ShareGPT dataset can achieve roughly the same speedup as Medusa2 when combined with lookahead decoding, with comparable scores on MT-bench. However, CLLM offers higher adaptability and memory efficiency as it requires no modifications to the target model&rsquo;s original architecture and no auxiliary components.</p>
+
+</div>
+
+
+
+<h3 id="fast-forwarding-and-stationary-tokens">Fast Forwarding and Stationary Tokens<a hidden class="anchor" aria-hidden="true" href="#fast-forwarding-and-stationary-tokens">#</a></h3>
+
+    <figure>
+	<div style="display: grid; place-items: center;">
+        	<img src="img/trajectory_compare_aligned.png" alt="trajectory_compare" style="width: 120%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 7: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.</strong></figcaption>
+    	</div>
+    </figure>
+
+
+<div style="text-align: justify;">
+    <p>The left side of Figure 6 shows target LLMs typically generate only one correct token in one iteration. In contrast, in CLLMs, we identify <strong>fast forwarding phenomenon</strong> where multiple consecutive tokens are correctly predicted in a single Jacobi iteration.</p>
+<p>Moreover, tokens correctly generated in advance (e.g. “country” and “H” at index 6 and 7 on the left side of Figure 6), are often replaced inaccurately in subsequent iterations in target LLMs. On the other hand, CLLMs exhibit the capability of predicting correct tokens preemptively, even with preceding incorrect tokens, while ensuring the tokens remain unchanged. We term such tokens as <strong>stationary tokens</strong>. Both phenomena contribute to the fast convergence in Jacobi decoding of CLLMs, thereby leading to a considerable generation speedup.</p>
+<p>We observe that CLLMs acquire a crucial linguistic concept through training – <strong>collocations</strong>: a series of words or terms that co-occur more frequently than one would expect by random chance <a href="https://aclanthology.org/P91-1036.pdf">[8]</a>. Language is not solely composed of isolated words but also relies heavily on specific word pairings. Examples of collocations are abundant in both natural and coding languages. They include verb + preposition combinations (e.g., &lsquo;&rsquo;talk to&rsquo;&rsquo;, &lsquo;&lsquo;remind &hellip; of &hellip;&rsquo;&rsquo;), verb + noun structures (e.g., &lsquo;&lsquo;make a decision&rsquo;&rsquo;, &lsquo;&lsquo;catch a cold&rsquo;&rsquo;), and many more domain-specific syntactical structures (e.g., &lsquo;&lsquo;SELECT &hellip; FROM &hellip;&rsquo;&rsquo;, &lsquo;&lsquo;if &hellip; else&rsquo;&rsquo; for programming). The consistency generation objective allows CLLMs to infer such structures from any point in the Jacobi trajectory, encouraging CLLMs to acquire proficiency in numerous collocations and thereby predict multiple words simultaneously to minimize iteration steps.</p>
+
+</div>
+
+
+
+<h2 id="final-words">Final words<a hidden class="anchor" aria-hidden="true" href="#final-words">#</a></h2>
+<div style="text-align: justify;">
+    We invite you to check out <a href="TODO">our paper</a> for more details! Please stay tuned for code and CLLM checkpoint release!
+</div>
+
+
+
+<h2 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h2>
+<div style="text-align: justify;">
+    [1] Song, Yang, et al. &ldquo;Accelerating feedforward computation via parallel nonlinear equation solving.&rdquo; International Conference on Machine Learning. PMLR, 2021.
+</div>
+
+
+
+<div style="text-align: justify;">
+    [2] Santilli, Andrea, et al. &ldquo;Accelerating Transformer Inference for Translation via Parallel Decoding.&rdquo; arXiv preprint arXiv:2305.10427 (2023).
+</div>
+
+
+
+<div style="text-align: justify;">
+    [3] Song, Yang, and Prafulla Dhariwal. &ldquo;Improved techniques for training consistency models.&rdquo; arXiv preprint arXiv:2310.14189 (2023).
+</div>
+
+
+
+<div style="text-align: justify;">
+    [4] Song, Yang, et al. &ldquo;Score-based generative modeling through stochastic differential equations.&rdquo; arXiv preprint arXiv:2011.13456 (2020).
+</div>
+
+
+
+<div style="text-align: justify;">
+    [5] Agarwal, Rishabh, et al. &ldquo;GKD: Generalized Knowledge Distillation for Auto-regressive Sequence Models.&rdquo; arXiv preprint arXiv:2306.13649 (2023).
+</div>
+
+
+
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="http://localhost:1313/">Hao Lab @ UCSD</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
