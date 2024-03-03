@@ -24,11 +24,11 @@ menu:
   main:
     - identifier: Home
       name: Home
-      url: ''
+      url: /home/
       weight: 10
     - identifier: Blogs
       name: Blogs
-      url: /blogs/
+      url: ''
       weight: 30
     - identifier: People
       name: People
