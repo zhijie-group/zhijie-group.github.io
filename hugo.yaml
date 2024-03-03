@@ -1,4 +1,4 @@
-baseURL: ''
+baseURL: 'http://hao-ai-lab.github.io/'
 languageCode: en-us
 title: 'Hao Lab @ UCSD'
 theme: 'PaperMod'
@@ -24,21 +24,21 @@ menu:
   main:
     - identifier: Blogs
       name: Blogs
-      url: ''
+      url: http://hao-ai-lab.github.io/
       weight: 10
     - identifier: Home
       name: Home
-      url: /home/
+      url: http://hao-ai-lab.github.io/home
       weight: 40
     - identifier: People
       name: People
-      url: /people/
-      weight: 50
+      url: http://hao-ai-lab.github.io/people
+      weight: 5
     - identifier: Publications
       name: Publications
-      url: /publications/
+      url: http://hao-ai-lab.github.io/publications
       weight: 60
     - identifier: Contact
       name: Contact
-      url: /contact/
+      url: http://hao-ai-lab.github.io/contact
       weight: 70	
