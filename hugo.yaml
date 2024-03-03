@@ -28,17 +28,17 @@ menu:
       weight: 10
     - identifier: Home
       name: Home
-      url: http://hao-ai-lab.github.io/home
+      url: /home/
       weight: 40
     - identifier: People
       name: People
-      url: http://hao-ai-lab.github.io/people
-      weight: 5
+      url: /people/
+      weight: 50
     - identifier: Publications
       name: Publications
-      url: http://hao-ai-lab.github.io/publications
+      url: /publications/
       weight: 60
     - identifier: Contact
       name: Contact
-      url: http://hao-ai-lab.github.io/contact
+      url: /contact/
       weight: 70	
