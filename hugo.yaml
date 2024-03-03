@@ -28,7 +28,7 @@ menu:
       weight: 10
     - identifier: Blogs
       name: Blogs
-      url: ''
+      url:
       weight: 30
     - identifier: People
       name: People
