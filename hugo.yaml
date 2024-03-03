@@ -22,14 +22,14 @@ params:
 
 menu:
   main:
-    - identifier: Blogs
-      name: Blogs
-      url: http://hao-ai-lab.github.io/
-      weight: 10
     - identifier: Home
       name: Home
-      url: /home/
-      weight: 40
+      url: ''
+      weight: 10
+    - identifier: Blogs
+      name: Blogs
+      url: /blogs/
+      weight: 30
     - identifier: People
       name: People
       url: /people/
