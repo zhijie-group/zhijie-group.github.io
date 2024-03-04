@@ -9,7 +9,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao Lab @ UCSD</title>
 <meta name="keywords" content="">
-<meta name="description" content="TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible.">
+<meta name="description" content="TL;DR: In this blog, we introduce consistency large language models (CLLMs), a new family of models capable of reducing inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called Jacobi decoding, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to the same result as AR decoding in as few steps as possible.">
 <meta name="author" content="">
 <link rel="canonical" href="//localhost:1313/blogs/cllm/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -169,7 +169,7 @@
         <p>An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective.</p>
 </figure>
   <div class="post-content"><div style="text-align: justify;">
-    <strong>TL;DR:</strong> In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baselines and other SOTA techniques. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
+    <strong>TL;DR:</strong> In this blog, we introduce consistency large language models (CLLMs), a new family of models capable of reducing inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>, which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to the same result as AR decoding in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baseline pre-trained models and other SOTA techniques like Medusa and speculative decoding. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
 </div>
 
 
@@ -178,7 +178,7 @@
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/baseline_vs_cllm_gsm8k_acc_demo.gif" alt="cllm-gsm8k-acc-demo" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-ABEL-7B-002 in comparison with baseline ABEL-7B-002 using Jacobi decoding on GSM8K.</strong></figcaption>
+		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline <a href="https://huggingface.co/GAIR/Abel-7B-001">ABEL-7B-001</a> using Jacobi decoding on GSM8K.</strong></figcaption>
     	</div>
     </figure>
 
