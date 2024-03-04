@@ -19,7 +19,7 @@ draft = false
 **TL;DR:** In this blog, we introduce consistency large language models (CLLMs), a new family of models developed with our proposed techniques to reduce inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called [Jacobi decoding](https://arxiv.org/abs/2305.10427), which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to a correctly predicted sequence in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baselines and other SOTA techniques. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
 {{< /justify >}}
 
-{{< image src="img/baseline_vs_cllm_spider.gif" alt="cllm-spider-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-Deepseek-Coder-7B in comparison with baseline Deepseek-Coder-7B using Jacobi decoding on Text-to-SQL tasks.">}}
+{{< image src="img/baseline_vs_cllm_gsm8k_acc_demo.gif" alt="cllm-gsm8k-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-ABEL-7B-002 in comparison with baseline ABEL-7B-002 using Jacobi decoding on GSM8K.">}}
 
 ## Background: Jacobi Decoding
 
@@ -109,19 +109,19 @@ We can encourage CLLM to output $\mathbf y^*$ with $\mathbf y$ as the input by m
 
 $$
 \begin{align}
-   \mathcal L_{\text{GC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, \mathbf y \sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{*}, \mathbf x))  || q_{\theta}(\cdot|\mathbf y_{:i}, \mathbf x)\Big] 
+   \mathcal L_{\text{GC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, \mathbf y \sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta^{-}}(\cdot|\mathbf y_{:i}^{*}, \mathbf x))  || q_{\theta}(\cdot|\mathbf y_{:i}, \mathbf x)\Big] 
 \end{align}
 $$
 
 {{< justify >}}
-where we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in [[5]](https://arxiv.org/abs/2306.13649) and in this paper we primarily experiment with the forward KL. 
+where $\theta^{-} = \text{stopgrad}(\theta)$ and we abuse notations to represent uniform sampling from the dataset, and we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in [[5]](https://arxiv.org/abs/2306.13649) and in this paper we primarily experiment with the forward KL. 
 
 Alternatively, local consistency (LC) loss following the formulation in [3], where the adjacent states $(\mathbf y^{(j)}, \mathbf y^{(j+1)}$ in a Jacobi trajectory $\mathcal{J}$ are driven to yield the same outputs:
 {{< /justify >}}
 
 $$
 \begin{align}
-   \mathcal L_{\text{LC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, (\mathbf y^{(j)}, \mathbf y^{(j+1)} )\sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{(j+1)}, \mathbf x)) || q_{\theta}(\cdot|\mathbf y_{:i}^{(j)}, \mathbf x) \Big] 
+   \mathcal L_{\text{LC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, (\mathbf y^{(j)}, \mathbf y^{(j+1)} )\sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta^{-}}(\cdot|\mathbf y_{:i}^{(j+1)}, \mathbf x)) || q_{\theta}(\cdot|\mathbf y_{:i}^{(j)}, \mathbf x) \Big] 
 \end{align}
 $$
 

@@ -177,8 +177,8 @@
 
     <figure>
 	<div style="display: grid; place-items: center;">
-        	<img src="img/baseline_vs_cllm_spider.gif" alt="cllm-spider-acc-demo" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-Deepseek-Coder-7B in comparison with baseline Deepseek-Coder-7B using Jacobi decoding on Text-to-SQL tasks.</strong></figcaption>
+        	<img src="img/baseline_vs_cllm_gsm8k_acc_demo.gif" alt="cllm-gsm8k-acc-demo" style="width: 120%; height: auto;">
+		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-ABEL-7B-002 in comparison with baseline ABEL-7B-002 using Jacobi decoding on GSM8K.</strong></figcaption>
     	</div>
     </figure>
 
@@ -311,11 +311,11 @@ $$
 
 $$
 \begin{align}
-   \mathcal L_{\text{GC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, \mathbf y \sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{*}, \mathbf x))  || q_{\theta}(\cdot|\mathbf y_{:i}, \mathbf x)\Big] 
+   \mathcal L_{\text{GC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, \mathbf y \sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta^{-}}(\cdot|\mathbf y_{:i}^{*}, \mathbf x))  || q_{\theta}(\cdot|\mathbf y_{:i}, \mathbf x)\Big] 
 \end{align}
 $$
 <div style="text-align: justify;">
-    <p>where we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in <a href="https://arxiv.org/abs/2306.13649">[5]</a> and in this paper we primarily experiment with the forward KL.</p>
+    <p>where $\theta^{-} = \text{stopgrad}(\theta)$ and we abuse notations to represent uniform sampling from the dataset, and we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in <a href="https://arxiv.org/abs/2306.13649">[5]</a> and in this paper we primarily experiment with the forward KL.</p>
 <p>Alternatively, local consistency (LC) loss following the formulation in [3], where the adjacent states $(\mathbf y^{(j)}, \mathbf y^{(j+1)}$ in a Jacobi trajectory $\mathcal{J}$ are driven to yield the same outputs:</p>
 
 </div>
@@ -324,7 +324,7 @@ $$
 
 $$
 \begin{align}
-   \mathcal L_{\text{LC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, (\mathbf y^{(j)}, \mathbf y^{(j+1)} )\sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta}(\cdot|\mathbf y_{:i}^{(j+1)}, \mathbf x)) || q_{\theta}(\cdot|\mathbf y_{:i}^{(j)}, \mathbf x) \Big] 
+   \mathcal L_{\text{LC}} =\underset{(\mathbf x, \mathcal{J}) \sim \mathcal{D}, (\mathbf y^{(j)}, \mathbf y^{(j+1)} )\sim \mathcal{J}}{\mathbb E} \Big[ \sum_{i=1}^n  D( q_{\theta^{-}}(\cdot|\mathbf y_{:i}^{(j+1)}, \mathbf x)) || q_{\theta}(\cdot|\mathbf y_{:i}^{(j)}, \mathbf x) \Big] 
 \end{align}
 $$
 <h4 id="ar-loss">AR Loss<a hidden class="anchor" aria-hidden="true" href="#ar-loss">#</a></h4>
