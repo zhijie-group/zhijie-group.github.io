@@ -225,5 +225,5 @@ We invite you to check out [our paper](TODO) for more details! Please stay tuned
 {{< /justify >}}
 
 {{< justify >}}
-[8] Chern, Ethan et al. "Generative AI for Math: Abel." https://github.com/GAIR-NLP/abel
+[8] Chern, Ethan et al. "Generative AI for Math: Abel." https://github.com/GAIR-NLP/abel.
 {{< /justify >}}
