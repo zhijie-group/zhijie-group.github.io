@@ -19,7 +19,7 @@ draft = false
 **TL;DR:** In this blog, we introduce consistency large language models (CLLMs), a new family of models capable of reducing inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called [Jacobi decoding](https://arxiv.org/abs/2305.10427), which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to the same result as AR decoding in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baseline pre-trained models and other SOTA techniques like Medusa and speculative decoding. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
 {{< /justify >}}
 
-{{< image src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline [ABEL-7B-001](https://huggingface.co/GAIR/Abel-7B-001) using Jacobi decoding on GSM8K.">}}
+{{< image src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline [ABEL-7B-001](https://github.com/GAIR-NLP/abel) using Jacobi decoding on GSM8K.">}}
 
 ## Background: Jacobi Decoding
 
@@ -147,7 +147,7 @@ $$
 
 ### Results
 {{< justify >}}
-Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct [6] or LLaMA-2-7B [7] as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
+Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct [6], LLaMA-2-7B [7] or ABEL-7B-001 [8] as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
 {{< /justify >}}
 
 {{< image src="img/cllm_speedup.png" alt="speedup" width="70%" title="Figure 5: CLLM speedup on different downstream tasks.">}}
@@ -214,4 +214,16 @@ We invite you to check out [our paper](TODO) for more details! Please stay tuned
 
 {{< justify >}}
 [5] Agarwal, Rishabh, et al. "GKD: Generalized Knowledge Distillation for Auto-regressive Sequence Models." arXiv preprint arXiv:2306.13649 (2023).
+{{< /justify >}}
+
+{{< justify >}}
+[6] Touvron, Hugo, et al. "Llama 2: Open foundation and fine-tuned chat models, 2023." URL https://arxiv. org/abs/2307.09288 (2023).
+{{< /justify >}}
+
+{{< justify >}}
+[7] Smadja, Frank. "From n-grams to collocations: An evaluation of Xtract." 29th Annual Meeting of the Association for Computational Linguistics. 1991.
+{{< /justify >}}
+
+{{< justify >}}
+[8] Chern, Ethan et al. "Generative AI for Math: Abel." https://github.com/GAIR-NLP/abel
 {{< /justify >}}
