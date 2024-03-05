@@ -160,6 +160,23 @@ Our experiments contain three domain-specific tasks, including Spider (text-to-S
 **Open-domain conversational Challenge (MT-bench):** CLLM trained from LLaMA2-7B using ShareGPT dataset can achieve roughly the same speedup as Medusa2 when combined with lookahead decoding, with comparable scores on MT-bench. However, CLLM offers higher adaptability and memory efficiency as it requires no modifications to the target model's original architecture and no auxiliary components.
 {{< /justify >}}
 
+**Training Cost:** 
+{{< justify >}}
+The fine-tuning cost of CLLMs is moderate, e.g., passing only around 1M tokens for LLaMA-7B to achieve a $3.4\times$ speedup on the Spider dataset. In the cases where the dataset size is large, for example, for CodeSearchNet-Python, only 10% of the dataset is required to generate Jacobi trajectories in training CLLMs to obtain around $2.5\times$ speedup. The total number of tokens can be estimated by taking:
+
+$N = \text{avg # of trajectories per prompt} \times \text{avg seq length} \times \text{# of prompts}$.
+{{< /justify >}}
+
+{{< center >}}
+| dataset | estimated training cost (tokens) |
+|:---:|:---:|
+| Spider | $2\times 10^6$ |
+| CodeSearchNet-Python | $1 \times 10^8$ |
+| GSM8K | $1 \times 10^7$ |
+| ShareGPT | $2 \times 10^8$ |
+
+{{< /center >}}
+
 ### Fast Forwarding and Stationary Tokens
 
 {{< image src="img/trajectory_compare_aligned.png" alt="trajectory_compare" width="120%" title="Figure 7: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.">}}
