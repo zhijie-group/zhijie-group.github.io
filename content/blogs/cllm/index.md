@@ -219,3 +219,17 @@ We would like to thank Yang Song, Canwen Xu, Yonghao Zhuang, Dacheng Li and Yich
 {{< justify >}}
 [5] Agarwal, Rishabh, et al. "GKD: Generalized Knowledge Distillation for Auto-regressive Sequence Models." arXiv preprint arXiv:2306.13649 (2023).
 {{< /justify >}}
+
+
+## Citation
+
+```
+@misc{kou2024cllms,
+      title={CLLMs: Consistency Large Language Models}, 
+      author={Siqi Kou and Lanxiang Hu and Zhezhi He and Zhijie Deng and Hao Zhang},
+      year={2024},
+      eprint={2403.00835},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
