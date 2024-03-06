@@ -147,7 +147,7 @@ $$
 
 ### Results
 {{< justify >}}
-Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct [6], LLaMA-2-7B [7] or ABEL-7B-001 [8] as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
+Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct, LLaMA-2-7B or ABEL-7B-001 as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
 {{< /justify >}}
 
 {{< image src="img/cllm_speedup.png" alt="speedup" width="70%" title="Figure 5: CLLM speedup on different downstream tasks.">}}
@@ -164,7 +164,7 @@ Our experiments contain three domain-specific tasks, including Spider (text-to-S
 {{< justify >}}
 The fine-tuning cost of CLLMs is moderate, e.g., passing only around 1M tokens for LLaMA-7B to achieve a $3.4\times$ speedup on the Spider dataset. In the cases where the dataset size is large, for example, for CodeSearchNet-Python, only 10% of the dataset is required to generate Jacobi trajectories in training CLLMs to obtain around $2.5\times$ speedup. The total number of tokens can be estimated by taking:
 
-$N = \text{avg # of trajectories per prompt} \times \text{avg seq length} \times \text{# of prompts}$.
+$N = \text{avg # of trajectories per prompt} \times \text{avg trajectory length} \times \text{# of prompts}$.
 {{< /justify >}}
 
 {{< center >}}
@@ -186,14 +186,18 @@ The left side of Figure 6 shows target LLMs typically generate only one correct 
 
 Moreover, tokens correctly generated in advance (e.g. “country” and “H” at index 6 and 7 on the left side of Figure 6), are often replaced inaccurately in subsequent iterations in target LLMs. On the other hand, CLLMs exhibit the capability of predicting correct tokens preemptively, even with preceding incorrect tokens, while ensuring the tokens remain unchanged. We term such tokens as **stationary tokens**. Both phenomena contribute to the fast convergence in Jacobi decoding of CLLMs, thereby leading to a considerable generation speedup.
 
-We observe that CLLMs acquire a crucial linguistic concept through training – **collocations**: a series of words or terms that co-occur more frequently than one would expect by random chance [[8]](https://aclanthology.org/P91-1036.pdf). Language is not solely composed of isolated words but also relies heavily on specific word pairings. Examples of collocations are abundant in both natural and coding languages. They include verb + preposition combinations (e.g., ''talk to'', ''remind ... of ...''), verb + noun structures (e.g., ''make a decision'', ''catch a cold''), and many more domain-specific syntactical structures (e.g., ''SELECT ... FROM ...'', ''if ... else'' for programming). The consistency generation objective allows CLLMs to infer such structures from any point in the Jacobi trajectory, encouraging CLLMs to acquire proficiency in numerous collocations and thereby predict multiple words simultaneously to minimize iteration steps. 
+We observe that CLLMs acquire a crucial linguistic concept through training – **collocations**: a series of words or terms that [co-occur more frequently than one would expect by random chance](https://aclanthology.org/P91-1036.pdf). Language is not solely composed of isolated words but also relies heavily on specific word pairings. Examples of collocations are abundant in both natural and coding languages. They include verb + preposition combinations (e.g., ''talk to'', ''remind ... of ...''), verb + noun structures (e.g., ''make a decision'', ''catch a cold''), and many more domain-specific syntactical structures (e.g., ''SELECT ... FROM ...'', ''if ... else'' for programming). The consistency generation objective allows CLLMs to infer such structures from any point in the Jacobi trajectory, encouraging CLLMs to acquire proficiency in numerous collocations and thereby predict multiple words simultaneously to minimize iteration steps. 
 {{< /justify >}}
 
 
 ## Final words
 {{< justify >}}
-We invite you to check out [our paper](TODO) for more details! Please stay tuned for code and CLLM checkpoint release!
+Please see [our paper](http://arxiv.org/abs/2403.00835) for more details. We also invite you to try out [our codebase](https://github.com/hao-ai-lab/Consistency_LLM) and [CLLM checkpoints](https://huggingface.co/cllm)!
 {{< /justify >}}
+
+## Acknowledgement
+
+We would like to thank Yang Song, Canwen Xu, Yonghao Zhuang, Dacheng Li and Yichao Fu for providing insightful feedback.
 
 ## References
 {{< justify >}}
@@ -214,16 +218,4 @@ We invite you to check out [our paper](TODO) for more details! Please stay tuned
 
 {{< justify >}}
 [5] Agarwal, Rishabh, et al. "GKD: Generalized Knowledge Distillation for Auto-regressive Sequence Models." arXiv preprint arXiv:2306.13649 (2023).
-{{< /justify >}}
-
-{{< justify >}}
-[6] Touvron, Hugo, et al. "Llama 2: Open foundation and fine-tuned chat models, 2023." URL https://arxiv. org/abs/2307.09288 (2023).
-{{< /justify >}}
-
-{{< justify >}}
-[7] Smadja, Frank. "From n-grams to collocations: An evaluation of Xtract." 29th Annual Meeting of the Association for Computational Linguistics. 1991.
-{{< /justify >}}
-
-{{< justify >}}
-[8] Chern, Ethan et al. "Generative AI for Math: Abel." https://github.com/GAIR-NLP/abel.
 {{< /justify >}}
