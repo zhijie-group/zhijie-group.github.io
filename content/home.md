@@ -1,6 +1,7 @@
 ---
 title: ""
 layout: "home"
+type: "home"
 url: "/home/"
 summary: "home page for Hao Lab @ UCSD"
 cover:
