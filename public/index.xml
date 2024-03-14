@@ -24,13 +24,6 @@
     </item>
     <item>
       <title>Break the Sequential Dependency of LLM Inference Using Lookahead Decoding</title>
-      <link>//localhost:1313/blogs/lookahead_decoding/</link>
-      <pubDate>Tue, 21 Nov 2023 12:00:00 -0800</pubDate>
-      <guid>//localhost:1313/blogs/lookahead_decoding/</guid>
-      <description>TL;DR: We introduce lookahead decoding, a new, exact, and parallel decoding algorithm to accelerate LLM inference. Lookahead decoding breaks the sequential dependency in autoregressive decoding by concurrently extracting and verifying n-grams directly with the LLM, utilizing the Jacobi iteration method. Lookahead decoding functions without the need for a draft model or a data store. It linearly decreases the number of decoding steps directly correlating with the log(FLOPs) used per decoding step.</description>
-    </item>
-    <item>
-      <title>Break the Sequential Dependency of LLM Inference Using Lookahead Decoding</title>
       <link>//localhost:1313/posts/lookahead_decoding/</link>
       <pubDate>Tue, 21 Nov 2023 12:00:00 -0800</pubDate>
       <guid>//localhost:1313/posts/lookahead_decoding/</guid>

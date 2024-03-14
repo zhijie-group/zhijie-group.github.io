@@ -19,7 +19,7 @@ markup:
         enable: true
 params:
   math: true
-
+  
 menu:
   main:
     - identifier: Home

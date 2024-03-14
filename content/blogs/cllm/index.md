@@ -2,7 +2,9 @@
 title = "Consistency Large Language Models: A Family of Efficient Parallel Decoders"
 date = 2024-02-21T12:00:00-08:00
 authors = ["Siqi Kou*", "Lanxiang Hu*", "Zhezhi He", "Zhijie Deng", "Hao Zhang"]
+author = "Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang"
 draft = false
+ShowReadingTime = true
 [cover]
       image = "img/objective_illustration_global.jpg"
       alt = "jacobi trajectory"
@@ -15,8 +17,9 @@ draft = false
       github = "github"
       url = "https://github.com"
 +++
+
 {{< justify >}}
-**TL;DR:** In this blog, we introduce consistency large language models (CLLMs), a new family of models capable of reducing inference latency by efficiently decoding $n$ tokens in parallel. This decoding method is called [Jacobi decoding](https://arxiv.org/abs/2305.10427), which improves inference efficiency by breaking the sequential nature of conventional auto-regressive (AR) decoding. CLLMs are trained with the objective of performing efficient Jacobi decoding by mapping any randomly initialized $n$-token sequence to the same result as AR decoding in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the baseline pre-trained models and other SOTA techniques like Medusa and speculative decoding. CLLMs also show high adaptability and memory efficiency as they require no modifications to the existing model architecture and auxiliary model components.
+**TL;DR:** LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word. CLLMs are trained with the objective of performing parallel decoding fast and reliably. Specifically, the training objective intends to empower CLLMs with the capability of efficient parallel decoding by mapping any randomly initialized $n$-token sequence to the same result as auto-regressive (AR) decoding in as few steps as possible. This parallel decoding method we employ is called [Jacobi decoding](https://arxiv.org/abs/2305.10427). Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the pre-trained baselines. In comparison with other SOTA techniques like Medusa2 and Eagle, CLLMs achieve comparable or even better speedup in some tasks with no extra cost and engineering efforts for adaptation, as they require no modifications to the existing model architecture or auxiliary model components.
 {{< /justify >}}
 
 {{< image src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline [ABEL-7B-001](https://github.com/GAIR-NLP/abel) using Jacobi decoding on GSM8K.">}}
@@ -30,7 +33,7 @@ Large language models (LLMs) are transforming the landscape of human lives, from
 {{< image src="img/clm_objective.png" alt="autoregressive" width="60%" title="Figure 2: illustration of conventional AR decoding: one token is generated at a time.">}}
 
 {{< justify >}}
-[Jacobi decoding](https://arxiv.org/abs/2305.10427) originates from the Jacobi and Gauss-Seidel fixed-point iteration for solving nonlinear equations, and is proven identical to AR generation using greedy decoding [[1]](https://proceedings.mlr.press/v139/song21a.html). Jacobi decoding reformulates the sequential generation process into a system of $n$ non-linear equations with $n$ variables solvable in parallel based on Jacobi iteration. Each iteration step might predict more than one correct token (By correctness, we mean alignment with the AR decoding
+[Jacobi decoding](https://arxiv.org/abs/2305.10427) originates from the Jacobi and Gauss-Seidel fixed-point iteration for solving nonlinear equations, and [is proven identical to AR generation using greedy decoding](https://proceedings.mlr.press/v139/song21a.html). Jacobi decoding reformulates the sequential generation process into a system of $n$ non-linear equations with $n$ variables solvable in parallel based on Jacobi iteration. Each iteration step might predict more than one correct token (By correctness, we mean alignment with the AR decoding
 result under a greedy sampling strategy), thereby accelerating AR decoding potentially. 
 {{< /justify >}}
 
@@ -43,7 +46,7 @@ To be specific, Jacobi decoding method first randomly guesses the next $n$ token
 ### Limitations of Jacobi Decoding
 
 {{< justify >}}
-However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., an average of $1.05\times$ speedup [[2]](https://arxiv.org/abs/2305.10427). This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 6.
+However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., [an average of $1.05\times$ speedup](https://arxiv.org/abs/2305.10427). This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 6.
 {{< /justify >}}
 
 ## Consistency LLMs (CLLMs)
@@ -84,7 +87,7 @@ Note that The iteration exits at some k such that $\mathbf y^{(k)} = \mathbf y^{
 ### Training with Jacobi Trajectories
 
 {{< justify >}}
-To address this, we propose adapting pre-trained LLMs so that they can consistently map any point $\mathbf y$ on the Jacobi trajectory $\mathcal{J}$ to the fixed point $\mathbf y^*$. Surprisingly, we find such an objective is analogous to that of [consistency models](https://arxiv.org/abs/2303.01469), a leading acceleration approach for diffusion models [3, 4]. In our proposed method, we use Jacobi trajectories collected from a target model to train the model with a loss that encourages single-step convergence during Jacobi iterations. For each target model $p$ to be adapted as a CLLM, the training consists of two parts:
+To address this, we propose adapting pre-trained LLMs so that they can consistently map any point $\mathbf y$ on the Jacobi trajectory $\mathcal{J}$ to the fixed point $\mathbf y^*$. Surprisingly, we find such an objective is analogous to that of [consistency models](https://arxiv.org/abs/2303.01469), a leading acceleration approach for diffusion models. In our proposed method, we use Jacobi trajectories collected from a target model to train the model with a loss that encourages single-step convergence during Jacobi iterations. For each target model $p$ to be adapted as a CLLM, the training consists of two parts:
 {{< /justify >}}
 
 {{< justify >}}
@@ -114,9 +117,9 @@ $$
 $$
 
 {{< justify >}}
-where $\theta^{-} = \text{stopgrad}(\theta)$ and we abuse notations to represent uniform sampling from the dataset, and we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in [[5]](https://arxiv.org/abs/2306.13649) and in this paper we primarily experiment with the forward KL. 
+where $\theta^{-} = \text{stopgrad}(\theta)$ and we abuse notations to represent uniform sampling from the dataset, and we abuse notations to represent uniform sampling from the dataset.  $D(\cdot||\cdot)$ denotes the distance between two distributions, choices are discussed in [the GKD method](https://arxiv.org/abs/2306.13649) and in this paper we primarily experiment with the forward KL. 
 
-Alternatively, local consistency (LC) loss following the formulation in [3], where the adjacent states $(\mathbf y^{(j)}, \mathbf y^{(j+1)}$ in a Jacobi trajectory $\mathcal{J}$ are driven to yield the same outputs:
+Alternatively, local consistency (LC) loss following the formulation in consistency models, where the adjacent states $(\mathbf y^{(j)}, \mathbf y^{(j+1)})$ in a Jacobi trajectory $\mathcal{J}$ are driven to yield the same outputs:
 {{< /justify >}}
 
 $$
@@ -150,7 +153,7 @@ $$
 Our experiments contain three domain-specific tasks, including Spider (text-to-SQL), Human-Eval (Python code completion), and GSM8k (math), and the broader open-domain conversational challenge, MT-bench. Reported experiments were conducted using either fine-tuned coder LLM, Deepseek-coder-7B-instruct, LLaMA-2-7B or ABEL-7B-001 as the target model depending on the task. Both training and evaluation are carried out on NVIDIA A100 40GB servers.
 {{< /justify >}}
 
-{{< image src="img/cllm_speedup.png" alt="speedup" width="70%" title="Figure 5: CLLM speedup on different downstream tasks.">}}
+{{< image src="img/cllm_speedup.png" alt="speedup" width="70%" title="Figure 5: CLLM speedup on different downstream tasks. CLLMs are significantly faster than pre-trained models and achieve comparable speedups in comparison with Medusa, yet with no extra cost at inference time.">}}
 
 {{< two_images src2="img/specialized_domains.png" src1="img/mt-bench.png" alt1="specialized" alt2="mt_bench" width1="50%" width2="50%" title="Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.">}}
 
@@ -190,7 +193,7 @@ We observe that CLLMs acquire a crucial linguistic concept through training – 
 {{< /justify >}}
 
 
-## Final words
+## Get started
 {{< justify >}}
 Please see [our paper](http://arxiv.org/abs/2403.00835) for more details. We also invite you to try out [our codebase](https://github.com/hao-ai-lab/Consistency_LLM) and [CLLM checkpoints](https://huggingface.co/cllm)!
 {{< /justify >}}
@@ -198,27 +201,6 @@ Please see [our paper](http://arxiv.org/abs/2403.00835) for more details. We als
 ## Acknowledgement
 
 We would like to thank Yang Song, Canwen Xu, Yonghao Zhuang, Dacheng Li and Yichao Fu for providing insightful feedback.
-
-## References
-{{< justify >}}
-[1] Song, Yang, et al. "Accelerating feedforward computation via parallel nonlinear equation solving." International Conference on Machine Learning. PMLR, 2021.
-{{< /justify >}}
-
-{{< justify >}}
-[2] Santilli, Andrea, et al. "Accelerating Transformer Inference for Translation via Parallel Decoding." arXiv preprint arXiv:2305.10427 (2023).
-{{< /justify >}}
-
-{{< justify >}}
-[3] Song, Yang, and Prafulla Dhariwal. "Improved techniques for training consistency models." arXiv preprint arXiv:2310.14189 (2023).
-{{< /justify >}}
-
-{{< justify >}}
-[4] Song, Yang, et al. "Score-based generative modeling through stochastic differential equations." arXiv preprint arXiv:2011.13456 (2020).
-{{< /justify >}}
-
-{{< justify >}}
-[5] Agarwal, Rishabh, et al. "GKD: Generalized Knowledge Distillation for Auto-regressive Sequence Models." arXiv preprint arXiv:2306.13649 (2023).
-{{< /justify >}}
 
 
 ## Citation
