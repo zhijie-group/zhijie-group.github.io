@@ -3,26 +3,30 @@ title = "Consistency Large Language Models: A Family of Efficient Parallel Decod
 date = 2024-02-21T12:00:00-08:00
 authors = ["Siqi Kou*", "Lanxiang Hu*", "Zhezhi He", "Zhijie Deng", "Hao Zhang"]
 author = "Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang"
-draft = false
 ShowReadingTime = true
-[cover]
-      image = "img/objective_illustration_global.jpg"
-      alt = "jacobi trajectory"
-      caption = "An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective."
+draft = false
 [socialIcons]
     [[socialIcons.icon]]
       name = "twitter"
       url = "https://twitter.com"
     [[socialIcons.icon]]
-      github = "github"
-      url = "https://github.com"
+      name = "github"
+      url = "https://github.com/hao-ai-lab/Consistency_LLM"
+[cover]
+      image = "img/objective_illustration_global.jpg"
+      alt = "jacobi trajectory"
+      caption = "An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective."
 +++
 
+{{< socialBadges twitter="Hao-AI-Lab" arxiv-index="2403.00835" github="hao-ai-lab/Consistency_LLM" >}}
+
 {{< justify >}}
+
 **TL;DR:** LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word. CLLMs are trained with the objective of performing parallel decoding fast and reliably. Specifically, the training objective intends to empower CLLMs with the capability of efficient parallel decoding by mapping any randomly initialized $n$-token sequence to the same result as auto-regressive (AR) decoding in as few steps as possible. This parallel decoding method we employ is called [Jacobi decoding](https://arxiv.org/abs/2305.10427). Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the pre-trained baselines. In comparison with other SOTA techniques like Medusa2 and Eagle, CLLMs achieve comparable or even better speedup in some tasks with no extra cost and engineering efforts for adaptation, as they require no modifications to the existing model architecture or auxiliary model components.
 {{< /justify >}}
 
 {{< image src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" width="120%" title="Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline [ABEL-7B-001](https://github.com/GAIR-NLP/abel) using Jacobi decoding on GSM8K.">}}
+
 
 ## Background: Jacobi Decoding
 

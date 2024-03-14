@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao Lab @ UCSD</title>
+<title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao AI Lab @ UCSD</title>
 <meta name="keywords" content="">
 <meta name="description" content="TL;DR: LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word.">
 <meta name="author" content="Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang">
@@ -87,7 +87,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="Hao Lab @ UCSD (Alt + H)">Hao Lab @ UCSD</a>
+            <a href="//localhost:1313/" accesskey="h" title="Hao AI Lab @ UCSD (Alt + H)">Hao AI Lab @ UCSD</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -168,7 +168,19 @@
 <figure class="entry-cover"><img loading="eager" src="//localhost:1313/img/objective_illustration_global.jpg" alt="jacobi trajectory">
         <p>An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective.</p>
 </figure>
-  <div class="post-content"><div style="text-align: justify;">
+  <div class="post-content"><div style="display: flex !important; align-items: center !important; gap: 10px !important;">
+    <a href="https://twitter.com/Hao-AI-Lab" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.shields.io/twitter/url?label=Follow%20%40Hao-AI-Lab&style=social&url=https%3A%2F%2Ftwitter.com%2FHao-AI-Lab">
+    </a>
+    <a href="https://arxiv.org/abs/2403.00835" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.shields.io/badge/arXiv-2403.00835-white.svg?style=social">
+    </a>
+    <a href="https://github.com/hao-ai-lab/Consistency_LLM" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.shields.io/github/stars/hao-ai-lab/Consistency_LLM?style=social">
+    </a>
+</div>
+
+<div style="text-align: justify;">
     <strong>TL;DR:</strong> LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word. CLLMs are trained with the objective of performing parallel decoding fast and reliably. Specifically, the training objective intends to empower CLLMs with the capability of efficient parallel decoding by mapping any randomly initialized $n$-token sequence to the same result as auto-regressive (AR) decoding in as few steps as possible. This parallel decoding method we employ is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the pre-trained baselines. In comparison with other SOTA techniques like Medusa2 and Eagle, CLLMs achieve comparable or even better speedup in some tasks with no extra cost and engineering efforts for adaptation, as they require no modifications to the existing model architecture or auxiliary model components.
 </div>
 
@@ -474,7 +486,7 @@ $$
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="//localhost:1313/">Hao Lab @ UCSD</a></span>
+    <span>&copy; 2024 <a href="//localhost:1313/">Hao AI Lab @ UCSD</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

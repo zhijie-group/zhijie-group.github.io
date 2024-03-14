@@ -5,8 +5,8 @@ url: "/home/"
 summary: "home page for Hao Lab @ UCSD"
 cover:
   image: img/ucsd-geisel.jpg
-  alt: "Hao Lab @ UCSD"
-  caption: "Hao Lab @ UCSD"
+  alt: "Hao AI Lab @ UCSD"
+  caption: "Hao AI Lab @ UCSD"
 ---
 
 ### Mission Statement 
