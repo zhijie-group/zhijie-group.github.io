@@ -13,7 +13,7 @@
       <link>//localhost:1313/blogs/cllm/</link>
       <pubDate>Wed, 21 Feb 2024 12:00:00 -0800</pubDate>
       <guid>//localhost:1313/blogs/cllm/</guid>
-      <description>TL;DR: LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word.</description>
+      <description>TL;DR: LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallel decoders. We introduce Consistency Large Language Models (CLLMs), a new family of parallel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process &amp;ndash; mimicking human cognitive process of forming complete sentences in mind before articulating word by word &amp;ndash; can be effectively learned by simply finetuning pretrained LLMs.</description>
     </item>
   </channel>
 </rss>

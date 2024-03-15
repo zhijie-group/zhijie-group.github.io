@@ -11,7 +11,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Consistency Large Language Models: A Family of Efficient Parallel Decoders | Hao AI Lab @ UCSD</title>
 <meta name="keywords" content="">
-<meta name="description" content="TL;DR: LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word.">
+<meta name="description" content="TL;DR: LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallel decoders. We introduce Consistency Large Language Models (CLLMs), a new family of parallel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process &ndash; mimicking human cognitive process of forming complete sentences in mind before articulating word by word &ndash; can be effectively learned by simply finetuning pretrained LLMs.">
 <meta name="author" content="Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang">
 <link rel="canonical" href="//localhost:1313/blogs/cllm/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -179,16 +179,22 @@
 </div>
 
 <div style="text-align: justify;">
-    <strong>TL;DR:</strong> LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallels decoders. We introduce Consistency Large Language Models (CLLMs), a new family of paralel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process can be effectively learned by pre-trained LLMs, mimicing human cognitive process of forming complete sentences in mind, before articulating word by word. CLLMs are trained with the objective of performing parallel decoding fast and reliably. Specifically, the training objective intends to empower CLLMs with the capability of efficient parallel decoding by mapping any randomly initialized $n$-token sequence to the same result as auto-regressive (AR) decoding in as few steps as possible. This parallel decoding method we employ is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with the pre-trained baselines. In comparison with other SOTA techniques like Medusa2 and Eagle, CLLMs achieve comparable or even better speedup in some tasks with no extra cost and engineering efforts for adaptation, as they require no modifications to the existing model architecture or auxiliary model components.
+    <strong>TL;DR:</strong> LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show LLMs can be taught to operate as efficient parallel decoders. We introduce Consistency Large Language Models (CLLMs), a new family of parallel decoders capable of reducing inference latency by efficiently decoding a $n$-token sequence in parallel. Our research shows this process &ndash; mimicking human cognitive process of forming complete sentences in mind before articulating word by word &ndash; can be effectively learned by simply finetuning pretrained LLMs. Specifically, CLLMs are trained to perform parallel decoding by mapping any randomly initialized $n$-token sequence to the same result yielded by autoregressive (AR) decoding in as few steps as possible. This parallel decoding method we employ is called <a href="https://arxiv.org/abs/2305.10427">Jacobi decoding</a>. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed while preserving generation quality in comparison with autoregressive baselines. In comparison with other SOTA techniques like Medusa2 and Eagle, CLLMs achieve comparable or even better speedup in many tasks, yet require no additional cost, auxiliary model component at inference time.
 </div>
 
 
+
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
 
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline <a href="https://github.com/GAIR-NLP/abel">ABEL-7B-001</a> using Jacobi decoding on GSM8K.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 1: Demo of speedup by CLLM-ABEL-7B-001 in comparison with baseline <a href="https://github.com/GAIR-NLP/abel">ABEL-7B-001</a> using Jacobi decoding on GSM8K.</figcaption>
     	</div>
     </figure>
 
@@ -200,11 +206,17 @@
 
 
 
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/clm_objective.png" alt="autoregressive" style="width: 60%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 2: illustration of conventional AR decoding: one token is generated at a time.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 2: illustration of conventional AR decoding: one token is generated at a time.</figcaption>
     	</div>
     </figure>
 
@@ -216,11 +228,17 @@ result under a greedy sampling strategy), thereby accelerating AR decoding poten
 
 
 
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/jacobi_objective.png" alt="jacobi" style="width: 60%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.</figcaption>
     	</div>
     </figure>
 
@@ -238,6 +256,7 @@ result under a greedy sampling strategy), thereby accelerating AR decoding poten
 
 
 
+<p><a href="https://lmsys.org/blog/2023-11-21-lookahead-decoding/">Lookahead decoding</a> and speculative decoding methods try to mitigate inefficiency in Jacobi decoding and conventional AR decoding, but incurs extra memory cost during inference time. While CLLMs require none.</p>
 <h2 id="consistency-llms-cllms">Consistency LLMs (CLLMs)<a hidden class="anchor" aria-hidden="true" href="#consistency-llms-cllms">#</a></h2>
 <h3 id="jacobi-decoding-preliminary">Jacobi Decoding Preliminary<a hidden class="anchor" aria-hidden="true" href="#jacobi-decoding-preliminary">#</a></h3>
 <div style="text-align: justify;">
@@ -270,7 +289,7 @@ y_{n}^{(j+1)} &= \underset{y}{\text{arg max}} \ \ p(y | \mathbf y_{:n}^{(j)}, \m
 \end{align}
 $$
 <div style="text-align: justify;">
-    Note that The iteration exits at some k such that $\mathbf y^{(k)} = \mathbf y^{(k−1)}$ and we define $\mathbf y^{∗} := \mathbf y^{(k)}$ as the fixed point, and $\mathcal J := \set{  \mathbf y^{(1)}, \dots, \mathbf y^{(k)} }$ as the Jacobi trajectory.
+    Note that the process exits at some k such that $\mathbf y^{(k)} = \mathbf y^{(k−1)}$ and we define $\mathbf y^{∗} := \mathbf y^{(k)}$ as the <strong>fixed point</strong>, and $\mathcal J := \set{  \mathbf y^{(1)}, \dots, \mathbf y^{(k)} }$ as the <strong>Jacobi trajectory</strong>.
 </div>
 
 
@@ -300,11 +319,17 @@ $$
 
 
 
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/cllm_objective.png" alt="training_objective" style="width: 130%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 4: an illustration of consistency training for one-step convergence: refining the target LLM to consistently predict the fixed point given any state along Jacobi trajectory as input.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 4: an illustration of consistency training for one-step convergence: refining the target LLM to consistently predict the fixed point given any state along Jacobi trajectory as input.</figcaption>
     	</div>
     </figure>
 
@@ -367,14 +392,26 @@ $$
 
 
 
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/cllm_speedup.png" alt="speedup" style="width: 70%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 5: CLLM speedup on different downstream tasks. CLLMs are significantly faster than pre-trained models and achieve comparable speedups in comparison with Medusa, yet with no extra cost at inference time.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 5: CLLM speedup on different downstream tasks. CLLMs are significantly faster than pre-trained models and achieve comparable speedups in comparison with Medusa, yet with no extra cost at inference time.</figcaption>
     	</div>
     </figure>
 
+
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
 
 
     <figure>
@@ -383,7 +420,7 @@ $$
 		<img src="img/specialized_domains.png" alt="mt_bench" style="width: 50%; height: auto;">
 	</div>
 	<div style="display: grid; place-items: center;">
-		<figcaption><strong>Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. CLLMs achieve similar or even better speedup in comoparison with Medusa2 while introducing no extra inference cost (in terms FLOPS and memory consumption).</figcaption>
 	</div>
     </figure>
 
@@ -396,39 +433,44 @@ $$
 
 
 
-<p><strong>Training Cost:</strong>
+<h3 id="training-cost">Training Cost<a hidden class="anchor" aria-hidden="true" href="#training-cost">#</a></h3>
 <div style="text-align: justify;">
     <p>The fine-tuning cost of CLLMs is moderate, e.g., passing only around 1M tokens for LLaMA-7B to achieve a $3.4\times$ speedup on the Spider dataset. In the cases where the dataset size is large, for example, for CodeSearchNet-Python, only 10% of the dataset is required to generate Jacobi trajectories in training CLLMs to obtain around $2.5\times$ speedup. The total number of tokens can be estimated by taking:</p>
-<p>$N = \text{avg # of trajectories per prompt} \times \text{avg trajectory length} \times \text{# of prompts}$.</p>
+<p>$N = $ avg # of trajectories per prompt $ \times $ avg trajectory length $ \times $ # of prompts.</p>
 
 </div>
 
 
-</p>
+
 <div style="text-align: center;">
     <table>
 <thead>
 <tr>
 <th style="text-align:center">dataset</th>
 <th style="text-align:center">estimated training cost (tokens)</th>
+<th style="text-align:center">$\%$ of pre-training cost</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">Spider</td>
-<td style="text-align:center">$2\times 10^6$</td>
+<td style="text-align:center">2M</td>
+<td style="text-align:center">$< 0.01\%$</td>
 </tr>
 <tr>
 <td style="text-align:center">CodeSearchNet-Python</td>
-<td style="text-align:center">$1 \times 10^8$</td>
+<td style="text-align:center">100M</td>
+<td style="text-align:center">$\sim 0.1\%$</td>
 </tr>
 <tr>
 <td style="text-align:center">GSM8K</td>
-<td style="text-align:center">$1 \times 10^7$</td>
+<td style="text-align:center">10M</td>
+<td style="text-align:center">$\sim 0.01\%$</td>
 </tr>
 <tr>
 <td style="text-align:center">ShareGPT</td>
-<td style="text-align:center">$2 \times 10^8$</td>
+<td style="text-align:center">200M</td>
+<td style="text-align:center">$\sim 0.2\%$</td>
 </tr>
 </tbody>
 </table>
@@ -436,11 +478,17 @@ $$
 </div>
 
 <h3 id="fast-forwarding-and-stationary-tokens">Fast Forwarding and Stationary Tokens<a hidden class="anchor" aria-hidden="true" href="#fast-forwarding-and-stationary-tokens">#</a></h3>
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
 
     <figure>
 	<div style="display: grid; place-items: center;">
         	<img src="img/trajectory_compare_aligned.png" alt="trajectory_compare" style="width: 120%; height: auto;">
-		<figcaption style="font-size: 16px;"><strong>Figure 7: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.</strong></figcaption>
+		<figcaption style="font-size: 16px;" class="gray-text">Figure 7: Comparison of Jacobi trajectory between a target LLM and CLLMs on Spider. Each point along the Jacobi trajectory is a color-coded sequence: blue for correct tokens matching with AR results, and red for inaccurate ones. CLLM demonstrates enhanced efficiency, converging to the fixed point $2\times$ faster the Target LLM. This increased efficiency in the CLLM can be attributed to the consistency loss which facilitates the learning of the structure of each $n$-token sequence given a prefix.</figcaption>
     	</div>
     </figure>
 

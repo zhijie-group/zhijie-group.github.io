@@ -53,6 +53,8 @@ To be specific, Jacobi decoding method first randomly guesses the next $n$ token
 However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., [an average of $1.05\times$ speedup](https://arxiv.org/abs/2305.10427). This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 6.
 {{< /justify >}}
 
+[Lookahead decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) and speculative decoding methods try to mitigate inefficiency in Jacobi decoding and conventional AR decoding, but incurs extra memory cost during inference time. While CLLMs require none.
+
 ## Consistency LLMs (CLLMs)
 
 ### Jacobi Decoding Preliminary
@@ -159,7 +161,7 @@ Our experiments contain three domain-specific tasks, including Spider (text-to-S
 
 {{< image src="img/cllm_speedup.png" alt="speedup" width="70%" title="Figure 5: CLLM speedup on different downstream tasks. CLLMs are significantly faster than pre-trained models and achieve comparable speedups in comparison with Medusa, yet with no extra cost at inference time.">}}
 
-{{< two_images src2="img/specialized_domains.png" src1="img/mt-bench.png" alt1="specialized" alt2="mt_bench" width1="50%" width2="50%" title="Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. Note that the dot size is in proportion to memory consumption.">}}
+{{< two_images src2="img/specialized_domains.png" src1="img/mt-bench.png" alt1="specialized" alt2="mt_bench" width1="50%" width2="50%" title="Figure 6: illustration of CLLM vs. other baselines on domain-specific tasks (Spider, CodeSearchNet-Python, GSM8k), as well as on MT-bench. CLLMs achieve similar or even better speedup in comoparison with Medusa2 while introducing no extra inference cost (in terms FLOPS and memory consumption).">}}
 
 {{< justify >}}
 **Specialized domains:** From Figure 5, we can see that in comparison with other baselines including the original target model, Medusa2, and speculative decoding, CLLMs achieve the most significant speedup.
@@ -171,16 +173,16 @@ Our experiments contain three domain-specific tasks, including Spider (text-to-S
 {{< justify >}}
 The fine-tuning cost of CLLMs is moderate, e.g., passing only around 1M tokens for LLaMA-7B to achieve a $3.4\times$ speedup on the Spider dataset. In the cases where the dataset size is large, for example, for CodeSearchNet-Python, only 10% of the dataset is required to generate Jacobi trajectories in training CLLMs to obtain around $2.5\times$ speedup. The total number of tokens can be estimated by taking:
 
-$N = \text{avg # of trajectories per prompt} \times \text{avg trajectory length} \times \text{# of prompts}$.
+$N = $ avg # of trajectories per prompt $ \times $ avg trajectory length $ \times $ # of prompts.
 {{< /justify >}}
 
 {{< center >}}
-| dataset | estimated training cost (tokens) |
-|:---:|:---:|
-| Spider | $2\times 10^6$ |
-| CodeSearchNet-Python | $1 \times 10^8$ |
-| GSM8K | $1 \times 10^7$ |
-| ShareGPT | $2 \times 10^8$ |
+| dataset | estimated training cost (tokens) | $\%$ of pre-training cost
+|:---:|:---:|:---:|
+| Spider | 2M | $< 0.01\%$
+| CodeSearchNet-Python | 100M | $\sim 0.1\%$
+| GSM8K | 10M | $\sim 0.01\%$
+| ShareGPT | 200M | $\sim 0.2\%$
 
 {{< /center >}}
 
