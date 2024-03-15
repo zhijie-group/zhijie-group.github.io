@@ -85,7 +85,7 @@ y_{n}^{(j+1)} &= \underset{y}{\text{arg max}} \ \ p(y | \mathbf y_{:n}^{(j)}, \m
 $$
 
 {{< justify >}}
-Note that The iteration exits at some k such that $\mathbf y^{(k)} = \mathbf y^{(k−1)}$ and we define $\mathbf y^{∗} := \mathbf y^{(k)}$ as the fixed point, and $\mathcal J := \set{  \mathbf y^{(1)}, \dots, \mathbf y^{(k)} }$ as the Jacobi trajectory. 
+Note that the process exits at some k such that $\mathbf y^{(k)} = \mathbf y^{(k−1)}$ and we define $\mathbf y^{∗} := \mathbf y^{(k)}$ as the **fixed point**, and $\mathcal J := \set{  \mathbf y^{(1)}, \dots, \mathbf y^{(k)} }$ as the **Jacobi trajectory**. 
 {{< /justify >}}
 
 ### Training with Jacobi Trajectories
@@ -167,7 +167,7 @@ Our experiments contain three domain-specific tasks, including Spider (text-to-S
 **Open-domain conversational Challenge (MT-bench):** CLLM trained from LLaMA2-7B using ShareGPT dataset can achieve roughly the same speedup as Medusa2 when combined with lookahead decoding, with comparable scores on MT-bench. However, CLLM offers higher adaptability and memory efficiency as it requires no modifications to the target model's original architecture and no auxiliary components.
 {{< /justify >}}
 
-**Training Cost:** 
+### Training Cost 
 {{< justify >}}
 The fine-tuning cost of CLLMs is moderate, e.g., passing only around 1M tokens for LLaMA-7B to achieve a $3.4\times$ speedup on the Spider dataset. In the cases where the dataset size is large, for example, for CodeSearchNet-Python, only 10% of the dataset is required to generate Jacobi trajectories in training CLLMs to obtain around $2.5\times$ speedup. The total number of tokens can be estimated by taking:
 
