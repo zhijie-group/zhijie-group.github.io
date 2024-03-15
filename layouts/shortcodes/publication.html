@@ -1,6 +1,18 @@
 <div class="publication-reference" style="text-align: justify;" data-topic="{{ .Params.topic }}">
-    <p><strong>{{ .Get "title" }}</strong><br>
+    <p>
+    <a href="{{ .Get "paperLink" }}">{{ .Get "title" }}</a><br>
     {{ .Inner }}<br>
-    <em>{{ .Get "venue" }}</em> (<a href="{{ .Get "paperLink" }}">Paper</a>, <a href="{{ .Get "codeLink" }}">Code</a>)
+    <strong>{{ .Get "venue" }}</strong>
+    {{ with .Get "award" }}
+        <strong style="color: red;">({{ . }})</strong>
+    {{ end }}
+
+        <br>
+    {{ with .Get "codeLink" }}
+        [<a href="{{ . }}">code</a>]
+    {{ end }}
+    {{ with .Get "project" }}
+        [<a href="{{ . }}">project</a>]
+    {{ end }}
     </p>
 </div>

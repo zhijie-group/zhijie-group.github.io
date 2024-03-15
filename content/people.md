@@ -26,8 +26,7 @@ summary: people
 {{< /lab_members_grid >}}
 
 ### Alumni
-
-{{< alumni category="PhD Students" >}}
+{{< alumni >}}
 {{< alumni_entry name="Hexu Zhao" description="Undergrad Intern, now PhD Student at NYU." homepage="https://github.com/TarzanZhao">}}
 {{< alumni_entry name="Runyu Lu" description="Undergrad Intern, now PhD Student at UMich." homepage="https://lry89757.github.io/">}}
 {{< alumni_entry name="Dacheng Li" description="Master's, now PhD Student at UC Berkeley." homepage="https://dachengli1.github.io/">}}
