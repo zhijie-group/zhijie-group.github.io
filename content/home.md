@@ -16,8 +16,6 @@ Welcome to the UCSD Hao Lab website! We are passionate about designing strong, e
 
 {{< /justify >}}
 
-{{< xBadge twitter="haoailab" >}}
-
 &emsp;
 
 ### News 
@@ -29,8 +27,3 @@ Welcome to the UCSD Hao Lab website! We are passionate about designing strong, e
 {{< /justify >}}
 
 &emsp;
-
-### Highlights
-
-<!-- Default use-case -->
-{{< gallery-slider dir="/img/slider/" width="700px" height="300px" auto-slide="6000" >}}
