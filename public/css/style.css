@@ -54,3 +54,34 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow for depth */
     border-radius: 5px; /* Optional: rounds the corners of the box */
 }
+
+.alumni-section h2 {
+    font-size: 1.5rem; /* Adjust the font size as needed */
+}
+
+.alumni-entry li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  font-size: 1.0rem;
+}
+
+.alumni-entry li strong {
+  font-weight: bold;
+  font-size: 1.0rem;
+}
+
+.lab-member h3 {
+    font-size: 1.0rem; /* Adjust to your preference */
+}
+
+.lab-member p, .lab-member .social-links {
+    font-size: 1.0rem; /* Adjust to your preference */
+}
+
+.lab-member img {
+    width: 100%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 200px; /* Or any specific width you prefer */
+    object-fit: cover; /* This will cover the area without breaking the aspect ratio */
+    border-radius: 50%; /* Optional: for round images */
+}

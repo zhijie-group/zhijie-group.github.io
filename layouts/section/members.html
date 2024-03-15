@@ -1,0 +1,46 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  
+  <div class="section">
+    <h2>Current Lab Members</h2>
+    <div class="lab-members">
+      {{ range .Params.lab_members }}
+        <div class="lab-member">
+          <img src="{{ .image }}" alt="{{ .name }}" class="member-photo">
+          <h3>{{ .name }}</h3>
+          <p>{{ .role }}</p>
+          <div class="social-links">
+            {{ if .social.twitter }}
+              <a href="{{ .social.twitter }}"><i class="fab fa-twitter"></i></a>
+            {{ end }}
+            {{ if .social.academic }}
+              <a href="{{ .social.academic }}"><i class="fas fa-user-graduate"></i></a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Alumni</h2>
+    <div class="lab-members alumni">
+      {{ range .Params.alumni }}
+        <div class="lab-member">
+          <img src="{{ .image }}" alt="{{ .name }}" class="member-photo">
+          <h3>{{ .name }}</h3>
+          <p>{{ .role }}</p>
+          <div class="social-links">
+            {{ if .social.linkedin }}
+              <a href="{{ .social.linkedin }}"><i class="fab fa-linkedin"></i></a>
+            {{ end }}
+            {{ if .social.academic }}
+              <a href="{{ .social.academic }}"><i class="fas fa-user-graduate"></i></a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+
+{{ end }}

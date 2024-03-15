@@ -1,0 +1,23 @@
+<head>
+    <!-- Other head elements -->
+    <style>
+        .alumni-entry li strong {
+            font-size: 1.0rem; /* Adjust the font size as needed */
+        }
+        .alumni-entry li {
+            font-size: 1.0rem; /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+
+<div class="alumni-entry">
+    <li>
+        {{ with .Get "homepage" }}
+        <a href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            <strong>{{ $.Get "name" }}</strong>
+        </a>
+        {{ else }}
+            <strong>{{ .Get "name" }}</strong>
+        {{ end }} – {{ .Get "description" }}
+    </li>
+</div>

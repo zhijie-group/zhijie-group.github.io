@@ -1,0 +1,18 @@
+<div class="lab-members-grid">
+    {{ .Inner }}
+</div>
+
+<style>
+.lab-members-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* This adds space between the items */
+}
+
+.lab-member {
+    width: calc(33.333% - 1rem); /* Sets the width to fit 3 per line, accounting for the gap */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-align the content */
+}
+</style>

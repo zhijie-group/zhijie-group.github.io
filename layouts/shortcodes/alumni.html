@@ -1,0 +1,15 @@
+<head>
+    <!-- Other head elements -->
+    <style>
+        .alumni-section h2 {
+            font-size: 1.0rem; /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+
+<div class="alumni-section">
+    <h2>{{ .Get "category" }}</h2>
+    <ul>
+        {{ .Inner }}
+    </ul>
+</div>
