@@ -5,7 +5,7 @@ type: "home"
 url: "/home/"
 summary: "home page for Hao Lab @ UCSD"
 cover:
-  image: img/ucsd-geisel.jpg
+  image: img/ucsd-hao-ai-lab.jpg
   alt: "Hao AI Lab @ UCSD"
   caption: "Hao AI Lab @ UCSD"
 ---
@@ -15,6 +15,8 @@ cover:
 Welcome to the UCSD Hao Lab website! We are passionate about designing strong, efficient, and secure machine learning models and algorithms, and in building scalable, practical distributed systems that can support real-world machine learning workloads. We also develop open-sourced models and systems to democratize the access of Large Language Models (LLMs). We are affiliated with the UCSD ML System Group.
 
 {{< /justify >}}
+
+{{< xBadge twitter="haoailab" >}}
 
 &emsp;
 

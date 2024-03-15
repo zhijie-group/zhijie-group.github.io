@@ -18,7 +18,7 @@ draft = false
       caption = "An instance of Jacobi trajectory and an illustration of the global consistency loss learning objective."
 +++
 
-{{< socialBadges twitter="Hao-AI-Lab" arxiv-index="2403.00835" github="hao-ai-lab/Consistency_LLM" >}}
+{{< socialBadges arxiv-index="2403.00835" github="hao-ai-lab/Consistency_LLM" >}}
 
 {{< justify >}}
 
