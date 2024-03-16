@@ -19,6 +19,8 @@ markup:
         enable: true
 params:
   math: true
+  label:
+    icon: "img/HAOAILAB_trimmed.jpg"
   
 menu:
   main:
@@ -42,6 +44,9 @@ menu:
       name: Contact
       url: /contact/
       weight: 70
+    - name: "Twitter"
+      url: "https://twitter.com/haoailab"
+      weight: 100
     - name: "GitHub"
       url: "https://github.com/hao-ai-lab"
-      weight: 100
+      weight: 120
