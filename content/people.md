@@ -20,7 +20,9 @@ summary: people
 
 {{< lab_member name="Jiangfei Duan" role="Visiting PhD Student" image="llama_placeholder.png" academic="https://jf-d.github.io/">}}
 
-{{< lab_member name="Anze Xie" role="Master's" image="anze_xie.jpg" academic="https://lry89757.github.io/" twitter="https://twitter.com/AnzeXie">}}
+{{< lab_member name="Atharva Kshirsagar" role="Master's" image="atharva.jpg" academic="https://www.linkedin.com/in/atharva-kshirsagar-8b78781a6/" twitter="https://twitter.com/anotherAtharva">}}
+
+{{< lab_member name="Anze Xie" role="Master's" image="anze_xie.jpg" twitter="https://twitter.com/AnzeXie">}}
 
 {{< lab_member name="Longfei Yun" role="Master's" image="longfei_yun.jpg" twitter="https://twitter.com/longfei_yu78793">}}
 {{< /lab_members_grid >}}
