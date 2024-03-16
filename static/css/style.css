@@ -88,10 +88,10 @@
 
 /* Set background color of the whole page to white */
 body {
-  background-color: white !important;
+  background-color: white;
 }
 
 /* You may need to set specific elements to white as well, for example: */
 .posts-list, .post-preview, .page-header {
-  background-color: white !important;
+  background-color: white;
 }
