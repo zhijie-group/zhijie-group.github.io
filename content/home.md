@@ -25,5 +25,3 @@ Welcome to the UCSD Hao Lab website! We are passionate about designing strong, e
 **09/23** &emsp; Hao officially joined UCSD!
 
 {{< /justify >}}
-
-&emsp;
