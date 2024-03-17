@@ -1,5 +1,5 @@
-/* Background */ .bg { color: white; background-color: white; }
-/* PreWrapper */ .chroma { color: white; background-color: white; }
+/* Background */ .bg { color: black; background-color: black; }
+/* PreWrapper */ .chroma { color: black; background-color: black; }
 /* Other */ .chroma .x {  }
 /* Error */ .chroma .err { color: #ed8796 }
 /* CodeLine */ .chroma .cl {  }
@@ -82,5 +82,5 @@
 /* GenericStrong */ .chroma .gs { font-weight: bold }
 /* GenericSubheading */ .chroma .gu { color: #f5a97f; font-weight: bold }
 /* GenericTraceback */ .chroma .gt { color: #ed8796 }
-/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+/* GenericUnderline */ .chroma .gl { color:blue; text-decoration: none }
 /* TextWhitespace */ .chroma .w {  }

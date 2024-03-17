@@ -44,7 +44,7 @@
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
-                <img src="/img/HAOAILAB_LOGO.jpg" alt="{{ site.Title }}" height="40">
+                <img id="logo-image" src="/img/HAOAILAB_LOGO.jpg" alt="{{ site.Title }}" height="40">
             </a>
             {{- end }}
             <div class="logo-switches">
@@ -136,3 +136,29 @@
         </ul>
     </nav>
 </header>
+
+<script>
+    function updateLogoForTheme(initialLoad = false) {
+        // Determine the current theme or user preference
+        const theme = localStorage.getItem('pref-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        const logoImage = document.getElementById('logo-image');
+        if (logoImage && !initialLoad) {
+            logoImage.src = theme === 'light' ? '/img/HAOAILAB_LOGO-dark-mode.png' : '/img/HAOAILAB_LOGO.jpg';
+        }
+    }
+
+    // Update the logo when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Call with true to indicate this is the initial load
+        updateLogoForTheme(true);
+    });
+
+    // Optional: If you have a theme toggle button, call updateLogoForTheme() when the theme is toggled
+    const themeToggleButton = document.getElementById('theme-toggle');
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', () => {
+            // Assuming your theme toggle logic correctly updates 'pref-theme' in localStorage
+            updateLogoForTheme();
+        });
+    }
+</script>
