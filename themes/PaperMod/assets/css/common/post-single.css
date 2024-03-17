@@ -69,18 +69,36 @@
     font-size: 12px;
 }
 
-.post-content a,
-.toc a:hover {
-    box-shadow: 0 1px 0;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-}
-
 .post-content a code {
     margin: auto 0;
     border-radius: 0;
     box-shadow: 0 -1px 0 var(--primary) inset;
 }
+
+.post-content a {
+    color: #0f33b5; /* Sets the link color to blue */
+    text-decoration: none; /* Removes the underline from links */
+    transition: opacity 200ms, background-color 200ms, text-decoration-color 200ms; /* Smooth transition for opacity, background-color, and text-decoration-color */
+}
+
+.post-content a:hover {
+    opacity: 0.75; /* Changes the link opacity on hover */
+    text-decoration: underline; /* Adds underline on hover */
+    text-decoration-color: #0f33b5; /* Optional: Changes the underline color if needed */
+}
+
+.dark .post-content a {
+    color: #4ECDC4; /* Sets the link color to blue */
+    text-decoration: none; /* Removes the underline from links */
+    transition: opacity 200ms, background-color 200ms, text-decoration-color 200ms; /* Smooth transition for opacity, background-color, and text-decoration-color */
+}
+
+.dark .post-content a:hover {
+    opacity: 0.75; /* Changes the link opacity on hover */
+    text-decoration: underline; /* Adds underline on hover */
+    text-decoration-color: #4ECDC4; /* Optional: Changes the underline color if needed */
+}
+
 
 .post-content del {
     text-decoration: line-through;

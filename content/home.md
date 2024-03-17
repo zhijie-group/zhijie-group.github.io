@@ -12,7 +12,8 @@ cover:
 
 {{< justify >}}
 
-Welcome to the UCSD Hao Lab website! We are passionate about designing strong, efficient, and secure machine learning models and algorithms, and in building scalable, practical distributed systems that can support real-world machine learning workloads. We also develop open-sourced models and systems to democratize the access of Large Language Models (LLMs). We are affiliated with the UCSD ML System Group.
+Welcome to the UCSD Hao AI Lab website! We are passionate about designing strong, efficient, and secure machine learning models and algorithms, and in building scalable, practical distributed systems that can support real-world machine learning workloads. 
+We also develop and maintain open-source models and systems to democratize the access of large models. We are affiliated with the UCSD ML System Group and [UCSD NLP Group](https://ucsd-nlp.github.io/).
 
 {{< /justify >}}
 
@@ -22,6 +23,6 @@ Welcome to the UCSD Hao Lab website! We are passionate about designing strong, e
 
 {{< justify >}}
 
-**09/23** &emsp; Hao officially joined UCSD!
+**07/23** &emsp; Hao officially joined UCSD!
 
 {{< /justify >}}
