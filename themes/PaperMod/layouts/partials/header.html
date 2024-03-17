@@ -44,7 +44,7 @@
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
-                <img id="logo-image" src="/img/HAOAILAB_LOGO.jpg" alt="{{ site.Title }}" height="40">
+                <img id="logo-image" src="/img/HAOAILAB_LOGO-transparent.jpg" alt="{{ site.Title }}" height="40">
             </a>
             {{- end }}
             <div class="logo-switches">
@@ -138,27 +138,49 @@
 </header>
 
 <script>
-    function updateLogoForTheme(initialLoad = false) {
-        // Determine the current theme or user preference
-        const theme = localStorage.getItem('pref-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    function updateThemeAndLogo() {
+        // Toggle 'dark' class on the body to switch themes
+        document.body.classList.toggle('dark');
+
+        // Update the logo based on the current theme directly after toggling
+        const isDarkTheme = document.body.classList.contains('dark');
         const logoImage = document.getElementById('logo-image');
-        if (logoImage && !initialLoad) {
-            logoImage.src = theme === 'light' ? '/img/HAOAILAB_LOGO-dark-mode.png' : '/img/HAOAILAB_LOGO.jpg';
-        }
+        logoImage.src = isDarkTheme ? '/img/HAOAILAB_LOGO-dark-mode.png' : '/img/HAOAILAB_LOGO-transparent.jpg';
+
+        // Optionally, save the theme preference to localStorage
+        const themePreference = isDarkTheme ? 'dark' : 'light';
+        localStorage.setItem('pref-theme', themePreference);
     }
 
-    // Update the logo when the page loads
+    function applyCurrentThemeAndLogo() {
+        // Check if the 'dark' class is present on the body to determine the current theme
+        const isDarkTheme = document.body.classList.contains('dark');
+
+        // Update the logo based on the current theme
+        const logoImage = document.getElementById('logo-image');
+        logoImage.src = isDarkTheme ? '/img/HAOAILAB_LOGO-dark-mode.png' : '/img/HAOAILAB_LOGO-transparent.jpg';
+    }
+
+    // Event listener for the theme toggle button
     document.addEventListener('DOMContentLoaded', function() {
-        // Call with true to indicate this is the initial load
-        updateLogoForTheme(true);
+        const themeToggleButton = document.getElementById('theme-toggle');
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', updateThemeAndLogo);
+        }
+
+        // Initial theme setup based on saved preference or system preference
+        // This part ensures the theme is set correctly when the page loads without changing the logo unnecessarily
+        const savedTheme = localStorage.getItem('pref-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.classList.toggle('dark', savedTheme === 'dark');
     });
 
-    // Optional: If you have a theme toggle button, call updateLogoForTheme() when the theme is toggled
+    // Adjust theme toggle functionality
     const themeToggleButton = document.getElementById('theme-toggle');
     if (themeToggleButton) {
         themeToggleButton.addEventListener('click', () => {
-            // Assuming your theme toggle logic correctly updates 'pref-theme' in localStorage
-            updateLogoForTheme();
+            updateThemeAndLogo(); // Immediately update the logo based on the new theme
         });
+        // Ensure the correct logo is displayed for the current theme
+        applyCurrentThemeAndLogo();
     }
 </script>
