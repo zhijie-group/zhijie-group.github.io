@@ -158,7 +158,7 @@ We implemented the proposed techniques in a system prototype, called DistServe, 
 - **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and tailoring tensor parallelism for prefill, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
 - **Summarization:** DistServe achieves 4.48x higher goodput and 10.2x more stringent SLO than vLLM. As expected, as vLLM colocate prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
 
-See our paper for more fine-grained experiment results. 
+See our [technical report](https://arxiv.org/pdf/2401.09670.pdf) for more fine-grained experiment results. 
 
 
 {{< image src="img/KSSWzYzMUgTm-TEx_7jifUw3eWryV_V4jWPueSfJLOXBdLAOwWI-G51huIwVlyfrfsmX2Q4-cQszlmWXKl1X9PHrZpW2O3KRz3HT2Pj1B8fmp195_BwV-dyRNhObcYWTqxPLkcNoMP3zm4xXkgE9ouE.png" alt="distserve_evaluation" width="100%" title="Figure 8. Evaluation of DistServe against vLLM on various datasets.">}}
@@ -167,26 +167,24 @@ See our paper for more fine-grained experiment results.
 
 ### Disaggregation vs. Chunked Prefill
 
-In this section, we compare prefill-decoding disaggregation to the recent approach known as dynamic splitfuse (alternatively, [chunked prefill + piggybacking](https://arxiv.org/pdf/2308.16369.pdf)), and discuss their strengths and weaknesses.
+In this section, we compare prefill-decoding disaggregation to the recent approach known as [dynamic splitfuse](https://github.com/microsoft/DeepSpeed/blob/master/blogs/deepspeed-fastgen/README.md) (alternatively, [chunked prefill and piggybacking](https://arxiv.org/pdf/2308.16369.pdf)), and discuss their strengths and weaknesses.
 
-The key idea of dynamic splitfuse is to split a lengthy prefill into smaller chunks, thereby forming a batch that fully engages the GPU by combining a chunk of prefill with several decoding tasks, a process referred to as piggybacking. The chunk size is deliberately chosen so that this approach can keep the GPU fully utilized at all steps to enhance overall system efficiency. However, it might introduce an increase in both TTFT and TPOT, potentially diminishing goodput under latency constraints. The challenge due to its inability to completely segregate prefill and decoding operations, leading to resource contention and a compromise between TTFT and TPOT.
+The key idea of dynamic splitfuse is to split a lengthy prefill into smaller chunks, thereby forming a batch that fully engages the GPU by combining a chunk of prefill with several decoding tasks, a process referred to as piggybacking. The **chunk size** is deliberately chosen based on workloads so that this approach can keep the GPU fully utilized at all steps to enhance overall system efficiency. However, it might introduce an increase in both TTFT and TPOT, potentially diminishing goodput under latency constraints. This is due to its inability to completely segregate prefill and decoding operations, leading to resource contention and a compromise between TTFT and TPOT.
 
 **For TTFT**, chunked-prefill causes overheads for prefill (hence high TTFT) **regardless of** chunk size. First, selecting a chunk size significantly below the GPU's saturation point prolongs the execution duration of prefill tasks. For instance, assuming a GPU saturation at a prefill length of 512, setting the chunk size to 256 would double the TTFT for all prefills extending beyond 512. Second, even if the chunk size is optimized to nearly maximize GPU usage, chunked prefill significantly increases memory access for prefill tasks due to the necessity of loading the KV cache from GPU’s HBM to SRM for each subsequent chunk. This scenario escalates especially for longer prefills, translating to a quadratic increase in KV cache loading operations compared to a linear increase in the unchunked setup, and reducing opportunities for piggybacking due to limited decode token slots.
+**As for TPOT**, as we have already revealed in [section 2](#collocating-prefill-and-decode-causes-interference), colocating prefill and decoding in a batch inherently slows down all those decoding tasks.
 
-**As for TPOT**, as we have already revealed in [section 2](#background-throughput-vs-goodput), colcoating prefill and decoding in a batch inherently slows down all those decoding tasks.
-
-In conclusion, chunked prefill may be promising in maximizing the overall system throughput, but when the application does not want to tradeoff between TTFT and TPOT but to adhere to both, disaggregation emerged as a better choice.
+In conclusion, chunked prefill may be promising in maximizing the overall throughput, but when the application does not want to tradeoff between TTFT and TPOT but to adhere to both, disaggregation emerges as a better choice.
 
 
 
 ## DistServe Today
 
-We are working with vLLM community to integrate the presented techniques into production LLM serving systems. 
+We are working with vLLM community to integrate the presented techniques into the vLLM ecosystem. 
 
 Concurrent to our work, [Splitwise](https://www.microsoft.com/en-us/research/blog/splitwise-improves-gpu-usage-by-splitting-llm-inference-phases/), [TetriInfer](https://arxiv.org/pdf/2401.11181.pdf) and [DéjàVu](https://arxiv.org/abs/2403.01876) also adopted this disaggregation strategy to separate prefill from decode to achieve better LLM serving goodput. We are excited to see many research and companies adopting disaggregation to optimize system goodput, and we believe that disaggregation will soon become the de facto choice for LLM serving engine.
 
 ## Acknowledgement
-
 We would like to thank Vikranth Srivatsa, Lanxiang Hu, Will Lin for providing insightful feedback to our blog. 
 
 ## Citation
