@@ -114,38 +114,28 @@ Figure 5 illustrates how a request is processed in such a disaggregated system. 
 Let’s go through a simple experiment to see why disaggregation is beneficial. We serve a 13B LLM on a single A100-80GB GPU with a synthetic workload of inputs of length 512 and output length 64 following [Poisson arrival](https://en.wikipedia.org/wiki/Poisson_point_process). We gradually increase the request rates (x-axis) and measure how the two latencies (P90 TTFT and P90 TPOT, y-axis) change in Figure 6.
 
 Suppose we set the SLO of P90 TTFT as 0.4 second and P90 TPOT as 0.04 second (the horizontal line in **Figure 6**). We observe the existing systems can support roughly 3 rps that stay within the TTFT latency constraint using 1 GPU, whereas for TPOT, it sustains 1.6 rps (**Figure 6a)**. Since we need to satisfy both constraints, the goodput of existing colocated system becomes:
+Goodput (colocate) = min(2.3, 1.6) = 1.6 rps (per GPU).
 
+The performance is significantly boosted after disaggregation. Prefill worker and decode worker can both achieve better rps than previous if only handling one phase – as shown in **Figure 6**, one prefill worker achieves roughly 5.6 rps and one decode worker achieves roughly 10 rps. More importantly, now we can flexibly allocate 2 prefill workers to pair with 1 decode worker (notate as 2P1D), 3 GPUs in total. The goodput becomes:
 
-Goodput (colocate) = min(2.3, 1.6) = 1.6 rps (per GPU)
+Goodput (2P1D) = min(5.6 x 2, 10) = 10 reqs/s / 3 GPUs ≈ 3.3 reqs/s (per GPU).
 
-
-
-The performance is significantly boosted after disaggregation. Prefill worker and decode worker can both achieve better rps than previous if only handling one phase – as shown in **Figure 6**, one prefill worker achieves roughly 5.6 rps and one decode worker achieves roughly 10 rps. 
-
-More importantly, now we can **flexibly** allocate 2 prefill workers to pair with 1 decode worker (notate as 2P1D), 3 GPUs in total.The goodput becomes
-
-Goodput (2P1D) = min(5.6 x 2, 10) = 10 reqs/s / 3 GPUs ≈ 3.3 reqs/s (per GPU)
-
-
-
-**Simply disaggregating without any parallelism yields 2x goodput improvement.**
+This experiment shows that this simple disaggregation without any parallelism yields 2x goodput.
 
 {{< image src="img/Z5_W2ORamzfMMNwW9HZyHHck2pERNvwWwJ2Q7Klx5bXbIZQ1MIyUbRmCUGgYVe4Obaf2LjcpoTwTVGAIyI48bDIcCvCTs0pRepsFzHWa5KvCGyBnOmbbADJReKgT_Le3gLdvZfy0KBZV-qNIW2jXAdM.png" alt="disaggregation_vs_collocation" width="100%" title="Figure 6. Collocation (a) has less flexibility than disaggregate (b) which allocates 2 GPU for prefill and 1 GPU for decode (2P1D).">}}
 
-In fact, besides different resource allocation for each phase, disaggregating prefill and decoding further free us to pick the best parallelism strategy for each phase to optimize goodput (which we call “tailored parallelism”).
+In fact, besides different resource allocation for each phase, disaggregating prefill and decoding further free us to pick the best parallelism strategy for each phase to optimize goodput (termed as "tailored parallelism"), which we studied in detail in [our paper](https://arxiv.org/pdf/2401.09670.pdf).
 
 **KV cache transfer**
 
-Disaggregation comes at the cost of the transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At the first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs over networks sounds like a bottleneck. 
+Disaggregation comes at the cost of the transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At the first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs sounds like a bottleneck.
+However, we show **the opposite**: with proper placement, KV cache transfer overhead can be effectively minimized to be as low as less than the time of a decoding step, thanks to today’s high-speed networks such as [NVLink](https://en.wikipedia.org/wiki/NVLink) and [PCI-e 5.0](https://en.wikipedia.org/wiki/PCI_Express).
 
-We will however show **the exact opposite**: with proper placement, KV cache transfer overhead can be effectively minimized to be as low as less than the time of a decoding step, thanks to today’s high-speed networks such as NVLink and PCI-e 5.0.
-
-To see this, assume we have 8-channel PCIe 5.0 x 16 (64GB/s per link) as the intra-node network. Given a request with 2048 tokens, we have the following estimation for transferring KV caches when serving OPT-175B:
+To see this, assume we have 8-channel PCIe 5.0 x 16 (64GB/s per link) as the intra-node network between GPUs. Given a request with 2048 tokens, we have the following estimation for transferring KV caches when serving OPT-175B:
 
 Latency = 2048 tokens * (4.5 MB/token) / (64GB/s * 8) = 17.6 ms
 
-This time is even less than one single decoding step for OPT-175B (about 30 - 50ms on A100). For larger models, longer sequences, or more advanced networks (e.g, A100-NVLink with a bandwidth of 600GB/s), the comparative overhead associated with KV cache transmission becomes much less significant relative to a single decoding step.
-
+The latency is less than one single decoding step for OPT-175B (about 30 - 50ms on A100). For larger models, longer sequences, or more advanced networks (e.g, A100-NVLink with a bandwidth of 600GB/s), as Figure 7 shows, the comparative overhead associated with KV cache transmission becomes much less significant relative to a single decoding step.
 In conclusion, careful placement of prefill and decoding workers to utilize high-bandwidth networking can effectively hide the KV cache transfer overhead, which is discussed in detail in [our paper](https://arxiv.org/pdf/2401.09670.pdf).
 
 
@@ -155,7 +145,7 @@ In conclusion, careful placement of prefill and decoding workers to utilize high
 
 ### DistServe: Evaluate the effectiveness of Disaggregation
 
-We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot (ShareGPT), code completion (HumanEval) and summarization (LongBench). 
+We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion,and summarization, shown in Table 8. 
 
 | **LLM App**     | **Data**                                                                              | **TTFT** | **TPOT** |
 | --------------- |---------------------------------------------------------------------------------------| -------- | -------- |
@@ -163,10 +153,9 @@ We implemented the proposed techniques in a system prototype, called DistServe, 
 | Code completion | [HumanEval](https://github.com/openai/human-eval)                                     | Tight    | Tight    |
 | Summarization   | [LongBench](https://github.com/THUDM/LongBench)                                       | Loose    | Medium   |
 
-**Figure 8** shows the comparison of our system against vLLM as a baseline:
-
+**Figure 9** show the results comparing DistServe to vLLM:
 - **Chatbot**: DistServe sustains 2.0x - 3.41x higher goodput compared to vLLM.
-- **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and automatically increasing tensor parallelism in prefill instances through the searching algorithm, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
+- **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and tailoring tensor parallelism for prefill, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
 - **Summarization:** DistServe achieves 4.48x higher goodput and 10.2x more stringent SLO than vLLM. As expected, as vLLM colocate prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
 
 See our paper for more fine-grained experiment results. 
