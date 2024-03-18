@@ -189,7 +189,7 @@ The key idea of dynamic splitfuse is to split a lengthy prefill into smaller chu
 
 **For TTFT**, chunked-prefill causes overheads for prefill (hence high TTFT) **regardless of** chunk size. First, selecting a chunk size significantly below the GPU's saturation point prolongs the execution duration of prefill tasks. For instance, assuming a GPU saturation at a prefill length of 512, setting the chunk size to 256 would double the TTFT for all prefills extending beyond 512. Second, even if the chunk size is optimized to nearly maximize GPU usage, chunked prefill significantly increases memory access for prefill tasks due to the necessity of loading the KV cache from GPU’s HBM to SRM for each subsequent chunk. This scenario escalates especially for longer prefills, translating to a quadratic increase in KV cache loading operations compared to a linear increase in the unchunked setup, and reducing opportunities for piggybacking due to limited decode token slots.
 
-**As for TPOT**, as we have already revealed in section 2, colcoating prefill and decoding in a batch inherently slows down all those decoding tasks.
+**As for TPOT**, as we have already revealed in [section 2](#background-throughput-vs-goodput), colcoating prefill and decoding in a batch inherently slows down all those decoding tasks.
 
 In conclusion, chunked prefill may be promising in maximizing the overall system throughput, but when the application does not want to tradeoff between TTFT and TPOT but to adhere to both, disaggregation emerged as a better choice.
 
