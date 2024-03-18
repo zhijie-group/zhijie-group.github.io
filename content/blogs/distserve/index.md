@@ -1,5 +1,5 @@
 +++
-title = "TODO: DistServe Title "
+title = "Throughput is not all you need: Maximizing Goodput in LLM Serving using Prefill-Decode Disaggregation"
 date = 2024-03-17T12:00:00-08:00
 authors = ["Yinmin Zhong", "Shengyu Liu", "Junda Chen", "Jianbo Hu", "Yibo Zhu", "Xuanzhe Liu", "Xin Jin", "Hao Zhang"]
 author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Liu, Xin Jin, Hao Zhang"
@@ -20,9 +20,9 @@ draft = false
 
 LLM apps today have diverse latency requirements. For example, a chatbot may require a fast initial response (e.g. under 0.2 seconds) but moderate speed in decoding (only need to match human reading speed), whereas code completion requires a fast end-to-end generation time for real-time code suggestions.
 
-In this blogpost, we show existing serving systems that optimize throughput are not optimal under latency criteria. We advocate using goodput, the number of completed requests per second adhering to the Service Level Objective (SLO), as an improved measure of LLM serving performance to account for both cost and user satisfaction.
+In this blogpost, we show existing serving systems that optimize throughput are not optimal under latency criteria. We advocate using **goodput, the number of completed requests per second adhering to the Service Level Objective (SLO)**, as an improved measure of LLM serving performance to account for both cost and user satisfaction.
 
-To optimize goodput, we introduce prefill-decode disaggregation, aka speating prefill from decode into different GPUs. We also build DistServe, which achieves up to 4.48x goodput or 10.2x tighter SLO compared to SOTA serving systems, while staying within tight latency constraints. We are integrating DistServe with vLLM to bring the technique to the community.
+To optimize goodput, we introduce prefill-decode disaggregation, aka splitting prefill from decode into different GPUs. We also build **DistServe**, which achieves up to 4.48x goodput or 10.2x tighter SLO compared to SOTA serving systems, while staying within tight latency constraints. We are integrating DistServe with vLLM to bring the technique to the community.
 
 {{< /justify >}}
 
@@ -79,7 +79,7 @@ LLM serving systems usually batch prefill and decoding all together using a tech
 
 However, **the two phases have very distinct characteristics in computation.** Prefill is very easily compute-bound, meaning a small batch of requests or even a long enough request will saturate computation very quickly. On the other hand, decoding needs a much bigger batch size to hit the compute bound, and is more easily subject to the memory-limit of the GPU. 
 
-Due to their vastly different compute patterns and SLOs, colocating these two phases is not optimal for achieve high goodput because:
+Due to their vastly different compute patterns and SLOs, colocating these two phases is not optimal for achieving high goodput because:
 
 - Collocating prefill and decode causes Interference between them.
 
@@ -96,7 +96,7 @@ We explain them next.
 
 As a result of this interference, when engineers want the system to meet the SLO of both TTFT and TPOT, they usually have to over-provision resources to meet the latency goal, especially when either SLO is strict. 
 
-{{< image src="img/v-G1pP-L0ns16SwUSokflz3L116UBcfU3IRq7Os_TaGLndVns9GCGl0LpmuY-XsFTQL1Im_uTMEIE2el3mgHDNZ8c2V-3amPTmTXYQply3S3tSjQv6FGByJOyHZ8Kf5pDhlzcAh9NlDTuth_ZI4tqJU.png" alt="collocation_overprovision" width="100%" title="Figure 4. Collocation causes overprovision resources to meet SLO.">}}
+{{< image src="img/v-G1pP-L0ns16SwUSokflz3L116UBcfU3IRq7Os_TaGLndVns9GCGl0LpmuY-XsFTQL1Im_uTMEIE2el3mgHDNZ8c2V-3amPTmTXYQply3S3tSjQv6FGByJOyHZ8Kf5pDhlzcAh9NlDTuth_ZI4tqJU.png" alt="collocation_overprovision" width="100%" title="Figure 4. To meet SLO, system that collocates prefill and decode needs to overprovision resources to meet SLO target.">}}
 
 
 ### Parallelism strategy is coupled between prefill and decode
@@ -171,13 +171,13 @@ We implemented the proposed techniques in a system prototype, called DistServe, 
 **Figure 8** shows the comparison of our system against vLLM as a baseline:
 
 - **Chatbot**: DistServe sustains 2.0x - 3.41x higher goodput compared to vLLM.
-- **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO attainment than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and automatically increasing intra-operation parallelism in prefill instances through the searching algorithm, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
-- **Summarization:** In this workload, we are able to achieve 4.48x higher goodput and 10.2x more stringent SLO attainment than vLLM. As expected, as vLLM co-locate prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
+- **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and automatically increasing tensor parallelism in prefill instances through the searching algorithm, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
+- **Summarization:** DistServe achieves 4.48x higher goodput and 10.2x more stringent SLO than vLLM. As expected, as vLLM colocate prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
 
 See our paper for more fine-grained experiment results. 
 
 
-{{< image src="img/KSSWzYzMUgTm-TEx_7jifUw3eWryV_V4jWPueSfJLOXBdLAOwWI-G51huIwVlyfrfsmX2Q4-cQszlmWXKl1X9PHrZpW2O3KRz3HT2Pj1B8fmp195_BwV-dyRNhObcYWTqxPLkcNoMP3zm4xXkgE9ouE.png" alt="distserve_evaluation" width="100%" title="Figure 8. Evaluation of DistServe against various benchmarks.">}}
+{{< image src="img/KSSWzYzMUgTm-TEx_7jifUw3eWryV_V4jWPueSfJLOXBdLAOwWI-G51huIwVlyfrfsmX2Q4-cQszlmWXKl1X9PHrZpW2O3KRz3HT2Pj1B8fmp195_BwV-dyRNhObcYWTqxPLkcNoMP3zm4xXkgE9ouE.png" alt="distserve_evaluation" width="100%" title="Figure 8. Evaluation of DistServe against vLLM on various datasets.">}}
 
  
 
