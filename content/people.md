@@ -16,7 +16,7 @@ summary: people
 
 {{< lab_member name="Will Lin" role="PhD Student (Rotation)" image="llama_placeholder.png" academic="https://github.com/SolitaryThinker">}}
 
-{{< lab_member name="Junda Chen" role="PhD Student (Rotation)" image="junda_chen.jpg" academic="https://github.com/GindaChen">}}
+{{< lab_member name="Junda Chen" role="PhD Student (Rotation)" image="junda_chen.jpg" academic="https://github.com/GindaChen" twitter="https://twitter.com/Junda_Chen_">}}
 
 {{< lab_member name="Jiangfei Duan" role="Visiting PhD Student" image="llama_placeholder.png" academic="https://jf-d.github.io/">}}
 
