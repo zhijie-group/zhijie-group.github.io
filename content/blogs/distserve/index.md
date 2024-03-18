@@ -118,7 +118,7 @@ Figure 5 illustrates how a request is processed in such a disaggregated system. 
 
 Let’s go through a simple experiment to see why disaggregation is beneficial. We serve a 13B LLM on a single A100-80GB GPU with a synthetic workload of inputs of length 512 and output length 64 following [Poisson arrival](https://en.wikipedia.org/wiki/Poisson_point_process). We gradually increase the request rates (x-axis) and measure how the two latencies (P90 TTFT and P90 TPOT, y-axis) change in Figure 6.
 
-Suppose we set the SLO of P90 TTFT as 0.4 second and P90 TPOT as 0.04 second (the horizontal line in **Figure 6**). We observe the existing systems can support roughly 2.3 rps that stay within the TTFT latency constraint using 1 GPU, whereas for TPOT, it sustains 1.6 rps (**Figure 6a)**. Since we need to satisfy both constraints, the goodput of existing colocated system becomes:
+Suppose we set the SLO of P90 TTFT as 0.4 second and P90 TPOT as 0.04 second (the horizontal line in **Figure 6**). We observe the existing systems can support roughly 3 rps that stay within the TTFT latency constraint using 1 GPU, whereas for TPOT, it sustains 1.6 rps (**Figure 6a)**. Since we need to satisfy both constraints, the goodput of existing colocated system becomes:
 $$
 \text{	Goodput (colocate) = min(2.3, 1.6) = 1.6 rps (per GPU)
 }
