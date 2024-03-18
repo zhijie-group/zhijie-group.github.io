@@ -6,7 +6,7 @@ author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Li
 ShowReadingTime = true
 draft = false
 [cover]
-    image = "img/distserve_anime.gif"
+    image = "img/distserve_anime-crop.gif"
     alt = "DistServe"
     caption = "A request going through an LLM serving engine with disaggregated prefill and decode"
 
@@ -16,7 +16,7 @@ draft = false
 
 {{< justify >}}
 
-**TLDR** 
+**TL;DR:** 
 
 LLM apps today have diverse latency requirements. For example, a chatbot may require a fast initial response (e.g. under 0.2 seconds) but moderate speed in decoding (only need to match human reading speed), whereas code completion requires a fast end-to-end generation time for real-time code suggestions.
 
@@ -44,6 +44,7 @@ Throughput measures the number of requests or tokens completed across all users 
 
 To briefly illustrate goodput, assuming an application require TTFT < 200 ms and TPOT < 50 ms for at least 90% of the requests, we get the following definition:
 
+
 Goodput (P90 TTFT < 200ms and P90 TPOT < 50ms) = maximum request rate per second when at least 90% of requests has both TTFT < 200ms and TPOT < 50ms
 
 **Figure 1** shows a simple case where an application with high throughput may have a low goodput. The application has a throughput of 10 requests per second. But with the latency constraint, only 3 requests hold within the SLO constraint, yielding a goodput of 3 requests per second. As you can imagine, a user of this high-throughput but low-goodput serving system will still suffer from low quality of service and user satisfaction.
@@ -56,10 +57,10 @@ Let’s summarize the terms introduced in the subsection:
 
 - **Goodput:** A measure of the effectiveness of an LLM serving system, taking into account both cost and user satisfaction. It is defined as the maximum request rate per second that the system can withhold while meeting a specified service level objective (SLO).
 - **Throughput:** The number of completed requests per second processed by an LLM serving system.
-- **Service level objective (SLO):** A set of targets that an LLM serving system must meet to provide a satisfactory user experience. Common SLOs include time-to-first-token latency (TTFT), time-per-output-token (TPOT), end-to-end latency (E2E), and exponential moving average (EMA) latency.
+- **Service level objective (SLO):** A set of targets that an LLM serving system must meet to provide a satisfactory user experience. Common SLOs include time-to-first-token (TTFT), time-per-output-token (TPOT), end-to-end latency (E2E), and exponential moving average (EMA) latency.
 - **Prefill:** The first phase of LLM inference that digests all the input tokens, populates the KV Cache, and generates the first output token.
 - **Decode:** The subsequent phase that generates token-by-token until termination.
-- **Time-to-first-token latency (TTFT):** The time it takes for an LLM serving system to generate the first token in response to a user request. 
+- **Time-to-first-token (TTFT):** The time it takes for an LLM serving system to generate the first token in response to a user request. 
 - **Time-per-output-token (TPOT):** The time it takes for an LLM serving system to generate subsequent tokens in response to a user request.
 
 
@@ -72,7 +73,8 @@ Before we dive deeper, let’s revisit the lifecycle of a request in LLM serving
 
 LLM serving systems usually batch prefill and decoding all together using a technique called [**iteration-level scheduling**](https://www.usenix.org/conference/osdi22/presentation/yu) or [**continuous batching**](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), so that the GPUs process a batch size as large as possible, run one iteration, and generate one token for all of these requests. This technique effectively enhances the overall throughput (token per second) and is widely adopted in popular serving systems such as vLLM and TensorRT-LLM. 
 
-{{< image src="img/f-6wY-aD-MgfcEnt58ra9Owzob7Dv_7yOYO7uo6xGIZkBFbkI3wH53Yq3o2TL-8dJNmUZkn-3mySZFBSvFo82HE2e31EckTBo63rgPAd_OU6PHaJnEXdhwEpLYpj2rggToqOgJsa0668qkehZTvWDH8.gif" alt="prefill_decode_process" width="100%" title="Figure 2. How requests get processed.">}}
+[//]: # ({{< image src="img/f-6wY-aD-MgfcEnt58ra9Owzob7Dv_7yOYO7uo6xGIZkBFbkI3wH53Yq3o2TL-8dJNmUZkn-3mySZFBSvFo82HE2e31EckTBo63rgPAd_OU6PHaJnEXdhwEpLYpj2rggToqOgJsa0668qkehZTvWDH8.gif" alt="prefill_decode_process" width="100%" title="Figure 2. How requests get processed.">}})
+{{< image src="img/distserve-anime-colocate-crop.gif" alt="prefill_decode_process" width="100%" title="Figure 2. How requests get processed.">}}
 
 
 However, **the two phases have very distinct characteristics in computation.** Prefill is very easily compute-bound, meaning a small batch of requests or even a long enough request will saturate computation very quickly. On the other hand, decoding needs a much bigger batch size to hit the compute bound, and is more easily subject to the memory-limit of the GPU. 
@@ -112,7 +114,7 @@ The intuition is simple: disaggregating prefill and decode into different GPUs a
 
 Figure 5 illustrates how a request is processed in such a disaggregated system. When a request arrives in the system, it first goes to a **prefill worker** and completes its prefill phase. After its intermediate states (mainly [KV Cache](https://medium.com/@joaolages/kv-caching-explained-276520203249)) migrate to a **decode worker,** multiple decode steps are taken to generate subsequent tokens. The request leaves the system once it finishes generation. 
 
-{{< image src="img/uq-IUaQehvFWcgb_CSIwPQ_lZ5bsiojqWX-Lxbt35gTHhxKepTi7Whlwfc50ff7a5LMFVpD4L70ay94Tk7UqZErzpyHcgDmY-wAkAHbgX1vCvnpDxnCdW8S4jqvTMeT8654QILJI0N_lGvqJwVxXa0E.gif" alt="disaggregation" width="100%" title="Figure 5. How requests get processed when prefill/decode is disaggregated.">}}
+{{< image src="img/distserve_anime-crop.gif" alt="disaggregation" width="100%" title="Figure 5. How requests get processed when prefill/decode is disaggregated.">}}
 
 Let’s go through a simple experiment to see why disaggregation is beneficial. We serve a 13B LLM on a single A100-80GB GPU with a synthetic workload of inputs of length 512 and output length 64 following [Poisson arrival](https://en.wikipedia.org/wiki/Poisson_point_process). We gradually increase the request rates (x-axis) and measure how the two latencies (P90 TTFT and P90 TPOT, y-axis) change in Figure 6.
 
