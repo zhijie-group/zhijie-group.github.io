@@ -20,7 +20,7 @@ draft = false
 
 In this blogpost, we show existing serving systems that optimize **throughput** are not optimal under latency criteria. We advocate using **goodput**, the number of completed requests per second adhering to the Service Level Objectives (SLOs), as an improved measure of LLM serving performance to account for both cost and user satisfaction.
 
-To optimize goodput, we introduce prefill-decode disaggregation, a.k.a. splitting prefill from decode into different GPUs. We also build [**DistServe**](https://arxiv.org/pdf/2401.09670.pdf), which achieves up to 4.48x goodput or 10.2x tighter SLO compared to exiting state-of-the-art serving systems, while staying within tight latency constraints. We are integrating DistServe with vLLM to bring the technique to the community.
+To optimize goodput, we introduce prefill-decode disaggregation, a.k.a. splitting prefill from decode into different GPUs. We also build a system prototype [**DistServe**](https://arxiv.org/pdf/2401.09670.pdf), which achieves up to 4.48x goodput or 10.2x tighter SLO compared to exiting state-of-the-art serving systems, while staying within tight latency constraints. We are integrating DistServe with vLLM to bring the technique to the community.
 
 {{< /justify >}}
 
