@@ -148,6 +148,8 @@
         logoImage.src = isDarkTheme ? '/img/HAOAILAB_LOGO-dark-mode.png' : '/img/HAOAILAB_LOGO-transparent.jpg';
 
         // Optionally, save the theme preference to localStorage
+        const themePreference = isDarkTheme ? 'dark' : 'light';
+        localStorage.setItem('pref-theme', themePreference);
     }
 
     function applyCurrentThemeAndLogo() {
