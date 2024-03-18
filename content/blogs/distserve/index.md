@@ -145,7 +145,7 @@ In conclusion, careful placement of prefill and decoding workers to utilize high
 
 ### DistServe: Evaluate the effectiveness of Disaggregation
 
-We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion,and summarization, shown in Table 8. 
+We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion,and summarization, shown in the Table below. 
 
 | **LLM App**     | **Data**                                                                              | **TTFT** | **TPOT** |
 | --------------- |---------------------------------------------------------------------------------------| -------- | -------- |
