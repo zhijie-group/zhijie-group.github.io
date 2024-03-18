@@ -61,7 +61,7 @@ Let’s summarize the terms introduced in the subsection:
 - **Prefill:** The first phase of LLM inference that digests all the input tokens, populates the KV Cache, and generates the first output token.
 - **Decode:** The subsequent phase that generates token-by-token until termination.
 - **Time-to-first-token (TTFT):** The time it takes for an LLM serving system to generate the first token in response to a user request. 
-- **Time-per-output-token (TPOT):** The time it takes for an LLM serving system to generate subsequent tokens in response to a user request.
+- **Time-per-output-token (TPOT):** The average time it takes for an LLM serving system to generate subsequent tokens in response to a user request.
 
 
 
