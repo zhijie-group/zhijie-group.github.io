@@ -6,7 +6,7 @@ author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Li
 ShowReadingTime = true
 draft = false
 [cover]
-    image = "img/distserve_anime.gif"
+    image = "img/distserve_anime-crop.gif"
     alt = "DistServe"
     caption = "A request going through an LLM serving engine with disaggregated prefill and decode"
 
