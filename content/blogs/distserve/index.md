@@ -122,7 +122,7 @@ Goodput (2P1D) = min(5.6 x 2, 10) = 10 reqs/s / 3 GPUs ≈ 3.3 reqs/s (per GPU).
 
 This experiment shows that this simple disaggregation without any parallelism yields 2x goodput.
 
-{{< image src="img/Z5_W2ORamzfMMNwW9HZyHHck2pERNvwWwJ2Q7Klx5bXbIZQ1MIyUbRmCUGgYVe4Obaf2LjcpoTwTVGAIyI48bDIcCvCTs0pRepsFzHWa5KvCGyBnOmbbADJReKgT_Le3gLdvZfy0KBZV-qNIW2jXAdM.png" alt="disaggregation_vs_collocation" width="100%" title="Figure 6. Collocation (a) has less flexibility than disaggregate (b) which allocates 2 GPU for prefill and 1 GPU for decode (2P1D).">}}
+{{< image src="img/colocate_vs_disaggregate.png" alt="disaggregation_vs_collocation" width="100%" title="Figure 6. Collocation (a) has less flexibility than disaggregate (b) which allocates 2 GPU for prefill and 1 GPU for decode (2P1D).">}}
 
 In fact, besides different resource allocation for each phase, disaggregating prefill and decoding further free us to pick the best parallelism strategy for each phase to optimize goodput (termed as "tailored parallelism"), which we studied in detail in [our paper](https://arxiv.org/pdf/2401.09670.pdf).
 
