@@ -1,8 +1,8 @@
 +++
 title = "Throughput is not all you need: Maximizing Goodput in LLM Serving using Prefill-Decode Disaggregation"
 date = 2024-03-17T12:00:00-08:00
-authors = ["Yinmin Zhong", "Shengyu Liu", "Junda Chen", "Jianbo Hu", "Yibo Zhu", "Xuanzhe Liu", "Xin Jin", "Hao Zhang"]
-author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Liu, Xin Jin, Hao Zhang"
+authors = ["Yinmin Zhong", "Shengyu Liu", "Junda Chen", "Yibo Zhu", "Xin Jin", "Hao Zhang"]
+author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Yibo Zhu, Xin Jin, Hao Zhang"
 ShowReadingTime = true
 draft = false
 [cover]
