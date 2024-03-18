@@ -85,9 +85,7 @@ We explain them next.
 
 ### Collocating prefill and decode causes Interference
 
-**Figure 3** shows a simplified view of the interference between prefill and decode. On the very left, we route the 2 incoming requests into two GPUs so that each request runs on their own. In the middle, we batch these 2 requests together in 1 GPU. We can see that continuous batching significantly elongates the latency for R1 (decode), and at the same time slightly increases the latency for R2 (prefill). On the right, we have a steady stream of incoming requests. Now the requests in the decode phase get “bugged” every single time a prefill requests come into the system, causing an unexpectedly long delay on decode. 
-
-<!-- {{< image src="img/lvHuoscAJhmWUmO2hN9ENRxYpW83WJRNLpeDfX52JqjATOpwdCD72PwbcH6LvA_bCMrnqxHdhi7snoUEt8DvvrJKEUuaHdCayqNLPfied_43of9cedDSvAqrpLqRQz2m3v6BZUkwdlDadMlelK-PVfU.png" alt="continuous_batching_interference" width="100%" title="Figure 3. Continuous batching causes interference.">}} -->
+**Figure 3** shows a simplified view of the interference between prefill and decode. On the very left, we batch these 2 requests together in 1 GPU. We can see that continuous batching significantly elongates the latency for R1 (decode), and at the same time slightly increases the latency for R2 (prefill). On the right, we have a steady stream of incoming requests. Now the requests in the decode phase get “bugged” every single time a prefill requests come into the system, causing an unexpectedly long delay on decode. 
 
 
 {{< image src="img/continuous_batching.png" alt="continuous_batching_interference" width="100%" title="Figure 3. Continuous batching causes interference.">}}
