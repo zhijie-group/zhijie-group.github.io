@@ -6,7 +6,7 @@ author = "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Li
 ShowReadingTime = true
 draft = false
 [cover]
-    image = "img/distserve_anime-crop.gif"
+    image = "img/distserve_anime.gif"
     alt = "DistServe"
     caption = "A request going through an LLM serving engine with disaggregated prefill and decode"
 
@@ -73,7 +73,6 @@ Before we dive deeper, let’s revisit the lifecycle of a request in LLM serving
 
 LLM serving systems usually batch prefill and decoding all together using a technique called [**iteration-level scheduling**](https://www.usenix.org/conference/osdi22/presentation/yu) or [**continuous batching**](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), so that the GPUs process a batch size as large as possible, run one iteration, and generate one token for all of these requests. This technique effectively enhances the overall throughput (token per second) and is widely adopted in popular serving systems such as vLLM and TensorRT-LLM. 
 
-[//]: # ({{< image src="img/f-6wY-aD-MgfcEnt58ra9Owzob7Dv_7yOYO7uo6xGIZkBFbkI3wH53Yq3o2TL-8dJNmUZkn-3mySZFBSvFo82HE2e31EckTBo63rgPAd_OU6PHaJnEXdhwEpLYpj2rggToqOgJsa0668qkehZTvWDH8.gif" alt="prefill_decode_process" width="100%" title="Figure 2. How requests get processed.">}})
 {{< image src="img/distserve-anime-colocate-crop.gif" alt="prefill_decode_process" width="100%" title="Figure 2. How requests get processed.">}}
 
 
