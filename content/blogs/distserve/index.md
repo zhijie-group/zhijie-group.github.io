@@ -16,9 +16,9 @@ draft = false
 
 {{< justify >}}
 
-**TL;DR:** LLM apps today have diverse latency requirements. For example, a chatbot may require a fast initial response (e.g., under 0.2 seconds) but moderate speed in decoding which only need to match human reading speed, whereas code completion requires a fast end-to-end generation time for real-time code suggestions.
+**TL;DR:** LLM apps today have diverse latency requirements. For example, a chatbot may require a fast initial response (e.g., under 0.2 seconds) but moderate speed in decoding which only needs to match human reading speed, whereas code completion requires a fast end-to-end generation time for real-time code suggestions.
 
-In this blogpost, we show existing serving systems that optimize **throughput** are not optimal under latency criteria. We advocate using **goodput**, the number of completed requests per second adhering to the Service Level Objectives (SLOs), as an improved measure of LLM serving performance to account for both cost and user satisfaction.
+In this blog post, we show existing serving systems that optimize **throughput** are not optimal under latency criteria. We advocate using **goodput**, the number of completed requests per second adhering to the Service Level Objectives (SLOs), as an improved measure of LLM serving performance to account for both cost and user satisfaction.
 
 To optimize goodput, we introduce prefill-decode disaggregation, a.k.a. splitting prefill from decode into different GPUs. We also build a system prototype [**DistServe**](https://arxiv.org/pdf/2401.09670.pdf), which achieves up to 4.48x goodput or 10.2x tighter SLO compared to exiting state-of-the-art serving systems, while staying within tight latency constraints. We are integrating DistServe with vLLM to bring the technique to the community.
 
@@ -31,7 +31,7 @@ Large language models (LLMs) are changing how the industry adopts AI technology 
 
 In reality, downstream applications come in different flavors -- they may have different latency requirements for user experience, hence dramatically different [service level objectives (SLO)](https://en.wikipedia.org/wiki/Service-level_objective) to satisfy. The most widely used SLOs in LLM services are:
 
-- Time to first token latency (**TTFT**): measuring the time taken for the LLM to respond the first generated token to the user.
+- Time to first token latency (**TTFT**): measuring the time taken for the LLM to output the first generated token to the user.
 - Time per output token (**TPOT**): measuring the average latency between two subsequent generated tokens.
 
 
@@ -40,10 +40,10 @@ In reality, downstream applications come in different flavors -- they may have d
 
 Throughput measures the number of requests or tokens completed *across all users and requests*, hence overlooking these latency requirements. We introduce **Goodput**, the number of completed requests per second that adheres to SLOs (TTFT and TPOT requirements), and show it is a much better metric, because it captures request throughput under SLO attainment -- hence both cost and service quality.
 
-To briefly illustrate goodput, assuming an application require TTFT < 200 ms and TPOT < 50 ms for at least 90% of the requests, we get the following definition:
+To briefly illustrate goodput, assuming an application requires TTFT < 200 ms and TPOT < 50 ms for at least 90% of the requests, we get the following definition:
 
 
-Goodput (P90 TTFT < 200ms and P90 TPOT < 50ms) = maximum request rate per second when at least 90% of requests has both TTFT < 200ms and TPOT < 50ms
+Goodput (P90 TTFT < 200ms and P90 TPOT < 50ms) = maximum request rate per second when at least 90% of requests have both TTFT < 200ms and TPOT < 50ms
 
 **Figure 1** shows a simple case where an application with high throughput may have a low goodput. The application has a throughput of 10 requests per second. But with the latency constraint, only 3 requests hold within the SLO constraint, yielding a goodput of 3 requests per second. As you can imagine, a user of this high-throughput but low-goodput serving system will still suffer from low quality of service.
 
@@ -107,16 +107,16 @@ The intuition is simple: disaggregating prefill and decode into different GPUs a
 1. **No interference between prefill and decode** makes both phases faster and easier to attain their respective SLO.
 2. **Decoupled resource allocation and parallelism strategy** such that optimization can tailor for prefill and decode separately.
 
-Figure 5 illustrates how a request is processed in such a disaggregated system. When a request arrives in the system, it first goes to a prefill worker and completes its prefill phase. Then the system migrates its intermediate states (mainly [KV Cache](https://medium.com/@joaolages/kv-caching-explained-276520203249)) to a **decode worker,** multiple decode steps are taken to generate subsequent tokens. The request leaves the system once it finishes generation. 
+Figure 5 illustrates how a request is processed in such a disaggregated system. When a request arrives in the system, it first goes to a prefill worker and completes its prefill phase. Then the system migrates its intermediate states (mainly [KV Cache](https://medium.com/@joaolages/kv-caching-explained-276520203249)) to a **decode worker,** and multiple decode steps are taken to generate subsequent tokens. The request leaves the system once it finishes generation. 
 
 {{< image src="img/distserve_anime-crop.gif" alt="disaggregation" width="100%" title="Figure 5. How requests get processed when prefill/decode is disaggregated.">}}
 
 Let’s go through a simple experiment to see why disaggregation is beneficial. We serve a 13B LLM on a single A100-80GB GPU with a synthetic workload of inputs of length 512 and output length 64 following [Poisson arrival](https://en.wikipedia.org/wiki/Poisson_point_process). We gradually increase the request rates (x-axis) and measure how the two latencies (P90 TTFT and P90 TPOT, y-axis) change in Figure 6.
 
-Suppose we set the SLO of P90 TTFT as 0.4 second and P90 TPOT as 0.04 second (the horizontal line in **Figure 6**). We observe the existing systems can support roughly 3 rps that stay within the TTFT latency constraint using 1 GPU, whereas for TPOT, it sustains 1.6 rps (**Figure 6a)**. Since we need to satisfy both constraints, the goodput of existing colocated system becomes:
+Suppose we set the SLO of P90 TTFT as 0.4 seconds and P90 TPOT as 0.04 seconds (the horizontal line in **Figure 6**). We observe the existing systems can support roughly 3 rps that stay within the TTFT latency constraint using 1 GPU, whereas for TPOT, it sustains 1.6 rps (**Figure 6a)**. Since we need to satisfy both constraints, the goodput of existing colocated system becomes:
 Goodput (colocate) = min(2.3, 1.6) = 1.6 rps (per GPU).
 
-The performance is significantly boosted after disaggregation. Prefill worker and decode worker can both achieve better rps than previous if only handling one phase – as shown in **Figure 6**, one prefill worker achieves roughly 5.6 rps and one decode worker achieves roughly 10 rps. More importantly, now we can flexibly allocate 2 prefill workers to pair with 1 decode worker (notate as 2P1D), 3 GPUs in total. The goodput becomes:
+The performance is significantly boosted after disaggregation. Prefill worker and decode worker can both achieve better rps than the previous if only handling one phase – as shown in **Figure 6**, one prefill worker achieves roughly 5.6 rps and one decode worker achieves roughly 10 rps. More importantly, now we can flexibly allocate 2 prefill workers to pair with 1 decode worker (notate as 2P1D), 3 GPUs in total. The goodput becomes:
 
 Goodput (2P1D) = min(5.6 x 2, 10) = 10 reqs/s / 3 GPUs ≈ 3.3 reqs/s (per GPU).
 
@@ -128,7 +128,7 @@ In fact, besides different resource allocation for each phase, disaggregating pr
 
 **KV cache transfer**
 
-Disaggregation comes at the cost of the transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At the first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs sounds like a bottleneck.
+Disaggregation comes at the cost of transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs sounds like a bottleneck.
 However, we show **the opposite**: with proper placement, KV cache transfer overhead can be effectively minimized to be as low as less than the time of a decoding step, thanks to today’s high-speed networks such as [NVLink](https://en.wikipedia.org/wiki/NVLink) and [PCI-e 5.0](https://en.wikipedia.org/wiki/PCI_Express).
 
 To see this, assume we have 8-channel PCIe 5.0 x 16 (64GB/s per link) as the intra-node network between GPUs. Given a request with 2048 tokens, we have the following estimation for transferring KV caches when serving OPT-175B:
@@ -145,7 +145,7 @@ In conclusion, careful placement of prefill and decoding workers to utilize high
 
 ### DistServe: Evaluate the effectiveness of Disaggregation
 
-We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion,and summarization, shown in the Table below. 
+We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion, and summarization, shown in the Table below. 
 
 | **LLM App**     | **Data**                                                                              | **TTFT** | **TPOT** |
 | --------------- |---------------------------------------------------------------------------------------| -------- | -------- |
@@ -153,10 +153,10 @@ We implemented the proposed techniques in a system prototype, called DistServe, 
 | Code completion | [HumanEval](https://github.com/openai/human-eval)                                     | Tight    | Tight    |
 | Summarization   | [LongBench](https://github.com/THUDM/LongBench)                                       | Loose    | Medium   |
 
-**Figure 9** show the results comparing DistServe to vLLM:
+**Figure 9** shows the results comparing DistServe to vLLM:
 - **Chatbot**: DistServe sustains 2.0x - 3.41x higher goodput compared to vLLM.
 - **Code Completion**: DistServe sustains 3.2x higher goodput and 1.5x more stringent SLO than vLLM. As a real-time coding assistant, the code completion task demands lower TTFT than chatbot, this leads to both systems ultimately being constrained by the TTFT requirement. However, by eliminating the interference of the decoding jobs and tailoring tensor parallelism for prefill, DistServe reduces the average latency of the prefill jobs, thereby meeting the TTFT requirements of more requests.
-- **Summarization:** DistServe achieves 4.48x higher goodput and 10.2x more stringent SLO than vLLM. As expected, as vLLM colocate prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
+- **Summarization:** DistServe achieves 4.48x higher goodput and 10.2x more stringent SLO than vLLM. As expected, as vLLM colocates prefill and decode together, it experiences a greater slowdown in decode that fails to meet the TPOT requirement.
 
 See our [technical report](https://arxiv.org/pdf/2401.09670.pdf) for more fine-grained experiment results. 
 
@@ -182,7 +182,7 @@ In conclusion, chunked prefill may be promising in maximizing the overall throug
 
 We are working with vLLM community to integrate the presented techniques into the vLLM ecosystem. 
 
-Concurrent to our work, [Splitwise](https://www.microsoft.com/en-us/research/blog/splitwise-improves-gpu-usage-by-splitting-llm-inference-phases/), [TetriInfer](https://arxiv.org/pdf/2401.11181.pdf) and [DéjàVu](https://arxiv.org/abs/2403.01876) also adopted this disaggregation strategy to separate prefill from decode to achieve better LLM serving goodput. We are excited to see many research and companies adopting disaggregation to optimize system goodput, and we believe that disaggregation will soon become the de facto choice for LLM serving engine.
+Concurrent to our work, [Splitwise](https://www.microsoft.com/en-us/research/blog/splitwise-improves-gpu-usage-by-splitting-llm-inference-phases/), [TetriInfer](https://arxiv.org/pdf/2401.11181.pdf) and [DéjàVu](https://arxiv.org/abs/2403.01876) also adopted this disaggregation strategy to separate prefill from decode to achieve better LLM serving goodput. We are excited to see many researchers and companies adopting disaggregation to optimize system goodput, and we believe that disaggregation will soon become the de facto choice for LLM serving engine.
 
 ## Acknowledgement
 We would like to thank Vikranth Srivatsa, Lanxiang Hu, Will Lin for providing insightful feedback to our blog. 
