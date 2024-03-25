@@ -18,6 +18,30 @@ Native markdown table doesn't have caption. We wrote a simple [`table` shortcode
 {{</ table >}}
 ```
 
+**Render**
+
+<figure>
+<div style="display: grid; place-items: center;">
+<div style="display: flex; justify-content: center;">
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption style="font-size: 16px;" class="gray-text">Your caption here.</figcaption>
+</div>
+</figure>
+
 
 
 Params:
