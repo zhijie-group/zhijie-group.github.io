@@ -147,11 +147,17 @@ In conclusion, careful placement of prefill and decoding workers to utilize high
 
 We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion, and summarization, shown in the Table below. 
 
+
+{{< table title="Table 8. Workloads in our evaluation and latency requirements." >}}
+
+
 | **LLM App**     | **Data**                                                                              | **TTFT** | **TPOT** |
 | --------------- |---------------------------------------------------------------------------------------| -------- | -------- |
 | Chatbot         | [ShareGPT](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered) | Tight    | Medium   |
 | Code completion | [HumanEval](https://github.com/openai/human-eval)                                     | Tight    | Tight    |
 | Summarization   | [LongBench](https://github.com/THUDM/LongBench)                                       | Loose    | Medium   |
+
+{{</ table >}}
 
 **Figure 9** shows the results comparing DistServe to vLLM:
 - **Chatbot**: DistServe sustains 2.0x - 3.41x higher goodput compared to vLLM.
