@@ -1,4 +1,4 @@
-# hao-ai-lab.github.io
+# [hao-ai-lab.github.io](https://hao-ai-lab.github.io/)
 
 This git repo hosts all content displayed on the website of Hao AI Lab @ UCSD.
 
@@ -16,9 +16,9 @@ hugo server
 
 ## How to generate publication list
 
-1. copy the latest publication json to the root folder.
-2. run the following
+1. Copy the latest publication json to the root folder.
+2. Run the following
 ```bash
 python gen_publications.py
 ```
-3. copy the output of this script to `content/publications.md`
+3. Copy the output of this script to `content/publications.md`
