@@ -3,6 +3,9 @@ languageCode: en-us
 title: 'Hao AI Lab @ UCSD'
 theme: 'PaperMod'
 
+googleAnalytics = 'G-T4DXGLCH1D'
+
+
 markup:
   goldmark:
     extensions:
@@ -18,6 +21,7 @@ markup:
             - $
         enable: true
 params:
+  env: production
   math: true
   label:
     icon: "img/HAOAILAB_trimmed.jpg"
