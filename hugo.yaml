@@ -3,7 +3,7 @@ languageCode: en-us
 title: 'Hao AI Lab @ UCSD'
 theme: 'PaperMod'
 
-googleAnalytics = 'G-T4DXGLCH1D'
+googleAnalytics: 'G-T4DXGLCH1D'
 
 
 markup:
