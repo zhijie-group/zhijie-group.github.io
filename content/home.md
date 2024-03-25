@@ -22,7 +22,7 @@ We also develop and maintain open-source models and systems to democratize the a
 ### News 
 
 {{< newsEntry >}}
-  **03/2024**: [DistServe](blogs/distserve) accepted in OSDI 24!
+  **03/21/2024**: [DistServe](blogs/distserve) accepted in OSDI 24!
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
