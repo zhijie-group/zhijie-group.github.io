@@ -14,7 +14,7 @@
     {
         "title": "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving",
         "authors": "Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Liu, Xin Jin, Hao Zhang",
-        "venue": "Preprint 2024",
+        "venue": "OSDI 2024",
         "pdf": "https://arxiv.org/pdf/2401.09670v1.pdf",
         "code": "",
         "presentation": "",
