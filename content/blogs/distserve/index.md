@@ -126,7 +126,7 @@ This experiment shows that this simple disaggregation without any parallelism yi
 
 In fact, besides different resource allocation for each phase, disaggregating prefill and decoding further free us to pick the best parallelism strategy for each phase to optimize goodput (termed as "tailored parallelism"), which we studied in detail in [our paper](https://arxiv.org/pdf/2401.09670.pdf).
 
-**KV cache transfer**
+### KV cache transfer
 
 Disaggregation comes at the cost of transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs sounds like a bottleneck.
 However, we show **the opposite**: with proper placement, KV cache transfer overhead can be effectively minimized to be as low as less than the time of a decoding step, thanks to today’s high-speed networks such as [NVLink](https://en.wikipedia.org/wiki/NVLink) and [PCI-e 5.0](https://en.wikipedia.org/wiki/PCI_Express).
