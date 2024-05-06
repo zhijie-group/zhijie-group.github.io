@@ -1,0 +1,18 @@
+<style>
+.gray-text {
+    color: #808080;
+}
+</style>
+
+{{ if .Get "title" }}
+<figure>
+    <div style="display: grid; place-items: center;">
+        <div style="display: flex; justify-content: center;">
+            {{ .Inner | markdownify }}
+        </div>
+        <figcaption style="font-size: 16px;" class="gray-text">{{ .Get "title" | markdownify }}</figcaption>
+    </div>
+</figure>
+{{ else }}
+    {{ .Inner | markdownify }}
+{{ end }}

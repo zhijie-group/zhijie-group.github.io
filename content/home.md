@@ -21,8 +21,13 @@ We also develop and maintain open-source models and systems to democratize the a
 
 ### News 
 
-{{< justify >}}
+<!-- 🎉 -->
 
-**07/23** &emsp; Hao officially joined UCSD!
+{{< newsEntry >}}
+  **03/2024**: [DistServe](blogs/distserve) accepted in OSDI 24! 🎉 
+{{< /newsEntry >}}
 
-{{< /justify >}}
+{{< newsEntry >}}
+  **07/2023**: Hao officially joined UCSD!
+{{< /newsEntry >}}
+

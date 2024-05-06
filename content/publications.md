@@ -11,7 +11,7 @@ summary: publications
 Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang
 {{< /publication >}}
 
-{{< publication title="DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving" venue="Preprint 2024" paperLink="https://arxiv.org/pdf/2401.09670v1.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems" >}}
+{{< publication title="DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving" venue="OSDI 2024" paperLink="https://arxiv.org/pdf/2401.09670v1.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems" >}}
 Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Liu, Xin Jin, Hao Zhang
 {{< /publication >}}
 

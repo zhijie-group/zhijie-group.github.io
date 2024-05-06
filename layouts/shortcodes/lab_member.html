@@ -38,5 +38,8 @@
         {{ if .Get "academic" }}
         <a href="{{ .Get "academic" }}"><i class="fas fa-home"></i></a>
         {{ end }}
+        {{ if .Get "linkedin" }}
+            <a href="{{ .Get "linkedin" }}"><i class="fab fa-linkedin"></i></a>
+        {{ end }}
     </div>
 </div>

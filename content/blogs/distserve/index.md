@@ -126,7 +126,7 @@ This experiment shows that this simple disaggregation without any parallelism yi
 
 In fact, besides different resource allocation for each phase, disaggregating prefill and decoding further free us to pick the best parallelism strategy for each phase to optimize goodput (termed as "tailored parallelism"), which we studied in detail in [our paper](https://arxiv.org/pdf/2401.09670.pdf).
 
-**KV cache transfer**
+### KV cache transfer
 
 Disaggregation comes at the cost of transferring intermediate states (i.e., KV Cache) between prefill and decoding GPUs. At first glance, KV cache is a big memory expenditure in LLM inference, and the transfer of KV cache between GPUs sounds like a bottleneck.
 However, we show **the opposite**: with proper placement, KV cache transfer overhead can be effectively minimized to be as low as less than the time of a decoding step, thanks to today’s high-speed networks such as [NVLink](https://en.wikipedia.org/wiki/NVLink) and [PCI-e 5.0](https://en.wikipedia.org/wiki/PCI_Express).
@@ -147,11 +147,17 @@ In conclusion, careful placement of prefill and decoding workers to utilize high
 
 We implemented the proposed techniques in a system prototype, called DistServe, and compared it with existing systems on three workloads and datasets with distinct latency constraints: chatbot, code completion, and summarization, shown in the Table below. 
 
+
+{{< table title="Table 8. Workloads in our evaluation and latency requirements." >}}
+
+
 | **LLM App**     | **Data**                                                                              | **TTFT** | **TPOT** |
 | --------------- |---------------------------------------------------------------------------------------| -------- | -------- |
 | Chatbot         | [ShareGPT](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered) | Tight    | Medium   |
 | Code completion | [HumanEval](https://github.com/openai/human-eval)                                     | Tight    | Tight    |
 | Summarization   | [LongBench](https://github.com/THUDM/LongBench)                                       | Loose    | Medium   |
+
+{{</ table >}}
 
 **Figure 9** shows the results comparing DistServe to vLLM:
 - **Chatbot**: DistServe sustains 2.0x - 3.41x higher goodput compared to vLLM.
