@@ -7,7 +7,7 @@ summary: publications
 
 ### 2024
 
-{{< publication title="CLLMs: Consistency Large Language Models" venue="Preprint 2024" paperLink="https://arxiv.org/pdf/2403.00835.pdf" codeLink="https://github.com/hao-ai-lab/Consistency_LLM" award="" project="" data-topic="Selected, Large Language Models, Scalable ML, ML Systems" >}}
+{{< publication title="CLLMs: Consistency Large Language Models" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2403.00835.pdf" codeLink="https://github.com/hao-ai-lab/Consistency_LLM" award="" project="" data-topic="Selected, Large Language Models, Scalable ML, ML Systems" >}}
 Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang
 {{< /publication >}}
 
@@ -15,15 +15,15 @@ Siqi Kou*, Lanxiang Hu*, Zhezhi He, Zhijie Deng, Hao Zhang
 Yinmin Zhong, Shengyu Liu, Junda Chen, Jianbo Hu, Yibo Zhu, Xuanzhe Liu, Xin Jin, Hao Zhang
 {{< /publication >}}
 
-{{< publication title="Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference" venue="Preprint 2024" paperLink="https://arxiv.org/pdf/2403.04132.pdf" codeLink="https://github.com/lm-sys/FastChat" award="" project="https://chat.lmsys.org/" data-topic="Selected, Large Language Models" >}}
+{{< publication title="Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2403.04132.pdf" codeLink="https://github.com/lm-sys/FastChat" award="" project="https://chat.lmsys.org/" data-topic="Selected, Large Language Models" >}}
 Wei-Lin Chiang*, Lianmin Zheng*, Ying Sheng, Anastasios Nikolas Angelopoulos, Tianle Li, Dacheng Li, Banghua Zhu, Hao Zhang, Michael Jordan, Joseph E. Gonzalez, Ion Stoica
 {{< /publication >}}
 
-{{< publication title="APIServe: Efficient API Support for Large-Language Model Inferencing" venue="Preprint 2024" paperLink="https://arxiv.org/pdf/2402.01869.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems" >}}
+{{< publication title="APIServe: Efficient API Support for Large-Language Model Inferencing" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2402.01869.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems" >}}
 Reyna Abhyankar*, Zijian He*, Vikranth Srivatsa, Hao Zhang, Yiying Zhang
 {{< /publication >}}
 
-{{< publication title="Break the Sequential Dependency of LLM Inference using Lookahead Decoding" venue="Preprint 2024" paperLink="https://arxiv.org/pdf/2402.02057v1.pdf" codeLink="https://github.com/hao-ai-lab/LookaheadDecoding" award="" project="https://lmsys.org/blog/2023-11-21-lookahead-decoding/" data-topic="Selected, Large Language Models, ML Systems" >}}
+{{< publication title="Break the Sequential Dependency of LLM Inference using Lookahead Decoding" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2402.02057v1.pdf" codeLink="https://github.com/hao-ai-lab/LookaheadDecoding" award="" project="https://lmsys.org/blog/2023-11-21-lookahead-decoding/" data-topic="Selected, Large Language Models, ML Systems" >}}
 Yichao Fu, Peter Bailis, Ion Stoica, Hao Zhang
 {{< /publication >}}
 
@@ -35,7 +35,7 @@ Yichao Fu, Peter Bailis, Ion Stoica, Hao Zhang
 Dacheng Li*, Rulin Shao*, Anze Xie, Ying Sheng, Lianmin Zheng, Joseph Gonzalez, Ion Stoica, Xuezhe Ma, Hao Zhang
 {{< /publication >}}
 
-{{< publication title="Online Speculative Decoding" venue="Preprint 2023" paperLink="https://arxiv.org/pdf/2310.07177.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems, Scalable ML" >}}
+{{< publication title="Online Speculative Decoding" venue="ICML 2023" paperLink="https://arxiv.org/pdf/2310.07177.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems, Scalable ML" >}}
 Xiaoxuan Liu, Lanxiang Hu, Peter Bailis, Ion Stoica, Zhijie Deng, Alvin Cheung, Hao Zhang
 {{< /publication >}}
 
