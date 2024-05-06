@@ -24,7 +24,11 @@ We also develop and maintain open-source models and systems to democratize the a
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-  **03/2024**: [DistServe](blogs/distserve) accepted in OSDI 24! 🎉 
+**05/2024**: Six paper are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [MuxServe](https://arxiv.org/abs/2404.02015), [Lookahead Decoding](https://arxiv.org/pdf/2402.02057), [Chatbot Arena](https://arxiv.org/abs/2403.04132), [APISERVE](https://arxiv.org/pdf/2402.01869), [CLLMs](https://arxiv.org/abs/2403.00835).
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+  **03/2024**: [DistServe](blogs/distserve) accepted OSDI 24! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
