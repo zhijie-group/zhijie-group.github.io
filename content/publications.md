@@ -27,16 +27,16 @@ Reyna Abhyankar*, Zijian He*, Vikranth Srivatsa, Hao Zhang, Yiying Zhang
 Yichao Fu, Peter Bailis, Ion Stoica, Hao Zhang
 {{< /publication >}}
 
+{{< publication title="Online Speculative Decoding" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2310.07177.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems, Scalable ML" >}}
+Xiaoxuan Liu, Lanxiang Hu, Peter Bailis, Ion Stoica, Zhijie Deng, Alvin Cheung, Hao Zhang
+{{< /publication >}}
+
 &emsp;
 
 ### 2023
 
 {{< publication title="How Long Can Context Length of Open-Source LLMs truly Promise?" venue="Instruction Tuning and Instruction Following Workshop @ NeurIPS 2023 " paperLink="https://openreview.net/pdf?id=LywifFNXV5" codeLink="" award="" project="https://github.com/DachengLi1/LongChat" data-topic="Selected, Large Language Models" >}}
 Dacheng Li*, Rulin Shao*, Anze Xie, Ying Sheng, Lianmin Zheng, Joseph Gonzalez, Ion Stoica, Xuezhe Ma, Hao Zhang
-{{< /publication >}}
-
-{{< publication title="Online Speculative Decoding" venue="ICML 2023" paperLink="https://arxiv.org/pdf/2310.07177.pdf" codeLink="" award="" project="" data-topic="Selected, Large Language Models, ML Systems, Scalable ML" >}}
-Xiaoxuan Liu, Lanxiang Hu, Peter Bailis, Ion Stoica, Zhijie Deng, Alvin Cheung, Hao Zhang
 {{< /publication >}}
 
 {{< publication title="Lightseq: Sequence Level Parallelism for Distributed Training of Long Context Transformers" venue="Preprint 2023" paperLink="https://arxiv.org/pdf/2310.03294.pdf" codeLink="https://github.com/RulinShao/LightSeq" award="" project="" data-topic="Large Language Models, ML Systems" >}}
