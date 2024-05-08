@@ -1,6 +1,6 @@
-bseURL: 'http://deng-ai-lab.github.io'
+bseURL: 'http://zhijie-group.github.io'
 languageCode: en-us
-title: 'Deng AI Lab @ SJTU'
+title: 'Zhijie Group @ SJTU'
 theme: 'PaperMod'
 
 googleAnalytics: 'G-T4DXGLCH1D'
@@ -29,7 +29,7 @@ params:
   env: production
   math: true
   label:
-    icon: "img/DENGAILAB_trimmed.jpg"
+    icon: "img/zhijiegroup_trimmed.jpg"
   
 menu:
   main:
