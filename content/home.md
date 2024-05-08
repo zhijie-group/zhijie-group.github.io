@@ -8,20 +8,20 @@ summary: "home page for Zhijie Group @ SJTU"
 
 {{< justify >}}
 
-Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI and scientific computing. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
 
 Current research interests focus on:
 
 - Improving model efficiency 
-  - Inference acceleration for large language/diffusion/multi-modal models
-	- Novel architectures for generative modeling
+  - Inference acceleration for large language and diffusion models
+  - Novel methods and architectures for generative modeling
 
 - Improving data efficiency
 	- Data selection, active learning, and data difficulty quantification
 	- Deep spectral methods
 
 - Improving modality efficiency
-  - Unified modeling and learning principles as well as architectures for texts, images, videos, and beyond
+  - Unified modeling methods, learning principles, and architectures for texts, images, videos, and beyond
 
 {{< /justify >}}
 
@@ -32,7 +32,7 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-**05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](#).
+**05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](#). 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
@@ -44,7 +44,7 @@ Current research interests focus on:
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **09/2023**: Three papers are accepted to NeurIPS 23! Check out: [Bayesian Data Selection](https://arxiv.org/pdf/2308.10544), [Learning Sample Difficulty from Pre-trained Models for Reliable Prediction](https://arxiv.org/pdf/2304.10127), and [CalibratedDPMs](https://arxiv.org/pdf/2302.10688).
+  **09/2023**: Three papers are accepted to NeurIPS 23! Check out: [Bayesian Data Selection](https://arxiv.org/pdf/2308.10544), [Learning Sample Difficulty from Pre-trained Models for Reliable Prediction](https://arxiv.org/pdf/2304.10127), and [CalibratedDPMs](https://arxiv.org/pdf/2302.10688). 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
