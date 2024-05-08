@@ -28,6 +28,8 @@ markup:
 params:
   env: production
   math: true
+  # TocSide: 'left'
+  # EnableInstantClick: true
   # label:
     # icon: "img/zhijiegroup_trimmed.jpg"
   
