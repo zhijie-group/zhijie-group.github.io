@@ -8,7 +8,7 @@ summary: "home page for Zhijie Group @ SJTU"
 
 {{< justify >}}
 
-Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), Shanghai Jiao Tong University, working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI and scientific computing. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI and scientific computing. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
 
 Current research interests focus on:
 
