@@ -122,7 +122,7 @@
     {
         "title": "Heterogeneous Multi-Task Gaussian Cox Processes",
         "authors": "Feng Zhou, Quyu Kong, Zhijie Deng, Fengxiang He, Peng Cui, Jun Zhu",
-        "venue": "Machine Learning",
+        "venue": "Machine Learning 2023",
         "pdf": "https://link.springer.com/article/10.1007/s10994-023-06382-1",
         "code": "",
         "presentation": "",
@@ -169,7 +169,7 @@
     },
     {
         "title": "Accelerated Linearized Laplace Approximation for Bayesian Deep Learning",
-        "authors": "Zhijie Deng, Feng Zhou, and Jun Zhu",
+        "authors": "Zhijie Deng, Feng Zhou, Jun Zhu",
         "venue": "NeurIPS 2022",
         "pdf": "https://openreview.net/pdf?id=jftNpltMgz",
         "code": "https://github.com/thudzj/ELLA",
@@ -181,7 +181,7 @@
     },
     {
         "title": "Confidence-based Reliable Learning under Dual Noises",
-        "authors": "Peng Cui, Yang Yue, Zhijie Deng†, and Jun Zhu†",
+        "authors": "Peng Cui, Yang Yue, Zhijie Deng†, Jun Zhu†",
         "venue": "NeurIPS 2022",
         "pdf": "https://openreview.net/pdf?id=7fGIR2oIHTl",
         "code": "",
@@ -194,7 +194,7 @@
     {
         "title": "Efficient Inference for Dynamic Flexible Interactions of Neural Populations",
         "authors": "Feng Zhou, Quyu Kong, Zhijie Deng, Jichao Kan, Yixuan Zhang, Cheng Feng, Jun Zhu",
-        "venue": "JMLR",
+        "venue": "JMLR 2022",
         "pdf": "https://www.jmlr.org/papers/volume23/21-1273/21-1273.pdf",
         "code": "",
         "presentation": "",
