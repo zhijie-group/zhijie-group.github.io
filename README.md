@@ -1,4 +1,4 @@
-# [deng-ai-lab.github.io](https://deng-ai-lab.github.io/)
+# [zhijie-group.github.io](https://zhijie-group.github.io/)
 
 This git repo hosts all content displayed on the website of Deng AI Lab @ SJTU.
 
@@ -8,8 +8,8 @@ This git repo hosts all content displayed on the website of Deng AI Lab @ SJTU.
 1. Install Hugo > 0.12
 2. Run the following commands:
 ```bash
-git clone https://github.com/hao-ai-lab/hao-ai-lab.github.io.git
-cd hao-ai-lab.github.io
+git clone https://github.com/zhijie-group/zhijie-group.github.io.git
+cd zhijie-group.github.io
 hugo server
 ```
 
