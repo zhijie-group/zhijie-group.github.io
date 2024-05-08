@@ -3,17 +3,25 @@ title: ""
 layout: "home"
 type: "home"
 url: "/home/"
-summary: "home page for Hao Lab @ UCSD"
-cover:
-  image: img/ucsd-hao-ai-lab.jpg
-  alt: "Hao AI Lab @ UCSD"
-  caption: "Hao AI Lab @ UCSD"
+summary: "home page for Zhijie Group @ SJTU"
 ---
 
 {{< justify >}}
 
-Welcome to the UCSD Hao AI Lab website! We are passionate about designing strong, efficient, and secure machine learning models and algorithms, and in building scalable, practical distributed systems that can support real-world machine learning workloads. 
-We also develop and maintain open-source models and systems to democratize the access of large models. We are affiliated with the [UCSD ML System Group](https://mlsys-ucsd.org/) and [UCSD NLP Group](https://ucsd-nlp.github.io/).
+Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), Shanghai Jiao Tong University, working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI and scientific computing. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+
+Current research interests focus on:
+
+- Improving model efficiency 
+  - Inference acceleration for large language/diffusion/multi-modal models
+	- Novel architectures for generative modeling
+
+- Improving data efficiency
+	- Data selection, active learning, and data difficulty quantification
+	- Deep spectral methods
+
+- Improving modality efficiency
+  - Unified modeling and learning principles as well as architectures for texts, images, videos, and beyond
 
 {{< /justify >}}
 
@@ -24,14 +32,21 @@ We also develop and maintain open-source models and systems to democratize the a
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-**05/2024**: Six paper are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [MuxServe](https://arxiv.org/abs/2404.02015), [Lookahead Decoding](https://arxiv.org/pdf/2402.02057), [Chatbot Arena](https://arxiv.org/abs/2403.04132), [APISERVE](https://arxiv.org/pdf/2402.01869), [CLLMs](https://arxiv.org/abs/2403.00835).
+**05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](#).
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **03/2024**: [DistServe](blogs/distserve) accepted to OSDI 24! 🎉 
+  **02/2024**: [Bayesian Exploration of Pre-trained Models for Low-shot Image Classification](https://arxiv.org/pdf/2404.00312) accepted to CVPR 24! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **07/2023**: Hao officially joined UCSD!
+  **01/2024**: [BayesDiff](https://arxiv.org/pdf/2310.11142) accepted to ICLR 24! 🎉 
 {{< /newsEntry >}}
 
+{{< newsEntry >}}
+  **09/2023**: Three papers are accepted to NeurIPS 23! Check out: [Bayesian Data Selection](https://arxiv.org/pdf/2308.10544), [Learning Sample Difficulty from Pre-trained Models for Reliable Prediction](https://arxiv.org/pdf/2304.10127), and [CalibratedDPMs](https://arxiv.org/pdf/2302.10688).
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+  **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/Deng_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) accepted to ICCV 23! 🎉 
+{{< /newsEntry >}}
