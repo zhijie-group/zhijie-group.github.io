@@ -11,3 +11,10 @@
 .post-content a:hover {
     opacity: 75%;
 }
+
+.post-content {
+	/* font-size: 32px; */
+    /* line-height: 1.2em; */
+	color: var(--content);
+    font-family: Georgia;
+}

@@ -50,3 +50,14 @@ Current research interests focus on:
 {{< newsEntry >}}
   **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/Deng_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) accepted to ICCV 23! 🎉 
 {{< /newsEntry >}}
+
+
+&emsp;
+&emsp;&emsp;&emsp;
+
+### Sponsors and Collaborators
+
+{{< image src="/img/sponsors/NSFC.jpg" alt="NSFC" width="30%" style="float: mid">}}
+{{< image src="/img/sponsors/shkw.jpg" alt="SHKW" width="30%" style="float: right">}}
+{{< image src="/img/sponsors/OPPO-Logo.png" alt="OPPO" width="30%">}}
+{{< image src="/img/sponsors/bc.png" alt="Baichuan" width="30%">}}
