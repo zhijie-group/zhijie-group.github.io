@@ -1,6 +1,6 @@
-bseURL: 'http://hao-ai-lab.github.io'
+bseURL: 'http://deng-ai-lab.github.io'
 languageCode: en-us
-title: 'Hao AI Lab @ UCSD'
+title: 'Deng AI Lab @ SJTU'
 theme: 'PaperMod'
 
 googleAnalytics: 'G-T4DXGLCH1D'
@@ -29,7 +29,7 @@ params:
   env: production
   math: true
   label:
-    icon: "img/HAOAILAB_trimmed.jpg"
+    icon: "img/DENGAILAB_trimmed.jpg"
   
 menu:
   main:
@@ -53,9 +53,6 @@ menu:
       name: Contact
       url: /contact/
       weight: 70
-    - name: "Twitter"
-      url: "https://twitter.com/haoailab"
-      weight: 100
     - name: "GitHub"
-      url: "https://github.com/hao-ai-lab"
+      url: "https://github.com/zhijie-group"
       weight: 120
