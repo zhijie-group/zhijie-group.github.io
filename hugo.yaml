@@ -28,8 +28,8 @@ markup:
 params:
   env: production
   math: true
-  label:
-    icon: "img/zhijiegroup_trimmed.jpg"
+  # label:
+    # icon: "img/zhijiegroup_trimmed.jpg"
   
 menu:
   main:
