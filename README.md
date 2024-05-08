@@ -1,6 +1,6 @@
-# [hao-ai-lab.github.io](https://hao-ai-lab.github.io/)
+# [deng-ai-lab.github.io](https://deng-ai-lab.github.io/)
 
-This git repo hosts all content displayed on the website of Hao AI Lab @ UCSD.
+This git repo hosts all content displayed on the website of Deng AI Lab @ SJTU.
 
 
 ## How to build
