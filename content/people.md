@@ -26,8 +26,6 @@ summary: people
 
 {{< lab_member name="Bokai Lin" role="Undergrad Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
-{{< lab_member name="Bokai Lin" role="Undergrad Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
-
 {{< lab_member name="Jiachun Jin" role="Visiting Master Student" image="unknown.jpg" academic="https://jiachunjin.github.io/" twitter="https://twitter.com/xx" >}}
 
 {{< /lab_members_grid >}}

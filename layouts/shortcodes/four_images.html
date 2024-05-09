@@ -1,0 +1,34 @@
+<style>
+  .gray-text {
+    color: #808080;
+  }
+</style>
+
+{{ if .Get "title" }}
+    <figure>
+	<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <img src="{{ .Get "src1" }}" alt="{{ .Get "alt1" }}" style="width: {{ .Get "width1" }}; height: auto;"> 
+		            <img src="{{ .Get "src2" }}" alt="{{ .Get "alt2" }}" style="width: {{ .Get "width2" }}; height: auto;">
+                <img src="{{ .Get "src3" }}" alt="{{ .Get "alt3" }}" style="width: {{ .Get "width3" }}; height: auto;">
+                <img src="{{ .Get "src4" }}" alt="{{ .Get "alt4" }}" style="width: {{ .Get "width4" }}; height: auto;">
+	</div>
+	<div style="display: grid; place-items: center;">
+		<figcaption style="font-size: 16px;" class="gray-text">{{ .Get "title" }}</figcaption>
+	</div>
+    </figure>
+{{ else }}
+<div id="banner" style="overflow: hidden;justify-content:space-around;">
+  <div style="display: inline-block; flex-wrap: wrap; justify-content: space-between; align-items: center; width: {{ .Get "width1" }}; height: auto;">
+    <img src="{{ .Get "src1" }}" alt="{{ .Get "alt1" }}"> 
+  </div>
+  <div style="display: inline-block; flex-wrap: wrap; justify-content: space-between; align-items: center; width: {{ .Get "width2" }}; height: auto;">
+    <img src="{{ .Get "src2" }}" alt="{{ .Get "alt2" }}">
+  </div>
+  <div style="display: inline-block; flex-wrap: wrap; justify-content: space-between; align-items: center; width: {{ .Get "width3" }}; height: auto;">
+    <img src="{{ .Get "src3" }}" alt="{{ .Get "alt3" }}">
+  </div>
+  <div style="display: inline-block; flex-wrap: wrap; justify-content: space-between; align-items: center; width: {{ .Get "width4" }}; height: auto;">
+    <img src="{{ .Get "src4" }}" alt="{{ .Get "alt4" }}">
+  </div>
+</div>
+{{ end }}
