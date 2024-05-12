@@ -14,7 +14,7 @@ summary: people
 
 {{< lab_member name="Zhenyi Liao" role="Master Student" image="lzy.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
-{{< lab_member name="Zipeng Xiao" role="Master Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
+{{< lab_member name="Zipeng Xiao" role="Master Student" image="xzp.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
 {{< lab_member name="Chang Liu" role="Master Student" image="lc.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
