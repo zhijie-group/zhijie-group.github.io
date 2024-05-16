@@ -32,15 +32,19 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**05/2024**: [Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model](https://arxiv.org/pdf/2305.16617.pdf) is accepted to ACL 2024 Findings! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](#). 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **02/2024**: [Bayesian Exploration of Pre-trained Models for Low-shot Image Classification](https://arxiv.org/pdf/2404.00312) accepted to CVPR 24! 🎉 
+  **02/2024**: [Bayesian Exploration of Pre-trained Models for Low-shot Image Classification](https://arxiv.org/pdf/2404.00312) is accepted to CVPR 24! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **01/2024**: [BayesDiff](https://arxiv.org/pdf/2310.11142) accepted to ICLR 24! 🎉 
+  **01/2024**: [BayesDiff](https://arxiv.org/pdf/2310.11142) is accepted to ICLR 24! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
@@ -48,7 +52,7 @@ Current research interests focus on:
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/Deng_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) accepted to ICCV 23! 🎉 
+  **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/Deng_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) is accepted to ICCV 23! 🎉 
 {{< /newsEntry >}}
 
 

@@ -1,5 +1,17 @@
 [
     {
+        "title": "Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model",
+        "authors": "Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†",
+        "venue": "Findings of ACL 2024",
+        "pdf": "https://arxiv.org/pdf/2305.16617.pdf",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "08/2024"
+    },
+    {
         "title": "SpikeZIP-TF: Conversion is All You Need for Transformer-based SNN",
         "authors": "Kang You, Zekai Xu, Chen Nie, Zhijie Deng, Qinghai Guo, Xiang Wang, Zhezhi He",
         "venue": "ICML 2024",

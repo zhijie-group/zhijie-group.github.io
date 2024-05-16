@@ -6,6 +6,9 @@ summary: publications
 ---
 
 ### 2024
+{{< publication title="Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model" venue="Findings of ACL 2024" paperLink="https://arxiv.org/pdf/2305.16617.pdf" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†
+{{< /publication >}}
 
 {{< publication title="SpikeZIP-TF: Conversion is All You Need for Transformer-based SNN" venue="ICML 2024" paperLink="" codeLink="" award="" project="" data-topic="Scalable ML" >}}
 Kang You, Zekai Xu, Chen Nie, Zhijie Deng, Qinghai Guo, Xiang Wang, Zhezhi He

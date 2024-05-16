@@ -3,3 +3,4 @@ public/*
 *.swp
 .hugo_build.lock
 .DS_Store
+convert_format_print.py
