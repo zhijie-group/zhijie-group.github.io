@@ -18,7 +18,7 @@ Kang You, Zekai Xu, Chen Nie, Zhijie Deng, Qinghai Guo, Xiang Wang, Zhezhi He
 Siqi Kou, Lanxiang Hu, Zhezhi He, Zhijie Deng†, Hao Zhang
 {{< /publication >}}
 
-{{< publication title="Improved Operator Learning by Orthogonal Attention" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2310.12487.pdf" codeLink="" award="" project="" data-topic="Deep Spectral Methods, Neural Eigenfunctions, AI4PDE" >}}
+{{< publication title="Improved Operator Learning by Orthogonal Attention" venue="ICML 2024" paperLink="https://arxiv.org/pdf/2310.12487.pdf" codeLink="" award="Spotlight" project="" data-topic="Deep Spectral Methods, Neural Eigenfunctions, AI4PDE" >}}
 Zipeng Xiao, Zhongkai Hao, Bokai Lin, Zhijie Deng†, Hang Su†
 {{< /publication >}}
 
