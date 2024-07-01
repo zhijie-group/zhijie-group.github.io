@@ -1,5 +1,17 @@
 [
     {
+        "title": "Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models",
+        "authors": "Juntu Zhao, Junyu Deng, Yixin Ye, Chongxuan Li, Zhijie Deng†, Dequan Wang†",
+        "venue": "ECCV 2024",
+        "pdf": "#",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Generative Models",
+        "date": "10/2024"
+    },
+    {
         "title": "Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model",
         "authors": "Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†",
         "venue": "Findings of ACL 2024",

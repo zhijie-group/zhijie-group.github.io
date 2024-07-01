@@ -32,6 +32,10 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**07/2024**: [Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models](#) is accepted to ECCV 2024! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **05/2024**: [Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model](https://arxiv.org/pdf/2305.16617.pdf) is accepted to ACL 2024 Findings! 🎉 
 {{< /newsEntry >}}
 

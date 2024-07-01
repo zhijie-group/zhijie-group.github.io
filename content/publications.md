@@ -6,6 +6,10 @@ summary: publications
 ---
 
 ### 2024
+{{< publication title="Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models" venue="ECCV 2024" paperLink="#" codeLink="" award="" project="" data-topic="Generative Models" >}}
+Juntu Zhao, Junyu Deng, Yixin Ye, Chongxuan Li, Zhijie Deng†, Dequan Wang†
+{{< /publication >}}
+
 {{< publication title="Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model" venue="Findings of ACL 2024" paperLink="https://arxiv.org/pdf/2305.16617.pdf" codeLink="" award="" project="" data-topic="Large Language Models" >}}
 Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†
 {{< /publication >}}
