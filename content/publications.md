@@ -6,7 +6,15 @@ summary: publications
 ---
 
 ### 2024
-{{< publication title="Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models" venue="ECCV 2024" paperLink="#" codeLink="" award="" project="" data-topic="Generative Models" >}}
+{{< publication title="Calibrating Deep Ensemble through Functional Variational Inference" venue="TMLR 2024" paperLink="https://openreview.net/pdf?id=uvPnTWMLll" codeLink="" award="" project="" data-topic="Uncertainty Quantification" >}}
+Zhijie Deng, Feng Zhou, Jianfei Chen, Guoqiang Wu, Jun Zhu
+{{< /publication >}}
+
+{{< publication title="Accurate and Reliable Forecasting using Stochastic Differential Equations" venue="TKDD 2024" paperLink="https://arxiv.org/pdf/2103.15041" codeLink="" award="" project="" data-topic="Uncertainty Quantification" >}}
+Peng Cui, Zhijie Deng, Wenbo Hu, Jun Zhu
+{{< /publication >}}
+
+{{< publication title="Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models" venue="ECCV 2024" paperLink="https://arxiv.org/pdf/2408.00230" codeLink="" award="" project="" data-topic="Generative Models" >}}
 Juntu Zhao, Junyu Deng, Yixin Ye, Chongxuan Li, Zhijie Deng†, Dequan Wang†
 {{< /publication >}}
 

@@ -32,7 +32,15 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-**07/2024**: [Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models](#) is accepted to ECCV 2024! 🎉 
+**08/2024**: [Calibrating Deep Ensemble through Functional Variational Inference](https://openreview.net/pdf?id=uvPnTWMLll) is accepted to TMLR! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+**08/2024**: [Accurate and Reliable Forecasting using Stochastic Differential Equations](https://arxiv.org/pdf/2103.15041) is accepted to TKDD! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+**07/2024**: [Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models](https://arxiv.org/pdf/2408.00230) is accepted to ECCV 2024! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}

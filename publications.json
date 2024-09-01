@@ -1,9 +1,33 @@
 [
     {
+        "title": "Calibrating Deep Ensemble through Functional Variational Inference",
+        "authors": "Zhijie Deng, Feng Zhou, Jianfei Chen, Guoqiang Wu, Jun Zhu",
+        "venue": "TMLR 2024",
+        "pdf": "https://openreview.net/pdf?id=uvPnTWMLll",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Uncertainty Quantification",
+        "date": "08/2024"
+    },
+    {
+        "title": "Accurate and Reliable Forecasting using Stochastic Differential Equations",
+        "authors": "Peng Cui, Zhijie Deng, Wenbo Hu, Jun Zhu",
+        "venue": "TKDD 2024",
+        "pdf": "https://arxiv.org/pdf/2103.15041",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Uncertainty Quantification",
+        "date": "08/2024"
+    },
+    {
         "title": "Lost in Translation: Latent Concept Misalignment in Text-to-Image Diffusion Models",
         "authors": "Juntu Zhao, Junyu Deng, Yixin Ye, Chongxuan Li, Zhijie Deng†, Dequan Wang†",
         "venue": "ECCV 2024",
-        "pdf": "#",
+        "pdf": "https://arxiv.org/pdf/2408.00230",
         "code": "",
         "presentation": "",
         "award": "",
