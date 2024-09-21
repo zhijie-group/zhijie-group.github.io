@@ -1,5 +1,17 @@
 [
     {
+        "title": "AdaMOE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models",
+        "authors": "Zihao Zeng, Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†",
+        "venue": "Findings of EMNLP 2024",
+        "pdf": "https://arxiv.org/pdf/2406.13233",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "11/2024"
+    },
+    {
         "title": "Calibrating Deep Ensemble through Functional Variational Inference",
         "authors": "Zhijie Deng, Feng Zhou, Jianfei Chen, Guoqiang Wu, Jun Zhu",
         "venue": "TMLR 2024",

@@ -6,6 +6,11 @@ summary: publications
 ---
 
 ### 2024
+
+{{< publication title="AdaMOE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models" venue="Findings of EMNLP 2024" paperLink="https://arxiv.org/pdf/2406.13233" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Zihao Zeng, Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†
+{{< /publication >}}
+
 {{< publication title="Calibrating Deep Ensemble through Functional Variational Inference" venue="TMLR 2024" paperLink="https://openreview.net/pdf?id=uvPnTWMLll" codeLink="" award="" project="" data-topic="Uncertainty Quantification" >}}
 Zhijie Deng, Feng Zhou, Jianfei Chen, Guoqiang Wu, Jun Zhu
 {{< /publication >}}

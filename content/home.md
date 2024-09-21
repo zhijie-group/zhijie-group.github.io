@@ -32,6 +32,10 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**09/2024**: [AdaMOE](https://arxiv.org/pdf/2406.13233) is accepted to EMNLP Findings! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **08/2024**: [Calibrating Deep Ensemble through Functional Variational Inference](https://openreview.net/pdf?id=uvPnTWMLll) is accepted to TMLR! 🎉 
 {{< /newsEntry >}}
 
@@ -44,7 +48,7 @@ Current research interests focus on:
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-**05/2024**: [Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model](https://arxiv.org/pdf/2305.16617.pdf) is accepted to ACL 2024 Findings! 🎉 
+**05/2024**: [Efficient Detection of LLM-generated Texts with a Bayesian Surrogate Model](https://arxiv.org/pdf/2305.16617.pdf) is accepted to ACL Findings! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
