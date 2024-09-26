@@ -7,6 +7,10 @@ summary: publications
 
 ### 2024
 
+{{< publication title="Amortized Fourier Neural Operators" venue="NeurIPS 2024" paperLink="#" codeLink="" award="" project="" data-topic="Neural operator" >}}
+Zipeng Xiao, Siqi Kou, Zhongkai Hao, Bokai Lin, Zhijie Deng†
+{{< /publication >}}
+
 {{< publication title="AdaMOE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models" venue="Findings of EMNLP 2024" paperLink="https://arxiv.org/pdf/2406.13233" codeLink="" award="" project="" data-topic="Large Language Models" >}}
 Zihao Zeng, Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†
 {{< /publication >}}

@@ -1,5 +1,17 @@
 [
     {
+        "title": "Amortized Fourier Neural Operators",
+        "authors": "Zipeng Xiao, Siqi Kou, Zhongkai Hao, Bokai Lin, Zhijie Deng†",
+        "venue": "NeurIPS 2024",
+        "pdf": "#",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Neural operator",
+        "date": "12/2024"
+    },
+    {
         "title": "AdaMOE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models",
         "authors": "Zihao Zeng, Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†",
         "venue": "Findings of EMNLP 2024",

@@ -12,15 +12,15 @@ Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyu
 
 Current research interests focus on:
 
-- Improving model efficiency 
+- Model efficiency 
   - Inference acceleration for large language and diffusion models
   - Novel methods and architectures for generative modeling
 
-- Improving data efficiency
+- Data efficiency
 	- Data selection, active learning, and data difficulty quantification
 	- Deep spectral methods
 
-- Improving modality efficiency
+- Modality efficiency
   - Unified modeling methods, learning principles, and architectures for texts, images, videos, and beyond
 
 {{< /justify >}}
@@ -30,6 +30,10 @@ Current research interests focus on:
 ### News 
 
 <!-- 🎉 -->
+
+{{< newsEntry >}}
+**09/2024**: [Amortized Fourier Neural Operators](#) is accepted to NeurIPS! 🎉 
+{{< /newsEntry >}}
 
 {{< newsEntry >}}
 **09/2024**: [AdaMOE](https://arxiv.org/pdf/2406.13233) is accepted to EMNLP Findings! 🎉 
