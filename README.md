@@ -1,6 +1,6 @@
 # [zhijie-group.github.io](https://zhijie-group.github.io/)
 
-This git repo hosts all content displayed on the website of Deng AI Lab @ SJTU.
+This git repo hosts all content displayed on the website of SJTU Deng Lab.
 
 
 ## How to build

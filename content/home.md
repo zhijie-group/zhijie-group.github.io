@@ -3,12 +3,12 @@ title: ""
 layout: "home"
 type: "home"
 url: "/home/"
-summary: "home page for Zhijie Group @ SJTU"
+summary: "home page for SJTU Deng Lab"
 ---
 
 {{< justify >}}
 
-Zhijie Group is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+SJTU Deng Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
 
 Current research interests focus on:
 
@@ -22,6 +22,7 @@ Current research interests focus on:
 
 - Modality efficiency
   - Unified modeling methods, learning principles, and architectures for texts, images, videos, and beyond
+  - Applications of efficient world models in Embodied AI
 
 {{< /justify >}}
 

@@ -1,6 +1,6 @@
 bseURL: 'http://zhijie-group.github.io'
 languageCode: en-us
-title: 'Zhijie Group @ SJTU'
+title: 'SJTU Deng Lab'
 theme: 'PaperMod'
 
 googleAnalytics: 'G-T4DXGLCH1D'
@@ -30,8 +30,8 @@ params:
   math: true
   # TocSide: 'left'
   # EnableInstantClick: true
-  # label:
-    # icon: "img/zhijiegroup_trimmed.jpg"
+  label:
+    icon: "img/logo.png"
   
 menu:
   main:
