@@ -13,4 +13,4 @@ Thank you for your interest in SJTU Deng Lab! If you have a strong background in
 
 {{< /justify >}}
 
-<img src="content/img/QRcode.png" alt="qr" style="width: 30%;" />
+<img src="blogs/img/QRcode.png" alt="qr" style="width: 30%;" />
