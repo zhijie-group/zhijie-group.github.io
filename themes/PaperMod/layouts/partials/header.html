@@ -44,9 +44,6 @@
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
-                {{- /* add logo */}}
-                {{- if site.Params.label.icon }}
-                <img id="logo-image" src="{{ site.Params.label.icon }}" alt="{{ site.Title }}" height="40">
                 <!-- <img id="logo-image" src="/img/Empty.png" alt="{{ site.Title }}" height="40"> -->
                 <div class="centered"> {{ site.Title }} </div>
             </a>
