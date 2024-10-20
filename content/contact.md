@@ -13,6 +13,5 @@ Thank you for your interest in SJTU Deng Lab! If you have a strong background in
 
 {{< /justify >}}
 
-<div style="display: grid; place-items: center;">
-{{< image src="/img/cllm/QRcode.png" alt="qr" width="30%" title="" >}}
-</div>
+{{< image src="/img/cllm/QRcode.png" alt="qr" width="30%" title="QRcode" >}}
+
