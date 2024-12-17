@@ -40,7 +40,7 @@ summary: people
 
 {{< lab_member name="Xuyao Huang" role="Master Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
-{{< lab_member name="Boxiou Li" role="Undergrad Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
+{{< lab_member name="Boxiu Li" role="Undergrad Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
 
 {{< /lab_members_grid >}}
 
