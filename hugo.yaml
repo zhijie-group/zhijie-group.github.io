@@ -55,9 +55,9 @@ menu:
       name: Contact
       url: /contact/
       weight: 70
-    - name: "X"
+    - name: "Twitter"
       url: "https://x.com/sjtudenglab"
-      weight: 120
+      weight: 100
     - name: "Zhihu"
       url: "https://www.zhihu.com/people/SJTUDengLab"
       weight: 120

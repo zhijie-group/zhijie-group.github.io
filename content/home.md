@@ -4,6 +4,10 @@ layout: "home"
 type: "home"
 url: "/home/"
 summary: "home page for SJTU Deng Lab"
+cover:
+  image: img/all-people.jpg
+  alt: "SJTU Deng Lab"
+  caption: "SJTU Deng Lab"
 ---
 
 {{< justify >}}
