@@ -33,8 +33,21 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-**09/2024**: [Amortized Fourier Neural Operators](#) is accepted to NeurIPS! 🎉 
+**01/2025**: Two papers are accepted to ICLR 25! Check out: [MatryoshkaKV](https://arxiv.org/pdf/2410.14731) and [3D-Properties](https://arxiv.org/pdf/2406.07327)! 🎉 
 {{< /newsEntry >}}
+
+{{< newsEntry >}}
+**12/2024**: [SCott: Accelerating Diffusion Models with Stochastic Consistency Distillation](https://arxiv.org/pdf/2403.01505.pdf) is accepted to AAAI! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+**12/2024**: [Unveiling Uncertainty: A Deep Dive into Calibration and Performance of Multimodal Large Language Models](https://aclanthology.org/2025.coling-main.208.pdf) is accepted to Coling! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+**09/2024**: [Amortized Fourier Neural Operators](https://openreview.net/attachment?id=a6em980M9x&name=pdf) is accepted to NeurIPS! 🎉 
+{{< /newsEntry >}}
+
 
 {{< newsEntry >}}
 **09/2024**: [AdaMOE](https://arxiv.org/pdf/2406.13233) is accepted to EMNLP Findings! 🎉 
@@ -57,7 +70,7 @@ Current research interests focus on:
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-**05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](#). 🎉 
+**05/2024**: Four papers are accepted to ICML 24! Check out: [OSD](https://arxiv.org/abs/2310.07177), [Othogonal attention](https://arxiv.org/pdf/2310.12487), [CLLMs](https://arxiv.org/abs/2403.00835), and [Spiking transformer](https://openreview.net/pdf?id=NeotatlYOL). 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}

@@ -1,9 +1,57 @@
 [
     {
+        "title": "MatryoshkaKV: Adaptive KV Compression via Trainable Orthogonal Projection",
+        "authors": "Bokai Lin, Zihao Zeng, Zipeng Xiao, Siqi Kou, TianQi Hou, Xiaofeng Gao, Hao Zhang, Zhijie Deng†",
+        "venue": "ICLR 2025",
+        "pdf": "https://arxiv.org/pdf/2410.14731",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "04/2025"
+    },
+    {
+        "title": "3D-Properties: Identifying Challenges in DPO and Charting a Path Forward",
+        "authors": "Yuzi Yan, Yibo Miao, Jialian Li, Yipin Zhang, Jian Xie, Zhijie Deng†, Dong Yan†",
+        "venue": "ICLR 2025",
+        "pdf": "https://arxiv.org/pdf/2406.07327",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "04/2025"
+    },
+    {
+        "title": "SCott: Accelerating Diffusion Models with Stochastic Consistency Distillation",
+        "authors": "Hongjian Liu, Qingsong Xie†, Zhijie Deng†, Chen Chen, Shixiang Tang, Fueyang Fu, Zheng-jun Zha, Haonan Lu",
+        "venue": "AAAI 2025",
+        "pdf": "https://arxiv.org/pdf/2403.01505.pdf",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Generative Models, Diffusion Models",
+        "date": "02/2025"
+    },
+    {
+        "title": "Unveiling Uncertainty: A Deep Dive into Calibration and Performance of Multimodal Large Language Models",
+        "authors": "Zijun Chen, Wenbo Hu, Guande He, Zhijie Deng, Zheng Zhang, Richang Hong",
+        "venue": "Coling 2025",
+        "pdf": "https://aclanthology.org/2025.coling-main.208.pdf",
+        "code": "",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "01/2025"
+    },
+    {
         "title": "Amortized Fourier Neural Operators",
         "authors": "Zipeng Xiao, Siqi Kou, Zhongkai Hao, Bokai Lin, Zhijie Deng†",
         "venue": "NeurIPS 2024",
-        "pdf": "#",
+        "pdf": "https://openreview.net/attachment?id=a6em980M9x&name=pdf",
         "code": "",
         "presentation": "",
         "award": "",

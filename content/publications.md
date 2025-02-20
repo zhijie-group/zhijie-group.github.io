@@ -5,9 +5,29 @@ url: "/publications/"
 summary: publications
 ---
 
+### 2025
+
+{{< publication title="MatryoshkaKV: Adaptive KV Compression via Trainable Orthogonal Projection" venue="ICLR 2025" paperLink="https://arxiv.org/pdf/2410.14731" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Bokai Lin, Zihao Zeng, Zipeng Xiao, Siqi Kou, TianQi Hou, Xiaofeng Gao, Hao Zhang, Zhijie Deng†
+{{< /publication >}}
+
+{{< publication title="3D-Properties: Identifying Challenges in DPO and Charting a Path Forward" venue="ICLR 2025" paperLink="https://arxiv.org/pdf/2406.07327" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Yuzi Yan, Yibo Miao, Jialian Li, Yipin Zhang, Jian Xie, Zhijie Deng†, Dong Yan†
+{{< /publication >}}
+
+{{< publication title="SCott: Accelerating Diffusion Models with Stochastic Consistency Distillation" venue="AAAI 2025" paperLink="https://arxiv.org/pdf/2403.01505.pdf" codeLink="" award="" project="" data-topic="Generative Models, Diffusion Models" >}}
+Hongjian Liu, Qingsong Xie†, Zhijie Deng†, Chen Chen, Shixiang Tang, Fueyang Fu, Zheng-jun Zha, Haonan Lu
+{{< /publication >}}
+
+{{< publication title="Unveiling Uncertainty: A Deep Dive into Calibration and Performance of Multimodal Large Language Models" venue="Coling 2025" paperLink="https://aclanthology.org/2025.coling-main.208.pdf" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Zijun Chen, Wenbo Hu, Guande He, Zhijie Deng, Zheng Zhang, Richang Hong
+{{< /publication >}}
+
+&emsp;
+
 ### 2024
 
-{{< publication title="Amortized Fourier Neural Operators" venue="NeurIPS 2024" paperLink="#" codeLink="" award="" project="" data-topic="Neural operator" >}}
+{{< publication title="Amortized Fourier Neural Operators" venue="NeurIPS 2024" paperLink="https://openreview.net/attachment?id=a6em980M9x&name=pdf" codeLink="" award="" project="" data-topic="Neural operator" >}}
 Zipeng Xiao, Siqi Kou, Zhongkai Hao, Bokai Lin, Zhijie Deng†
 {{< /publication >}}
 
@@ -31,7 +51,7 @@ Juntu Zhao, Junyu Deng, Yixin Ye, Chongxuan Li, Zhijie Deng†, Dequan Wang†
 Yibo Miao, Hongcheng Gao, Hao Zhang, Zhijie Deng†
 {{< /publication >}}
 
-{{< publication title="SpikeZIP-TF: Conversion is All You Need for Transformer-based SNN" venue="ICML 2024" paperLink="" codeLink="" award="" project="" data-topic="Scalable ML" >}}
+{{< publication title="SpikeZIP-TF: Conversion is All You Need for Transformer-based SNN" venue="ICML 2024" paperLink="https://openreview.net/pdf?id=NeotatlYOL" codeLink="" award="" project="" data-topic="Scalable ML" >}}
 Kang You, Zekai Xu, Chen Nie, Zhijie Deng, Qinghai Guo, Xiang Wang, Zhezhi He
 {{< /publication >}}
 
