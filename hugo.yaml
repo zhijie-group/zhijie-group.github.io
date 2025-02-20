@@ -55,12 +55,14 @@ menu:
       name: Contact
       url: /contact/
       weight: 70
-    - name: "GitHub"
-      url: "https://github.com/zhijie-group"
+    - name: "X"
+      url: "https://x.com/sjtudenglab"
       weight: 120
     - name: "Zhihu"
       url: "https://www.zhihu.com/people/SJTUDengLab"
       weight: 120
-    - name: "X"
-      url: "https://x.com/sjtudenglab"
+    - name: "GitHub"
+      url: "https://github.com/zhijie-group"
       weight: 120
+    
+    
