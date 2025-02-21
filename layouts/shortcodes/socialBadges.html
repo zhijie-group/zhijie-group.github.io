@@ -3,10 +3,20 @@
         <a href="https://arxiv.org/abs/{{ .Get "arxiv-index" }}" target="_blank" rel="noopener noreferrer">
           <img src="https://img.shields.io/badge/arXiv-{{ .Get "arxiv-index" }}-white.svg?style=social" style="transform: scale(1.5);">
         </a>
-    {{ end }} 
+    {{ end }}
     {{ if .Get "github" }}
         <a href="https://github.com/{{ .Get "github" }}" target="_blank" rel="noopener noreferrer">
           <img src="https://img.shields.io/github/stars/{{ .Get "github" }}?style=social" style="transform: scale(1.5);">
+        </a>
+    {{ end }}
+    {{ if .Get "paper" }}
+        <a href="{{ .Get "paper" }}" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+        </a>
+    {{ end }}
+    {{ if .Get "code" }}
+        <a href="{{ .Get "code" }}" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
         </a>
     {{ end }}
 </div>
