@@ -1,99 +1,122 @@
 +++
-title = "😳7%+ accuracy leap on AIME24/25 for DeepSeek R1 via simply being more careful with the questions?! Attention should be shifted from reasoning capacities to reasoning fidelity!"
-date = 2025-02-21T18:00:00-08:00
-authors = ["Zihao Zeng", "Xuyao Huang", "Boxiu Li", "Zhijie Deng"]
-author = "Zihao Zeng, Xuyao Huang, Boxiu Li, Zhijie Deng"
+title = "😳 7%+ accuracy leap on AIME24/25 for DeepSeek R1 via simply being more careful with the questions?! Attention should be shifted from reasoning capacities to reasoning fidelity!"
+date = 2025-02-21
+authors = ["Zihao Zeng", "Xuyao Huang*", "Boxiu Li*", "Zhijie Deng†"]
+author = "Zihao Zeng, Xuyao Huang*, Boxiu Li*, Zhijie Deng†"
 ShowReadingTime = true
 draft = false
-[socialIcons]
-    [[socialIcons.icon]]
-      name = "twitter"
-      url = "https://x.com/sjtudenglab"
-    [[socialIcons.icon]]
-      name = "github"
-      url = "https://github.com/zhijie-group/SIFT"
-[cover]
-      image = "fig6.png"
-      alt = "Four core operations in SIFT"
-      caption = "Four core operations in SIFT: (i) Sticker Generation (SG), (ii) Consensus Prediction (CP), (iii) Forward Optimization (FO), (iv) Inverse Generation (IG)."
 +++
 
-{{< socialBadges arxiv-index="xxxx.xxxxx" github="zhijie-group/SIFT" >}}
+<!-- {{< socialBadges arxiv-index="xxxx.xxxxx" github="zhijie-group/SIFT" >}} -->
+Code: https://github.com/zhijie-group/SIFT
 
-## Introduction
+Paper: https://github.com/zhijie-group/SIFT/blob/main/paper.pdf
+
+## Introduction & Motivation
 
 {{< justify >}}
-Techniques including Chain-of-Thought (CoT) Prompting[^1][^2] and Self-Consistency[^3], as well as reasoning-enhanced models, e.g., OpenAI-o1[^4], DeepSeek-R1[^5], and KIMI-k1.5[^6], have all contributed to improvements in multi-step reasoning for solving hard problems.
+Techniques including Chain-of-Thought (CoT) Prompting [1,2] and Self-Consistency [3], as well as reasoning-enhanced models, e.g., OpenAI-o1, DeepSeek-R1, and KIMI-k1.5 [4-6], have all contributed to improvements in multi-step reasoning for solving hard problems.
 
 Discussions in the community suggest that advanced reasoning capabilities in LLMs mainly stem from two factors:
-1. foundational knowledge acquisition through massive pretraining on diverse data
-2. strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL)
+1. foundational knowledge acquisition through massive pretraining on diverse data;
+2. strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL).
 
-In recent weeks, much attention has been focused on reproducing R1 and improving reasoning abilities. However, through systematic exploration, we have found that various models ranging from the small Llama3.2-3B-Instruct to state-of-the-art ones like DeepSeek-R1 often suffer from the *misinterpretation of the original problem* during reasoning, leading to incorrect results.
+In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical *misinterpretation of the original problem* during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.
+
+Here are two examples:
 {{< /justify >}}
 
-{{< image src="fig1.png" alt="Factual Drift" width="60%" title="Qwen2.5 misinterprets the sentence 'Then Carla has to restart from the beginning' in the question. DeepSeek-R1 misinterprets by assuming the distribution of cubic residues, which is not mentioned in the question.">}}
+{{< image src="image/fig1.png" alt="Factual Drift" width="90%" title="LLMs suffer from misinterpretation of the original problem during reasoning process.">}}
 
 {{< justify >}}
-Therefore, many times, the failure to achieve correct reasoning results is not due to insufficient reasoning capability, but rather because the model is not reasoning on the correct problem. We refer to this type of failure as "**Factual Drift**."
-It occurs when LLMs misinterpret, overlook, or hallucinate key contextual information during reasoning, thus leading to errors despite logically sound steps. For instance, in the phrase "_10 dollars per kilo_," models might misinterpret "_per_" as "_total_" instead of "for each," resulting in incorrect calculations.
+As shown, Qwen2.5 makes errors becauses of misunderstanding the fact "restart the download" and DeepSeek-R1 fails due to assuming the distribution of cubic residues, which is not mentioned in the question.
+
+To be more rigorous, we conduct a study of Qwen2.5-7B-Instruct on Gsm8k. We collect the incorrect reasoning outcomes on Gsm8k testset and classify the cause for the error into two categories: "Misinterpretation of the Original Problem" and "Logical Reasoning Errors", with the help of GLM-4-Plus. The plot below displays the statistics:
 {{< /justify >}}
 
-{{< image src="fig2.png" alt="Error Distribution" width="60%" title="We conduct a study on Qwen2.5-7B-Instruct. We use Gsm8k dataset and analyze the routs for the reasoning errors by GLM-4-Plus.">}}
+{{< image src="image/fig2.png" alt="Error Distribution" width="60%" title="Error Distribution">}}
 
 {{< justify >}}
-Moreover, we observed a common phenomenon occurs during DeepSeek-R1's reasoning--**Self-Verification**, where the model revisiting the original problem, focusing on key information, and paraphrasing it.
+*To our surprise, over 30 percent reasoning errors stem from "Misinterpretation of the Original Problem" in this case.* This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not *reasoning on the correct problem.*
+
+We refer to this type of failure as "**Factual Drift**." It means LLMs misinterpret, overlook, or hallucinate key contextual information during reasoning, thus making errors despite logically sound steps.
+
+When shifting from small models to cutting-edge ones like DeepSeek-R1, we delightly observe that the factual drift issue is alleviated to some extent, with an example listed below:
 {{< /justify >}}
 
-{{< image src="fig3.png" alt="Self-Verification" width="60%">}}
+{{< image src="image/fig3.png" alt="Self-Verification" width="60%" title="Self-verification occurs during DeepSeek-R1’s reasoning.">}}
 
 {{< justify >}}
-Inspired by that humans usually use sticky notes to externalize critical elements when handling complex tasks, we introduce **SIFT (<u>S</u>t<u>i</u>ck to the <u>F</u>ac<u>t</u>s)**, a post-training framework that explicitly grounds LLM reasoning in contextual facts using dynamically generated summaries called **Sticker**s.
+By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as **Self-Verification**, which is also ackownledged by many other researchers in the community. However, *such self-verification operates as a stochastic safeguard rather than a systematic protocol*—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).
+
+Given all these discussions, we finally arrive at the conclusion that **attention should be shifted from reasoning capacities to reasoning fidelity**. Namely, it is equally important to care about whether LLMs are reasoning about the correct problem.
 {{< /justify >}}
-
-{{< image src="fig4.png" alt="Sticky Note" width="48%" title="A sticky note. (Generated by Doubao)">}}
-{{< image src="fig5.png" alt="Sticker" width="48%" title="An example of a query and its Sticker.">}}
-
 
 ## The SIFT Framework
 
 {{< justify >}}
-SIFT tackles factual drift through four core operations:  
+Inspired by that humans usually use sticky notes to externalize critical elements when handling complex tasks, we introduce **SIFT (Stick to the Facts)** to explicitly **ground LLM reasoning in contextual facts** using dynamically generated query summaries called **Stickers**.
 {{< /justify >}}
 
-{{< image src="fig6.png" alt="4 Operators" width="90%">}}
+{{< image src="image/fig45.png" alt="Sticky Note" width="85%" title="**Left**: A sticky note (generated by Doubao). **Right**: An example of a query and its Sticker.">}}
+<!-- {{< image src="image/fig5.png" alt="Sticker" width="48%" title="An example of a query and its Sticker.">}} -->
 
 {{< justify >}}
-1. Sticker Generation (SG): The model extracts key facts (e.g., conditions, core questions) from the query and makes a structured Sticker.                    
-2. Consensus Prediction (CP): Predictions are generated from both the Sticker alone and the original query augmented with the Sticker. If they disagree, the Sticker will be refined.  
-3. Forward Optimization (FO): The Sticker are adjusted to better align with the query’s semantics.  
+SIFT is a post-training approach, *leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS)*. Concretely, SIFT
+lets the target LLM summarize key facts within the input query, including essential conditions and the core question, into a structured Sticker (see above), and make two predictions based on the Sticker alone and the query augmented with the Sticker, respectively.
+
+If the predictions are the same, SIFT returns the prediction; otherwise, the Sticker is refined through bidirectional optimization—a forward one to better align the Sticker with the query and an inverse one to conform to the model’s reasoning preference—for more faithful reasoning.
+
+The whole algorithmic procedure is exhibited below:
+{{< /justify >}}
+
+{{< image src="image/fig7.png" alt="Algorithms" width="45%" title="SIFT Algorithm">}}
+
+{{< justify >}}
+Namely, there are four core operations in SIFT:
+1. Sticker Generation (SG): The model extracts key facts (e.g., conditions, core questions) from the query and makes a structured Sticker.
+2. Consensus Prediction (CP): Predictions are generated from both the Sticker alone and the original query augmented with the Sticker. If they disagree, the Sticker will be refined.
+3. Forward Optimization (FO): The Sticker are adjusted to better align with the query’s semantics.
 4. Inverse Generation (IG): A new Sticker from the model’s prediction is inferred  to match its reasoning preferences.
 
-And we can divide the SIFT approach into 3 stages:
-1. Stage 1: Only SG and CP are used.
-2. Stage 2: Building upon Stage 1, FO is used to optimize the Sticker.
-3. Stage 3: The complete process outlined in Algorithm 1.
+Their illustration is provided below:
 {{< /justify >}}
 
-{{< image src="fig7.png" alt="Algorithms" width="50%">}}
+{{< image src="image/fig6.png" alt="4 Operators" width="90%" title="Illustration of the four core operations in SIFT.">}}
 
 {{< justify >}}
-By iteratively refining the Sticker, SIFT ensures the model grounds its reasoning in accurate context.  
+Refer to the appendix of our paper for the details of the used prompts.
 {{< /justify >}}
-
 
 ## Key Results
 
 {{< justify >}}
-Experiments across models (3B to 100B+ parameters) and benchmarks (GSM8K, MATH-500, AIME2024) demonstrate SIFT’s effectiveness:  
-- DeepSeek-R1 achieves a high accuracy of **85.67%** on AIME2024 (vs. 78.33% baseline), setting a new SOTA in open-source models.  
-- Llama3.2-3B-Instruct improves its accuracy by **8.80%** on MATH-500.  
+Experiments across models (3B to 100B+ parameters) and benchmarks (GSM8K, MATH-500, AIME2024) demonstrate SIFT’s effectiveness:
+- Improves DeepSeek-R1' accuracy to **85.67%** on AIME2024 (vs. 78.33% baseline) and **77.33%** on AIME2025 (vs. 69.80% baseline), setting a new SOTA in open-source models.
+- Improves Llama3.2-3B-Instruct's accuracy by **8.80%** on MATH-500.
 - SIFT shows consistent gains across architectures (dense/MoE) and scales,  which proves its versatility.
 {{< /justify >}}
 
-{{< image src="fig8.png" alt="DeepSeek" width="90%">}}
+{{< image src="image/fig8.png" alt="DeepSeek" width="90%" title="Applying SIFT to DeepSeek-R1 demonstrates highly competitive reasoning performance on AIME2024, AIME2025, and MATH-500 (pass@1 accuracy).">}}
 
-{{< image src="fig9.png" alt="small" width="90%">}}
+{{< image src="image/fig9.png" alt="small" width="90%" title="SIFT consistently improves reasoning performance across different models and datasets.">}}
+
+{{< justify >}}
+Note that the 3 stages in the above results mean:
+1. Stage 1: Only SG and CP are used.
+2. Stage 2: Building upon Stage 1, FO is used to optimize the Sticker.
+3. Stage 3: The complete process outlined in Algorithm 1.
+
+Besides, compared to self-consistency, another well-known baseline for verifier-free inference-time scaling, SIFT enjoys a better accuracy versus tokens scaling curve:
+{{< /justify >}}
+
+{{< image src="image/fig11.png" alt="Comparison" width="50%" title="Llama3.2-3B-Instruct on GSM8K (temperature = 0.6, top-p = 0.9)">}}
+
+{{< justify >}}
+SIFT can also embrace self-consistency to form the SIFT-Consistency approach to further improve self-consistency:
+{{< /justify >}}
+
+{{< image src="image/fig12.png" alt="SIFT-Consistency" width="50%" title="Llama3.2-3B-Instruct on GSM8K (temperature = 0.6, top-p = 0.9)">}}
 
 {{< justify >}}
 More experimental details and results can be found in our paper (including iterative optimization, sample augmentation, and some ablation studies).
@@ -103,26 +126,46 @@ More experimental details and results can be found in our paper (including itera
 ## Why Does SIFT Work?
 
 {{< justify >}}
-1. **Explicit Fact Highlights**：Stickers externalize critical information, mimicking human sticky-note practices.  
-2. **Bidirectional Alignment**: FO anchors Stickers to source semantics, while IG aligns them with the model’s reasoning style.  
-3. **Consensus Validation**: It refers that disagreements between Sticker-only and augmented predictions can trigger refinement so as to ensure factual fidelity.  
+1. **Explicit Fact Highlights**：Stickers externalize critical information, mimicking human sticky-note practices.
+2. **Bidirectional Alignment**: FO anchors Stickers to source semantics, while IG aligns them with the model’s reasoning style.
+3. **Consensus Validation**: It refers that disagreements between Sticker-only and augmented predictions can trigger refinement so as to ensure factual fidelity.
 4. **Read better to reason better**: SIFT helps models better understand a query, align more accurately with the true intent, and fully leverage their capabilities.
-As shown in the figure below, iterative optimization progressively improves prediction alignment, reducing factual drift.  
+
+As shown in the figure below, iterative optimization progressively improves prediction alignment, reducing factual drift.
 {{< /justify >}}
 
-{{< image src="fig10.png" alt="venn" width="90%" title="Venn diagrams illustrating the accuracy of predictions obtained from the “Only Sticker” and “Query + Sticker” representations at each stage. The percentages represent the accuracy where both methods correctly predict the same outcomes.">}}
+{{< image src="image/fig10.png" alt="venn" width="90%" title="Venn diagrams illustrating the accuracy of predictions obtained from the “Only Sticker” and “Query + Sticker” representations at each stage. The percentages represent the accuracy where both methods correctly predict the same outcomes.">}}
 
 
 ## Conclusion
 
 {{< justify >}}
-SIFT provides a systematic solution to factual drift, enabling LLMs to “stick to the facts” without costly retraining. By bridging the gap between contextual understanding and reasoning, it pushes the boundaries of reliable AI problem-solving.  
+SIFT provides a systematic solution to factual drift, enabling LLMs to “stick to the facts” without costly retraining. By bridging the gap between contextual understanding and reasoning, it pushes the boundaries of reliable AI problem-solving.
 {{< /justify >}}
 
+## Citation
 
-[^1]: Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yutaka Matsuo, and Yusuke Iwasawa. 2022. Large language models are zero-shot reasoners. Advances in neural information processing systems.
-[^2]: Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V Le, Denny Zhou, et al. 2022b. Chain-of-thought prompting elicits reasoning in large language models. Advances in neural information processing systems.
-[^3]: Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. 2023. Self-consistency improves chain of thought reasoning in language models. The Eleventh International Conference on Learning Representations.
-[^4]: Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et al. 2024. Openai o1 system card.
-[^5]: Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et al. 2025. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning.
-[^6]: Kimi Team, Angang Du, Bofei Gao, Bowei Xing, Changjiu Jiang, Cheng Chen, Cheng Li, Chenjun Xiao, Chenzhuang Du, Chonghua Liao, et al. 2025. Kimi k1. 5: Scaling reinforcement learning with llms.
+If you find our paper or  codebase useful, please consider citing:
+
+```
+@article{zeng2025sift,
+  title={SIFT: Grounding LLM Reasoning in Contexts via Stickers},
+  author={Zeng, Zihao and Huang, Xuyao and Li, Boxiu and Deng, Zhijie},
+  year={2025},
+  url={https://github.com/zhijie-group/SIFT/blob/main/paper.pdf}
+}
+```
+
+# Reference
+
+[1] Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yutaka Matsuo, and Yusuke Iwasawa. 2022. Large language models are zero-shot reasoners. Advances in neural information processing systems.
+
+[2] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V Le, Denny Zhou, et al. 2022b. Chain-of-thought prompting elicits reasoning in large language models. Advances in neural information processing systems.
+
+[3] Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. 2023. Self-consistency improves chain of thought reasoning in language models. The Eleventh International Conference on Learning Representations.
+
+[4] Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et al. 2024. Openai o1 system card.
+
+[5] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et al. 2025. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning.
+
+[6] Kimi Team, Angang Du, Bofei Gao, Bowei Xing, Changjiu Jiang, Cheng Chen, Cheng Li, Chenjun Xiao, Chenzhuang Du, Chonghua Liao, et al. 2025. Kimi k1. 5: Scaling reinforcement learning with llms.
