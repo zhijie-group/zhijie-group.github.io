@@ -27,7 +27,7 @@ Discussions in the community suggest that advanced reasoning capabilities in LLM
 1. foundational knowledge acquisition through massive pretraining on diverse data;
 2. strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL).
 
-In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical <ins>misinterpretation of the original problem</ins> during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.
+In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical **misinterpretation of the original problem** during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.
 
 Here are two examples:
 {{< /justify >}}
@@ -43,7 +43,7 @@ To be more rigorous, we conduct a study of Qwen2.5-7B-Instruct on Gsm8k. We coll
 {{< image src="image/fig2.png" alt="Error Distribution" width="60%" title="Error Distribution">}}
 
 {{< justify >}}
-<ins>To our surprise, over 30 percent of reasoning errors stem from "Misinterpretation of the Original Problem" in this case.</ins> This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not <ins>reasoning on the correct problem.</ins>
+**To our surprise, over 30 percent of reasoning errors stem from "Misinterpretation of the Original Problem"** in this case. This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not reasoning on the correct problem.
 
 We refer to this type of failure as "**Factual Drift**." It means LLMs misinterpret, overlook, or hallucinate key contextual information during reasoning, thus making errors despite logically sound steps.
 
@@ -53,9 +53,13 @@ When shifting from small models to cutting-edge ones like DeepSeek-R1, we deligh
 {{< image src="image/fig3.png" alt="Self-Verification" width="60%" title="Self-verification occurs during DeepSeek-R1’s reasoning.">}}
 
 {{< justify >}}
-By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as **Self-Verification**, which is also acknowledged by many other researchers in the community. However, <ins>such self-verification operates as a stochastic safeguard rather than a systematic protocol</ins>—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).
+By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as **Self-Verification**, which is also acknowledged by many other researchers in the community. However, **such self-verification operates as a stochastic safeguard rather than a systematic protocol**—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).
 
-Given all these discussions, we finally arrive at the conclusion that **attention should be shifted from reasoning capacities to reasoning fidelity**. Namely, it is equally important to care about whether LLMs are reasoning about the correct problem.
+Given all these discussions, we finally arrive at the conclusion that 
+
+> **attention should be shifted from reasoning capacities to reasoning fidelity**. 
+
+Namely, it is equally important to care about whether LLMs are reasoning about the correct problem.
 {{< /justify >}}
 
 ## The SIFT Framework
@@ -68,7 +72,7 @@ Inspired by that humans usually use sticky notes to externalize critical element
 <!-- {{< image src="image/fig5.png" alt="Sticker" width="48%" title="An example of a query and its Sticker.">}} -->
 
 {{< justify >}}
-SIFT is a post-training approach, <ins>leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS)</ins>. Concretely, SIFT
+SIFT is a post-training approach, **leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS)**. Concretely, SIFT
 lets the target LLM summarize key facts within the input query, including essential conditions and the core question, into a structured Sticker (see above), and make two predictions based on the Sticker alone and the query augmented with the Sticker, respectively.
 
 If the predictions are the same, SIFT returns the prediction; otherwise, the Sticker is refined through bidirectional optimization—a forward one to better align the Sticker with the query and an inverse one to conform to the model’s reasoning preference—for more faithful reasoning.
