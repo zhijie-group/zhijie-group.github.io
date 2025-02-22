@@ -2,7 +2,7 @@
 title = "SIFT: Grounding LLM Reasoning in Contexts via Stickers"
 date = 2025-02-21
 authors = ["Zihao Zeng", "Xuyao Huang*", "Boxiu Li*", "Zhijie Deng†"]
-author = "Zihao Zeng, Xuyao Huang*, Boxiu Li*, Zhijie Deng†"
+author = "Zihao Zeng, Xuyao Huang*, Boxiu Li*, Zhijie Deng† (* is for equal contribution)"
 ShowReadingTime = true
 draft = false
 [cover]
@@ -27,7 +27,7 @@ Discussions in the community suggest that advanced reasoning capabilities in LLM
 1. foundational knowledge acquisition through massive pretraining on diverse data;
 2. strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL).
 
-In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical *misinterpretation of the original problem* during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.
+In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical <span style="color:blue">misinterpretation of the original problem</span> during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.
 
 Here are two examples:
 {{< /justify >}}
@@ -35,25 +35,25 @@ Here are two examples:
 {{< image src="image/fig1.png" alt="Factual Drift" width="90%" title="LLMs suffer from misinterpretation of the original problem during reasoning process.">}}
 
 {{< justify >}}
-As shown, Qwen2.5 makes errors becauses of misunderstanding the fact "restart the download" and DeepSeek-R1 fails due to assuming the distribution of cubic residues, which is not mentioned in the question.
+As shown, Qwen2.5 makes errors because of misunderstanding the fact "restart the download" and DeepSeek-R1 fails due to assuming the distribution of cubic residues, which is not mentioned in the question.
 
-To be more rigorous, we conduct a study of Qwen2.5-7B-Instruct on Gsm8k. We collect the incorrect reasoning outcomes on Gsm8k testset and classify the cause for the error into two categories: "Misinterpretation of the Original Problem" and "Logical Reasoning Errors", with the help of GLM-4-Plus. The plot below displays the statistics:
+To be more rigorous, we conduct a study of Qwen2.5-7B-Instruct on Gsm8k. We collect the incorrect reasoning outcomes on the Gsm8k testset and classify the cause for the error into two categories: "Misinterpretation of the Original Problem" and "Logical Reasoning Errors", with the help of GLM-4-Plus. The plot below displays the statistics:
 {{< /justify >}}
 
 {{< image src="image/fig2.png" alt="Error Distribution" width="60%" title="Error Distribution">}}
 
 {{< justify >}}
-*To our surprise, over 30 percent reasoning errors stem from "Misinterpretation of the Original Problem" in this case.* This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not *reasoning on the correct problem.*
+<span style="color:blue">To our surprise, over 30 percent of reasoning errors stem from "Misinterpretation of the Original Problem" in this case.</span> This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not <span style="color:blue">reasoning on the correct problem.</span>
 
 We refer to this type of failure as "**Factual Drift**." It means LLMs misinterpret, overlook, or hallucinate key contextual information during reasoning, thus making errors despite logically sound steps.
 
-When shifting from small models to cutting-edge ones like DeepSeek-R1, we delightly observe that the factual drift issue is alleviated to some extent, with an example listed below:
+When shifting from small models to cutting-edge ones like DeepSeek-R1, we delightedly observe that the factual drift issue is alleviated to some extent, with an example listed below:
 {{< /justify >}}
 
 {{< image src="image/fig3.png" alt="Self-Verification" width="60%" title="Self-verification occurs during DeepSeek-R1’s reasoning.">}}
 
 {{< justify >}}
-By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as **Self-Verification**, which is also ackownledged by many other researchers in the community. However, *such self-verification operates as a stochastic safeguard rather than a systematic protocol*—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).
+By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as **Self-Verification**, which is also acknowledged by many other researchers in the community. However, <span style="color:blue">such self-verification operates as a stochastic safeguard rather than a systematic protocol</span>—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).
 
 Given all these discussions, we finally arrive at the conclusion that **attention should be shifted from reasoning capacities to reasoning fidelity**. Namely, it is equally important to care about whether LLMs are reasoning about the correct problem.
 {{< /justify >}}
@@ -68,7 +68,7 @@ Inspired by that humans usually use sticky notes to externalize critical element
 <!-- {{< image src="image/fig5.png" alt="Sticker" width="48%" title="An example of a query and its Sticker.">}} -->
 
 {{< justify >}}
-SIFT is a post-training approach, *leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS)*. Concretely, SIFT
+SIFT is a post-training approach, <span style="color:blue">leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS)</span>. Concretely, SIFT
 lets the target LLM summarize key facts within the input query, including essential conditions and the core question, into a structured Sticker (see above), and make two predictions based on the Sticker alone and the query augmented with the Sticker, respectively.
 
 If the predictions are the same, SIFT returns the prediction; otherwise, the Sticker is refined through bidirectional optimization—a forward one to better align the Sticker with the query and an inverse one to conform to the model’s reasoning preference—for more faithful reasoning.
@@ -98,7 +98,7 @@ Refer to the appendix of our paper for the details of the used prompts.
 
 {{< justify >}}
 Experiments across models (3B to 100B+ parameters) and benchmarks (GSM8K, MATH-500, AIME2024) demonstrate SIFT’s effectiveness:
-- Improves DeepSeek-R1' accuracy to **85.67%** on AIME2024 (vs. 78.33% baseline) and **77.33%** on AIME2025 (vs. 69.80% baseline), setting a new SOTA in open-source models.
+- Improves DeepSeek-R1's accuracy to **85.67%** on AIME2024 (vs. 78.33% baseline) and **77.33%** on AIME2025 (vs. 69.80% baseline), setting a new SOTA in open-source models.
 - Improves Llama3.2-3B-Instruct's accuracy by **8.80%** on MATH-500.
 - SIFT shows consistent gains across architectures (dense/MoE) and scales,  which proves its versatility.
 {{< /justify >}}
@@ -134,7 +134,7 @@ More experimental details and results can be found in our paper (including itera
 {{< justify >}}
 1. **Explicit Fact Highlights**：Stickers externalize critical information, mimicking human sticky-note practices.
 2. **Bidirectional Alignment**: FO anchors Stickers to source semantics, while IG aligns them with the model’s reasoning style.
-3. **Consensus Validation**: It refers that disagreements between Sticker-only and augmented predictions can trigger refinement so as to ensure factual fidelity.
+3. **Consensus Validation**: It refers to that disagreements between Sticker-only and augmented predictions can trigger refinement so as to ensure factual fidelity.
 4. **Read better to reason better**: SIFT helps models better understand a query, align more accurately with the true intent, and fully leverage their capabilities.
 
 As shown in the figure below, iterative optimization progressively improves prediction alignment, reducing factual drift.
