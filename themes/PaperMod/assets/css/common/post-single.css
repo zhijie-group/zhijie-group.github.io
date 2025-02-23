@@ -16,9 +16,10 @@
 .post-meta,
 .breadcrumbs {
     color: var(--secondary);
-    font-size: 14px;
+    font-size: 18px;
     display: flex;
     flex-wrap: wrap;
+    padding: 12px 5px;
 }
 
 .post-meta .i18n_list li {

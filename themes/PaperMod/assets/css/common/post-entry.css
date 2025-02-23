@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     min-height: 320px;
     margin: var(--gap) 0 calc(var(--gap) * 2) 0;
 }
@@ -105,4 +105,8 @@
 .entry-cover a {
     color: var(--secondary);
     box-shadow: 0 1px 0 var(--primary);
+}
+
+.entry-cover p {
+    margin-top: 12px;
 }

@@ -34,6 +34,8 @@
     transform: translate(0, -10%);
     border-radius: 6px;
     margin-inline-end: 8px;
+    width: 250px; /* 设置图片宽度 */
+    height: auto;
 }
 
 button#theme-toggle {
