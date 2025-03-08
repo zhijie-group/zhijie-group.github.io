@@ -46,7 +46,8 @@ summary: people
 
 ### Alumni
 {{< alumni >}}
-{{< lab_member name="Bokai Lin" role="Undergrad Intern, incoming PhD Student at SJTU & SII." image="lbk.jpg" academic="#">}}
+{{< alumni_entry name="Bokai Lin" description="Undergrad Intern, incoming PhD Student at SJTU & SII." homepage="https://openreview.net/profile?id=~Bokai_Lin1">}} 
+<!-- image="lbk.jpg" academic="#">}} -->
 {{< alumni_entry name="Yu Lei" description="Undergrad Intern, incoming PhD Student at UT Austin." homepage="https://theknight-z.github.io/">}}
 {{< alumni_entry name="Tong Chen" description="Undergrad Intern, incoming PhD Student at UPenn." homepage="https://openreview.net/profile?id=~Tong_Chen13">}}
 {{< alumni_entry name="Hongcheng Gao" description="Undergrad Intern, now Master Student at UCAS." homepage="https://hongcheng-gao.github.io/">}}
