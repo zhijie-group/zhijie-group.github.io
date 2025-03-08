@@ -32,9 +32,7 @@ summary: people
 
 {{< lab_member name="Chenkai Xu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Yu Lei" role="Undergrad Student" image="unknown.jpg" academic="https://theknight-z.github.io/">}}
-
-{{< lab_member name="Bokai Lin" role="Undergrad Student" image="lbk.jpg" academic="#">}}
+<!-- {{< lab_member name="Yu Lei" role="Undergrad Student" image="unknown.jpg" academic="https://theknight-z.github.io/">}} -->
 
 {{< lab_member name="Bingde Liu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
@@ -48,5 +46,9 @@ summary: people
 
 ### Alumni
 {{< alumni >}}
+{{< lab_member name="Bokai Lin" role="Undergrad Intern, incoming PhD Student at SJTU & SII." image="lbk.jpg" academic="#">}}
+{{< alumni_entry name="Yu Lei" description="Undergrad Intern, incoming PhD Student at UT Austin." homepage="https://theknight-z.github.io/">}}
+{{< alumni_entry name="Tong Chen" description="Undergrad Intern, incoming PhD Student at UPenn." homepage="https://openreview.net/profile?id=~Tong_Chen13">}}
 {{< alumni_entry name="Hongcheng Gao" description="Undergrad Intern, now Master Student at UCAS." homepage="https://hongcheng-gao.github.io/">}}
+{{< alumni_entry name="Aochuan Chen" description="Undergrad Intern, now PhD Student at HKUST-gz." homepage="https://openreview.net/profile?id=~Aochuan_Chen1">}}
 {{< /alumni >}}
