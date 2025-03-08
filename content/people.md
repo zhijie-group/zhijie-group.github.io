@@ -22,7 +22,7 @@ summary: people
 
 {{< lab_member name="Siqi Kou" role="PhD Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Yi Yang" role="PhD Student" image="unknown.jpg" academic="#">}}
+{{< lab_member name="Yi Yang" role="Incoming PhD Student" image="unknown.jpg" academic="#">}}
 
 {{< lab_member name="Xu Wang" role="Master Student" image="unknown.jpg" academic="#">}}
 
@@ -30,7 +30,7 @@ summary: people
 
 {{< lab_member name="Xuyao Huang" role="Master Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Chenkai Xu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
+{{< lab_member name="Chenkai Xu" role="Incoming Master Student" image="unknown.jpg" academic="#">}}
 
 <!-- {{< lab_member name="Yu Lei" role="Undergrad Student" image="unknown.jpg" academic="https://theknight-z.github.io/">}} -->
 
