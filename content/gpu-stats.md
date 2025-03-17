@@ -24,12 +24,13 @@ document.addEventListener("DOMContentLoaded", function() {
             container.innerHTML = data.map(machine => {
                 const machineName = Object.keys(machine)[0];
                 const stats = machine[machineName].split('\n').slice(1).map(line => {
-                    let [gpu, utilization, mem, temp] = line.split(/\s{2,}/);
+                    let [gpu, utilization, mem, temp, uname] = line.split(/\s{2,}/);
                     gpu = gpu.replace('GPU', '').trim();
                     utilization = utilization.replace('utilization', '').trim();
                     mem = mem.replace('mem', '').trim();
                     temp = temp.replace('temp', '').trim();
-                    return `<tr><td>${gpu}</td><td>${utilization}</td><td>${mem}</td><td>${temp}</td></tr>`;
+                    uname = uname.replace('User', '').trim();
+                    return `<tr><td>${gpu}</td><td>${utilization}</td><td>${mem}</td><td>${temp}</td><td>${uname}</td></tr>`;
                 }).join('');
                 return `
                     <h3>Machine ${machineName}</h3>
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <th>Utilization</th>
                                 <th>Memory</th>
                                 <th>Temperature</th>
+                                <th>User(s)</th>
                             </tr>
                         </thead>
                         <tbody>
