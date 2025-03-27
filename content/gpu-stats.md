@@ -17,6 +17,7 @@ summary: "GPU statistics and usage information"
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    // fetch("https://raw.githubusercontent.com/zhijie-group/gpu_stat/master/gpu_status.json") 
     fetch("gpu_status.json")
         .then(response => response.json())
         .then(data => {
