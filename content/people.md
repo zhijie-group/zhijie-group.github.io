@@ -10,13 +10,13 @@ summary: people
 {{< lab_members_grid >}}
 {{< lab_member name="Zhijie Deng" role="Assistant Professor" image="dzj.jpg" academic="https://thudzj.github.io/"  twitter="https://x.com/ZhijieDeng2">}}
 
-{{< lab_member name="Yibo Miao" role="Master Student" image="unknown.jpg" academic="https://scholar.google.com/citations?user=PaVrM_kAAAAJ&hl=zh-CN">}}
+<!-- {{< lab_member name="Yibo Miao" role="Master Student" image="unknown.jpg" academic="https://scholar.google.com/citations?user=PaVrM_kAAAAJ&hl=zh-CN">}} -->
 
-{{< lab_member name="Zhenyi Liao" role="Master Student" image="lzy.jpg" academic="#">}}
+<!-- {{< lab_member name="Zhenyi Liao" role="Master Student" image="lzy.jpg" academic="#">}} -->
 
-{{< lab_member name="Zipeng Xiao" role="Master Student" image="xzp.jpg" academic="#">}}
+<!-- {{< lab_member name="Zipeng Xiao" role="Master Student" image="xzp.jpg" academic="#">}} -->
 
-<!-- {{< lab_member name="Chang Liu" role="Master Student" image="lc.jpg" academic="#">}} -->
+{{< lab_member name="Chang Liu" role="Master Student" image="lc.jpg" academic="#">}}
 
 {{< lab_member name="Zihao Zeng" role="Master Student" image="zzh.jpg" academic="#">}}
 
@@ -52,4 +52,7 @@ summary: people
 {{< alumni_entry name="Tong Chen" description="Undergrad Intern, incoming PhD Student at UPenn." homepage="https://openreview.net/profile?id=~Tong_Chen13">}}
 {{< alumni_entry name="Hongcheng Gao" description="Undergrad Intern, now Master Student at UCAS." homepage="https://hongcheng-gao.github.io/">}}
 {{< alumni_entry name="Aochuan Chen" description="Undergrad Intern, now PhD Student at HKUST-gz." homepage="https://openreview.net/profile?id=~Aochuan_Chen1">}}
+{{< alumni_entry name="Zhenyi Liao" description="" homepage="">}} 
+{{< alumni_entry name="Yibo Miao" description="" homepage="https://scholar.google.com/citations?user=PaVrM_kAAAAJ&hl=zh-CN">}} 
+{{< alumni_entry name="Zipeng Xiao" description="" homepage="">}} 
 {{< /alumni >}}
