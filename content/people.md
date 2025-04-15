@@ -50,13 +50,13 @@ summary: people
 
 ### Alumni
 {{< alumni >}}
-{{< alumni_entry name="Bokai Lin" description="Undergrad Intern, incoming PhD Student at SJTU & SII." homepage="https://openreview.net/profile?id=~Bokai_Lin1">}} 
+{{< alumni_entry name="Yibo Miao" description="Master, 2022-2025; now Researcher at Kimi." homepage="https://scholar.google.com/citations?user=PaVrM_kAAAAJ&hl=zh-CN">}} 
+{{< alumni_entry name="Zhenyi Liao" description="Master, 2022-2025; now Researcher at OPPO AI Center." homepage="">}} 
+{{< alumni_entry name="Zipeng Xiao" description="Master, 2022-2025." homepage="">}} 
+{{< alumni_entry name="Bokai Lin" description="Undergrad Intern, 2023-2025; incoming PhD Student at SJTU & SII." homepage="https://openreview.net/profile?id=~Bokai_Lin1">}} 
 <!-- image="lbk.jpg" academic="#">}} -->
-{{< alumni_entry name="Yu Lei" description="Undergrad Intern, incoming PhD Student at UT Austin." homepage="https://theknight-z.github.io/">}}
-{{< alumni_entry name="Tong Chen" description="Undergrad Intern, incoming PhD Student at UPenn." homepage="https://openreview.net/profile?id=~Tong_Chen13">}}
-{{< alumni_entry name="Hongcheng Gao" description="Undergrad Intern, now Master Student at UCAS." homepage="https://hongcheng-gao.github.io/">}}
-{{< alumni_entry name="Aochuan Chen" description="Undergrad Intern, now PhD Student at HKUST-gz." homepage="https://openreview.net/profile?id=~Aochuan_Chen1">}}
-{{< alumni_entry name="Zhenyi Liao" description="" homepage="">}} 
-{{< alumni_entry name="Yibo Miao" description="" homepage="https://scholar.google.com/citations?user=PaVrM_kAAAAJ&hl=zh-CN">}} 
-{{< alumni_entry name="Zipeng Xiao" description="" homepage="">}} 
+{{< alumni_entry name="Hongcheng Gao" description="Undergrad Intern, 2022-2025; now Master Student at UCAS." homepage="https://hongcheng-gao.github.io/">}}
+{{< alumni_entry name="Yu Lei" description="Undergrad Intern, 2022-2024; incoming PhD Student at UT Austin." homepage="https://theknight-z.github.io/">}}
+{{< alumni_entry name="Tong Chen" description="Undergrad Intern, 2023-2024; incoming PhD Student at UPenn." homepage="https://openreview.net/profile?id=~Tong_Chen13">}}
+{{< alumni_entry name="Aochuan Chen, 2021-2022" description="Undergrad Intern; now PhD Student at HKUST-gz." homepage="https://openreview.net/profile?id=~Aochuan_Chen1">}}
 {{< /alumni >}}
