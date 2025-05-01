@@ -12,7 +12,7 @@ cover:
 
 {{< justify >}}
 
-SJTU Deng Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/), [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+SJTU Deng Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/) and [School of Computer Science](https://www.cs.sjtu.edu.cn/) at [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
 
 Current research interests focus on:
 
@@ -35,6 +35,10 @@ Current research interests focus on:
 ### News 
 
 <!-- 🎉 -->
+
+{{< newsEntry >}}
+**05/2025**: [Orthus](https://arxiv.org/pdf/2412.00127) is accepted to ICML! 🎉 
+{{< /newsEntry >}}
 
 {{< newsEntry >}}
 **01/2025**: Two papers are accepted to ICLR 25! Check out: [MatryoshkaKV](https://arxiv.org/pdf/2410.14731) and [3D-Properties](https://arxiv.org/pdf/2406.07327)! 🎉 

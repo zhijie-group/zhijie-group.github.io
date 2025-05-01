@@ -1,5 +1,17 @@
 [
     {
+        "title": "Orthus: Autoregressive Interleaved Image-Text Generation with Modality-Specific Heads",
+        "authors": "Siqi Kou, Jiachun Jin, Zhihong Liu, Chang Liu, Ye Ma, Jian Jia, Quan Chen, Peng Jiang, Zhijie Deng†",
+        "venue": "ICML 2025",
+        "pdf": "https://arxiv.org/pdf/2412.00127",
+        "code": "https://github.com/zhijie-group/Orthus",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "07/2025"
+    },
+    {
         "title": "MatryoshkaKV: Adaptive KV Compression via Trainable Orthogonal Projection",
         "authors": "Bokai Lin, Zihao Zeng, Zipeng Xiao, Siqi Kou, TianQi Hou, Xiaofeng Gao, Hao Zhang, Zhijie Deng†",
         "venue": "ICLR 2025",

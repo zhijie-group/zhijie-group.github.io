@@ -7,6 +7,10 @@ summary: publications
 
 ### 2025
 
+{{< publication title="Orthus: Autoregressive Interleaved Image-Text Generation with Modality-Specific Heads" venue="ICML 2025" paperLink="https://arxiv.org/pdf/2412.00127" codeLink="https://github.com/zhijie-group/Orthus" award="" project="" data-topic="Large Language Models" >}}
+Siqi Kou, Jiachun Jin, Zhihong Liu, Chang Liu, Ye Ma, Jian Jia, Quan Chen, Peng Jiang, Zhijie Deng†
+{{< /publication >}}
+
 {{< publication title="MatryoshkaKV: Adaptive KV Compression via Trainable Orthogonal Projection" venue="ICLR 2025" paperLink="https://arxiv.org/pdf/2410.14731" codeLink="" award="" project="" data-topic="Large Language Models" >}}
 Bokai Lin, Zihao Zeng, Zipeng Xiao, Siqi Kou, TianQi Hou, Xiaofeng Gao, Hao Zhang, Zhijie Deng†
 {{< /publication >}}
