@@ -46,6 +46,8 @@ summary: people
 
 {{< lab_member name="Jiachun Jin" role="Visiting Master Student" image="unknown.jpg" academic="https://jiachunjin.github.io/">}}
 
+{{< lab_member name="Yi Yang" role="PhD Student" image="unknown.jpg" academic="#" twitter="https://twitter.com/xx" >}}
+
 {{< /lab_members_grid >}}
 
 ### Alumni
