@@ -105,3 +105,4 @@ Current research interests focus on:
 
 {{< four_images src1="/img/sponsors/NSFC.jpg" src2="/img/sponsors/shkw.jpg" src3="/img/sponsors/OPPO-Logo.png" src4="/img/sponsors/bc.png" alt2="shkw" alt1="nsfc" alt3="oppo" alt4="baichuan" width1="23%" width2="27%" width3="23%" width4="25%" title="">}}
 {{< four_images src1="/img/sponsors/ks.jpg" src2="/img/sponsors/hw.png" src3="/img/sponsors/ts.png" src4="/img/sponsors/zhipu.png" alt2="hw" alt1="ks" alt3="ts" alt4="zhipu" width1="23%" width2="27%" width3="23%" width4="25%" title="">}}
+{{< four_images src1="/img/sponsors/alimama.png" src2="/img/sponsors/em.jpg" src3="/img/sponsors/em.jpg" src4="/img/sponsors/em.jpg" alt2="white-linen" alt1="alimama" alt3="white-linen" alt4="white-linen" width1="23%" width2="27%" width3="23%" width4="25%" title="">}}
