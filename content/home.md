@@ -3,16 +3,16 @@ title: ""
 layout: "home"
 type: "home"
 url: "/home/"
-summary: "home page for SJTU Deng Lab"
+summary: "home page for DENG Lab @ SJTU"
 cover:
   image: img/all-people.jpg
-  alt: "SJTU Deng Lab"
-  caption: "SJTU Deng Lab"
+  alt: "DENG Lab @ SJTU"
+  caption: "DENG Lab @ SJTU"
 ---
 
 {{< justify >}}
 
-SJTU Deng Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/) and [School of Computer Science](https://www.cs.sjtu.edu.cn/) at [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
+DENG Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/) and [School of Computer Science](https://www.cs.sjtu.edu.cn/) at [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
 
 Current research interests focus on:
 
@@ -94,7 +94,7 @@ Current research interests focus on:
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
-  **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/Deng_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) is accepted to ICCV 23! 🎉 
+  **07/2023**: [Learning Neural Eigenfunctions for Unsupervised Semantic Segmentation](https://openaccess.thecvf.com/content/ICCV2023/papers/DENG_Learning_Neural_Eigenfunctions_for_Unsupervised_Semantic_Segmentation_ICCV_2023_paper.pdf) is accepted to ICCV 23! 🎉 
 {{< /newsEntry >}}
 
 
