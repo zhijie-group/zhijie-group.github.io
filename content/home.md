@@ -37,6 +37,10 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**06/2025**: [L^2VSD](#) and [Meta-Unlearning on Diffusion Models](https://arxiv.org/pdf/2410.12777) are accepted to ICCV! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **05/2025**: [Orthus](https://arxiv.org/pdf/2412.00127) is accepted to ICML! 🎉 
 {{< /newsEntry >}}
 

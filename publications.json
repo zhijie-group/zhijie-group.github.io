@@ -1,5 +1,27 @@
 [
     {
+        "title": "Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts",
+        "authors": "Hongcheng Gao, Tianyu Pang†, Chao Du, Taihang Hu, Zhijie Deng†, Min Lin",
+        "venue": "ICCV 2025",
+        "pdf": "https://arxiv.org/pdf/2410.12777",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Generative Models, Diffusion Models",
+        "date": "10/2025"
+    },
+    {
+        "title": "Advancing Text-to-3D Generation with Linearized Lookahead Variational Score Distillation",
+        "authors": "Yu Lei, Bingde Liu, Qingsong Xie, Haonan Lu, Zhijie Deng†",
+        "venue": "ICCV 2025",
+        "pdf": "#",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Generative Models, Diffusion Models",
+        "date": "10/2025"
+    },
+    {
         "title": "Orthus: Autoregressive Interleaved Image-Text Generation with Modality-Specific Heads",
         "authors": "Siqi Kou, Jiachun Jin, Zhihong Liu, Chang Liu, Ye Ma, Jian Jia, Quan Chen, Peng Jiang, Zhijie Deng†",
         "venue": "ICML 2025",
