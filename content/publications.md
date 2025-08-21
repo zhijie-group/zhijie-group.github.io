@@ -7,6 +7,10 @@ summary: publications
 
 ### 2025
 
+{{< publication title="LOVECon: Text-driven Training-free Long Video Editing with ControlNet" venue="SCIS 2025" paperLink="https://arxiv.org/pdf/2310.09711.pdf" codeLink="" award="" project="" data-topic="Generative Models, Diffusion Models" >}}
+Zhenyi Liao, Qingsong Xie, Zhijie Deng†
+{{< /publication >}}
+
 {{< publication title="SIFT: Grounding LLM Reasoning in Contexts via Stickers" venue="Findings of EMNLP 2025" paperLink="https://arxiv.org/pdf/2502.14922?" codeLink="" award="" project="" data-topic="Large Language Models" >}}
 Zihao Zeng, Xuyao Huang, Boxiu Li, Zhijie Deng†
 {{< /publication >}}

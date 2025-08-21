@@ -1,5 +1,16 @@
 [
     {
+        "title": "LOVECon: Text-driven Training-free Long Video Editing with ControlNet",
+        "authors": "Zhenyi Liao, Qingsong Xie, Zhijie Deng†",
+        "venue": "SCIS 2025",
+        "pdf": "https://arxiv.org/pdf/2310.09711.pdf",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Generative Models, Diffusion Models",
+        "date": "08/2025"
+    },
+    {
         "title": "SIFT: Grounding LLM Reasoning in Contexts via Stickers",
         "authors": "Zihao Zeng, Xuyao Huang, Boxiu Li, Zhijie Deng†",
         "venue": "Findings of EMNLP 2025",

@@ -37,6 +37,10 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**08/2025**: [LOVECon](https://arxiv.org/pdf/2310.09711.pdf) is accepted to SCIS! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **08/2025**: [SIFT](https://arxiv.org/pdf/2502.14922?) and [Fast Quiet-STaR](https://arxiv.org/pdf/2505.17746) are accepted to EMNLP Findings! 🎉 
 {{< /newsEntry >}}
 

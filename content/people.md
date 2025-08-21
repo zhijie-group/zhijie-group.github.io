@@ -16,13 +16,15 @@ summary: people
 
 <!-- {{< lab_member name="Zipeng Xiao" role="Master Student" image="xzp.jpg" academic="#">}} -->
 
-{{< lab_member name="Chang Liu" role="Master Student" image="lc.jpg" academic="#">}}
-
-{{< lab_member name="Zihao Zeng" role="Master Student" image="zzh.jpg" academic="#">}}
-
 {{< lab_member name="Siqi Kou" role="PhD Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Yi Yang" role="Incoming PhD Student" image="unknown.jpg" academic="#">}}
+{{< lab_member name="Yi Yang" role="PhD Student" image="unknown.jpg" academic="#">}}
+
+{{< lab_member name="Jiachun Jin" role="PhD Student" image="unknown.jpg" academic="https://jiachunjin.github.io/">}}
+
+{{< lab_member name="Zihao Zeng" role="Master Student" image="zzh.jpg" academic="https://cengzihao.github.io/">}}
+
+{{< lab_member name="Chang Liu" role="Master Student" image="lc.jpg" academic="#">}}
 
 {{< lab_member name="Xu Wang" role="Master Student" image="unknown.jpg" academic="#">}}
 
@@ -30,21 +32,25 @@ summary: people
 
 {{< lab_member name="Xuyao Huang" role="Master Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Chenkai Xu" role="Incoming Master Student" image="unknown.jpg" academic="#">}}
+{{< lab_member name="Chenkai Xu" role="Master Student" image="unknown.jpg" academic="#">}}
+
+{{< lab_member name="Yiyang Chen" role="Master Student" image="unknown.jpg" academic="#">}}
 
 <!-- {{< lab_member name="Yu Lei" role="Undergrad Student" image="unknown.jpg" academic="https://theknight-z.github.io/">}} -->
 
-{{< lab_member name="Bingde Liu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
+<!-- {{< lab_member name="Bingde Liu" role="Undergrad Student" image="unknown.jpg" academic="#">}} -->
+
+{{< lab_member name="Yijie Jin" role="Undergrad Student" image="unknown.jpg" academic="https://drewjin.github.io/">}}
 
 {{< lab_member name="Zhihong Liu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
+
+{{< lab_member name="Yuji Ren" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
 {{< lab_member name="Yuzhe Liu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
 {{< lab_member name="Boxiu Li" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Yijie Jin" role="Undergrad Student" image="unknown.jpg" academic="https://drewjin.github.io/">}}
-
-{{< lab_member name="Jiachun Jin" role="Visiting Master Student" image="unknown.jpg" academic="https://jiachunjin.github.io/">}}
+{{< lab_member name="Yanzhe Hu" role="Undergrad Student" image="unknown.jpg" academic="#">}}
 
 {{< /lab_members_grid >}}
 
