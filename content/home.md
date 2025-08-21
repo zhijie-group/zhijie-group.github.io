@@ -37,6 +37,10 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
+**08/2025**: [SIFT](https://arxiv.org/pdf/2502.14922?) and [Fast Quiet-STaR](https://arxiv.org/pdf/2505.17746) are accepted to EMNLP Findings! 🎉 
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
 **06/2025**: [L^2VSD](#) and [Meta-Unlearning on Diffusion Models](https://arxiv.org/pdf/2410.12777) are accepted to ICCV! 🎉 
 {{< /newsEntry >}}
 

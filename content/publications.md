@@ -7,6 +7,14 @@ summary: publications
 
 ### 2025
 
+{{< publication title="SIFT: Grounding LLM Reasoning in Contexts via Stickers" venue="Findings of EMNLP 2025" paperLink="https://arxiv.org/pdf/2502.14922?" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Zihao Zeng, Xuyao Huang, Boxiu Li, Zhijie Deng†
+{{< /publication >}}
+
+{{< publication title="Fast Quiet-STaR: Thinking Without Thought Tokens" venue="Findings of EMNLP 2025" paperLink="https://arxiv.org/pdf/2505.17746" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Wei Huang, Yizhe Xiong, Xin Ye, Zhijie Deng, Hui Chen, Zijia Lin, Guiguang Ding
+{{< /publication >}}
+
 {{< publication title="Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts" venue="ICCV 2025" paperLink="https://arxiv.org/pdf/2410.12777" codeLink="" award="" project="" data-topic="Generative Models, Diffusion Models" >}}
 Hongcheng Gao, Tianyu Pang†, Chao Du, Taihang Hu, Zhijie Deng†, Min Lin
 {{< /publication >}}

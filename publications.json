@@ -1,5 +1,27 @@
 [
     {
+        "title": "SIFT: Grounding LLM Reasoning in Contexts via Stickers",
+        "authors": "Zihao Zeng, Xuyao Huang, Boxiu Li, Zhijie Deng†",
+        "venue": "Findings of EMNLP 2025",
+        "pdf": "https://arxiv.org/pdf/2502.14922?",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "11/2025"
+    },
+    {
+        "title": "Fast Quiet-STaR: Thinking Without Thought Tokens",
+        "authors": "Wei Huang, Yizhe Xiong, Xin Ye, Zhijie Deng, Hui Chen, Zijia Lin, Guiguang Ding",
+        "venue": "Findings of EMNLP 2025",
+        "pdf": "https://arxiv.org/pdf/2505.17746",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "11/2025"
+    },
+    {
         "title": "Meta-Unlearning on Diffusion Models: Preventing Relearning Unlearned Concepts",
         "authors": "Hongcheng Gao, Tianyu Pang†, Chao Du, Taihang Hu, Zhijie Deng†, Min Lin",
         "venue": "ICCV 2025",
