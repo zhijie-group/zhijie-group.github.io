@@ -35,6 +35,9 @@ Current research interests focus on:
 ### News 
 
 <!-- 🎉 -->
+{{< newsEntry >}}
+**08/2025**: Zhijie will searve as an area chair of ICLR 2026! 🎉 
+{{< /newsEntry >}}
 
 {{< newsEntry >}}
 **08/2025**: [LOVECon](https://arxiv.org/pdf/2310.09711.pdf) is accepted to SCIS! 🎉 
