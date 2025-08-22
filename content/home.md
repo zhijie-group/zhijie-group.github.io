@@ -9,7 +9,7 @@ cover:
   alt: "DENG Lab @ SJTU"
   caption: "DENG Lab @ SJTU"
 ---
-
+ 
 {{< justify >}}
 
 DENG Lab is affiliated with [Qing Yuan Research Institute](http://www.qingyuan.sjtu.edu.cn/) and [School of Computer Science](https://www.cs.sjtu.edu.cn/) at [Shanghai Jiao Tong University](https://en.sjtu.edu.cn/), working on pioneering novel methods and theories that enhance the efficiency, efficacy, reliability, and trustworthiness of machine learning approaches, especially for generative AI. Our members conduct comprehensive research across the entire machine learning cycle, encompassing data, methods, models, and evaluation.
