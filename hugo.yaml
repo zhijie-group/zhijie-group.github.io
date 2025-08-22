@@ -1,4 +1,4 @@
-bseURL: 'http://zhijie-group.github.io'
+baseURL: 'https://zhijie-group.github.io/'
 languageCode: en-us
 title: 'DENG Lab @ SJTU'
 theme: 'PaperMod'
@@ -33,6 +33,18 @@ params:
   assets:
     css:
       - "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  # Define social params to avoid deprecated .Site.Social usage in Hugo >= 0.124
+  social:
+    twitter: sjtudenglab      # Without '@'
+    facebook_admin: ""        # Optional, leave empty if not used
+  # Optional: show social icons on home/profile if enabled by theme
+  socialIcons:
+    - name: github
+      url: "https://github.com/zhijie-group"
+    - name: x
+      url: "https://x.com/sjtudenglab"
+    - name: zhihu
+      url: "https://www.zhihu.com/people/SJTUDengLab"
   
 menu:
   main:

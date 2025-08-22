@@ -7,6 +7,7 @@ This git repo hosts all content displayed on the website of DENG Lab @ SJTU.
 
 1. Install Hugo > 0.12
 2. Run the following commands:
+
 ```bash
 git clone https://github.com/zhijie-group/zhijie-group.github.io.git
 cd zhijie-group.github.io

@@ -36,7 +36,7 @@ Current research interests focus on:
 
 <!-- 🎉 -->
 {{< newsEntry >}}
-**08/2025**: Zhijie will searve as an area chair of ICLR 2026! 🎉 
+**08/2025**: Zhijie will serve as an area chair of ICLR 2026! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
