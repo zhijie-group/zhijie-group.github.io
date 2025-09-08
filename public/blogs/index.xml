@@ -39,6 +39,128 @@
 &lt;p&gt;With a minor tweak to the load‑balancing loss (treat all nulls as one averaged bucket) and a simple annealing schedule, AdaMoE reduces FLOPs while maintaining or improving accuracy (e.g., on Mixtral‑8×7B/ARC‑C: −14.55% FLOPs with +1.69% accuracy).&lt;/p&gt;</description>
     </item>
     <item>
+      <title>AdaMoE: 借助“空专家”实现Token级别的动态路由选择</title>
+      <link>https://zhijie-group.github.io/blogs/adamoe_zh/</link>
+      <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://zhijie-group.github.io/blogs/adamoe_zh/</guid>
+      <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
+    
+    
+    
+        &lt;a href=&#34;https://arxiv.org/pdf/2406.13233&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+    
+        &lt;a href=&#34;https://github.com/zhijie-group/AdaMoE&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;h2 id=&#34;太长不看版&#34;&gt;太长不看版&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;AdaMoE 通过向专家池中添加一组 &lt;strong&gt;“空专家”&lt;/strong&gt;（null experts）（其计算开销为零），为混合专家模型（MoE）带来了Token级别的自适应专家选择能力。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在&lt;code&gt;top-k&lt;/code&gt;路由范式下，当一个Token被路由到“空专家”时，它实际上激活了更少的真实专家。这使得&lt;strong&gt;每个Token所激活的真实专家数量，在保持平均计算预算不变的前提下，实现了自适应&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;我们对负载均衡损失函数（load‑balancing loss）进行了微调（将所有“空专家”视为一个聚合的计算单元），并采用了一个简单的退火策略。AdaMoE在降低了计算量（FLOPs）的同时，保持甚至提升了模型的准确率。例如，在Mixtral‑8×7B模型和ARC‑C数据集上的实验显示：计算量降低了14.55%，而准确率提升了1.69%。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;为何专家选择需要token级别的自适应&#34;&gt;为何专家选择需要Token级别的自适应？&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    我们将混合专家模型的路由机制从固定的 &lt;strong&gt;&lt;code&gt;top-k&lt;/code&gt;&lt;/strong&gt; 模式转向Token级别的自适应模式，其根本原因在于一个关键的观察：&lt;strong&gt;并非所有Token在计算上都生而平等&lt;/strong&gt;。在一段文本中，不同Token所蕴含的信息量和处理的复杂度存在巨大差异。传统的MoE模型强制每个Token激活固定数量的专家，这种统一的计算分配方式忽略了Token间的差异，从而导致了计算资源的低效分配。
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;image/pre.png&#34; alt=&#34;Pre-Experiment&#34; style=&#34;width: 55%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;在 SocialIQA 数据集上，不同Token的累积路由概率超过50%所需的Top专家数量分布。每一条柱状图代表Mixtral-8x7B模型中，对应MoE层内不同专家数量的Token占比。&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;我们为此提供了实验性的证据。我们分析了Mixtral-8x7B（一个采用固定top-2路由的模型）的路由概率分布，并发现了两种关键模式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;大量Token的路由概率高度集中于单个专家，这表明激活第二个专家通常是多余的；&lt;/li&gt;
+&lt;li&gt;另有相当一部分Token的概率更均匀地分布在多个专家上，这意味着它们可能需要两个甚至更多专家的计算能力才能被有效处理。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这一发现有力地证明，固定的&lt;code&gt;top-k&lt;/code&gt;策略是次优的，它对简单的Token造成了过度计算，而对复杂的Token则可能计算不足。&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;借助空专家实现自适应路由&#34;&gt;借助“空专家”实现自适应路由&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;AdaMoE 通过引入 &lt;strong&gt;“空专家”&lt;/strong&gt;（null experts）来实现Token级别的自适应专家选择。我们将其定义为一种不执行任何操作的单元，处理Token特征所需的&lt;strong&gt;计算量（FLOPs）为零&lt;/strong&gt;。在大型语言模型的实践中，常见的零计算操作包括常数零映射和恒等映射（为简化起见，我们在后续讨论中默认采用零映射作为“空专家”的实现）。&lt;/p&gt;
+&lt;p&gt;我们的机制运行如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在原有的&lt;code&gt;n&lt;/code&gt;个真实专家之外，将&lt;strong&gt;专家集合扩展&lt;/strong&gt;&lt;code&gt;m&lt;/code&gt;个“空专家”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;略微增加&lt;/strong&gt;路由器的 &lt;strong&gt;&lt;code&gt;top-k&lt;/code&gt;&lt;/strong&gt; 值（例如，从 2 增加到 3 或 4）。这样，每个Token选出的&lt;code&gt;top-k&lt;/code&gt;专家中就可能包含一部分“空专家”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;实现计算的自适应&lt;/strong&gt;：如果&lt;code&gt;top-k&lt;/code&gt;专家中包含&lt;code&gt;r&lt;/code&gt;个“空专家”，那么该Token实际上只使用了&lt;code&gt;k-r&lt;/code&gt;个真实专家。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;进行合理的负载均衡&lt;/strong&gt;：在计算负载均衡损失时，我们将&lt;strong&gt;所有“空专家”聚合为单一的计算单元&lt;/strong&gt;（因为没有必要在完全等价的“空专家”之间强制实现均衡）。&lt;/li&gt;
+&lt;li&gt;在&lt;code&gt;top-k&lt;/code&gt;选择之后，&lt;strong&gt;仅对真实专家进行归一化&lt;/strong&gt;，以确保输出的尺度与标准的MoE模型保持一致。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;image/vs.png&#34; alt=&#34;DeepSeek&#34; style=&#34;width: 85%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;固定的 top-2 路由与 AdaMoE 对比。左图：标准的 top-2 路由，每个Token精确激活2个真实专家。右图：AdaMoE，从4个真实专家和5个“空专家”中选择 top-4，使得某些Token激活了3个真实专家，而另一些只激活了1个。&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;h2 id=&#34;主要实验结果&#34;&gt;主要实验结果&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    在对 Mixtral‑8×7B 进行微调时，AdaMoE 在多个基准测试中，既降低了FFN层的计算量（FLOPs），又保持甚至提升了模型的准确率。例如，在 ARC‑Challenge 数据集上，&lt;strong&gt;总FLOPs下降了约14.55%，而准确率提升了1.69%&lt;/strong&gt;。同时，每层每个Token激活的平均专家数从 2.0 降至约 1.67。
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;image/res.png&#34; alt=&#34;venn&#34; style=&#34;width: 80%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;AdaMoE在多个数据集上的性能表现，展示了准确率（Acc.）、FLOPs降低百分比（%FLOPs）和平均专家负载（Load）的对比。&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;h2 id=&#34;从论文走向实践&#34;&gt;从论文走向实践&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;我们备受鼓舞地看到，“空专家”这一概念并非仅仅停留在理论层面，它已被业界前沿的大型语言模型所采纳和实现。&lt;strong&gt;LongCat-Flash&lt;/strong&gt; [1]（一个5600亿参数的模型）的技术报告中，就将 &lt;strong&gt;“零计算专家”&lt;/strong&gt;（zero-computation experts）列为一项关键的架构创新，并引用了我们的论文。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>SIFT: Grounding LLM Reasoning in Contexts via Stickers</title>
       <link>https://zhijie-group.github.io/blogs/sift/</link>
       <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
