@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Blogs on DENG Lab @ SJTU</title>
+    <link>https://zhijie-group.github.io/blogs/</link>
+    <description>Recent content in Blogs on DENG Lab @ SJTU</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 08 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://zhijie-group.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AdaMoE: Token-Adaptive Routing with Null Experts for MoE</title>
+      <link>https://zhijie-group.github.io/blogs/adamoe/</link>
+      <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://zhijie-group.github.io/blogs/adamoe/</guid>
+      <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
+    
+    
+    
+        &lt;a href=&#34;https://arxiv.org/pdf/2406.13233&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+    
+        &lt;a href=&#34;https://github.com/zhijie-group/AdaMoE&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;h2 id=&#34;tl-dr&#34;&gt;TL; DR&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;AdaMoE adds a set of &lt;strong&gt;null experts&lt;/strong&gt; (with zero compute) to the expert pool to enable token-adaptive expert choice for MoE.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Under the top-k routing paradigm, tokens that route to null experts effectively use fewer true experts, making the number of &lt;strong&gt;true experts per token adaptive&lt;/strong&gt; under the same average budget.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;With a minor tweak to the load‑balancing loss (treat all nulls as one averaged bucket) and a simple annealing schedule, AdaMoE reduces FLOPs while maintaining or improving accuracy (e.g., on Mixtral‑8×7B/ARC‑C: −14.55% FLOPs with +1.69% accuracy).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SIFT: Grounding LLM Reasoning in Contexts via Stickers</title>
+      <link>https://zhijie-group.github.io/blogs/sift/</link>
+      <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://zhijie-group.github.io/blogs/sift/</guid>
+      <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
+    
+    
+    
+        &lt;a href=&#34;https://github.com/zhijie-group/SIFT/blob/main/paper.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+    
+        &lt;a href=&#34;https://github.com/zhijie-group/SIFT&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+            &lt;img src=&#34;https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;h2 id=&#34;introduction--motivation&#34;&gt;Introduction &amp;amp; Motivation&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;Techniques including Chain-of-Thought (CoT) Prompting [1,2] and Self-Consistency [3], as well as reasoning-enhanced models, e.g., OpenAI-o1, DeepSeek-R1, and KIMI-k1.5 [4-6], have all contributed to improvements in multi-step reasoning for solving hard problems.&lt;/p&gt;
+&lt;p&gt;Discussions in the community suggest that advanced reasoning capabilities in LLMs mainly stem from two factors:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;foundational knowledge acquisition through massive pretraining on diverse data;&lt;/li&gt;
+&lt;li&gt;strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical &lt;strong&gt;misinterpretation of the original problem&lt;/strong&gt; during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Consistency Large Language Models: A Family of Efficient Parallel Decoders</title>
+      <link>https://zhijie-group.github.io/blogs/cllm/</link>
+      <pubDate>Mon, 06 May 2024 12:00:00 -0800</pubDate>
+      <guid>https://zhijie-group.github.io/blogs/cllm/</guid>
+      <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
+    
+        &lt;a href=&#34;https://arxiv.org/abs/2403.00835&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+          &lt;img src=&#34;https://img.shields.io/badge/arXiv-2403.00835-white.svg?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+    
+        &lt;a href=&#34;https://github.com/hao-ai-lab/Consistency_LLM&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;
+          &lt;img src=&#34;https://img.shields.io/github/stars/hao-ai-lab/Consistency_LLM?style=social&#34; style=&#34;transform: scale(1.5);&#34;&gt;
+        &lt;/a&gt;
+    
+    
+    
+&lt;/div&gt;
+
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;strong&gt;TL;DR:&lt;/strong&gt; LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show pretrained LLMs can be easily taught to operate as efficient parallel decoders. We introduce &lt;strong&gt;Consistency Large Language Models (CLLMs)&lt;/strong&gt;, a new family of parallel decoders capable of reducing inference latency by efficiently decoding an $n$-token sequence per inference step. Our research shows this process &amp;ndash; mimicking human cognitive process of forming complete sentences in mind before articulating word by word &amp;ndash; can be effectively learned by simply finetuning pretrained LLMs. Specifically, CLLMs are trained to perform parallel decoding by mapping any randomly initialized $n$-token sequence to the same result yielded by autoregressive (AR) decoding in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed, in par with or even beter than other fast inference techniques like Medusa2 and Eagle, yet require no additional memory cost to accomodate auxiliary model components at inference time.
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;img/baseline_vs_cllm_gsm8k_best_acc_demo.gif&#34; alt=&#34;cllm-gsm8k-acc-demo&#34; style=&#34;width: 120%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;Figure 1: Demo of $\sim 3 \times$ speedup by CLLM-ABEL-7B-001 in comparison with baseline &lt;a href=&#34;https://github.com/GAIR-NLP/abel&#34;&gt;ABEL-7B-001&lt;/a&gt; using Jacobi decoding on GSM8K.&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;h2 id=&#34;background-jacobi-decoding&#34;&gt;Background: Jacobi Decoding&lt;/h2&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    Large language models (LLMs) are transforming the landscape of human lives, from programming to offering legal and health advice. However, during inference, LLMs generate responses token by token using AR decoding as shown in Figure 1, leading to high latency for longer responses. Using AR decoding, it often necessitates architectural modifications, auxiliary components, or draft models, to speed up inference by generating more than one token at a time.
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;img/clm_objective.png&#34; alt=&#34;autoregressive&#34; style=&#34;width: 60%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;Figure 2: illustration of conventional AR decoding: one token is generated at a time.&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;a href=&#34;https://arxiv.org/abs/2305.10427&#34;&gt;Jacobi decoding&lt;/a&gt; originates from the Jacobi and Gauss-Seidel fixed-point iteration for solving nonlinear equations, and &lt;a href=&#34;https://proceedings.mlr.press/v139/song21a.html&#34;&gt;is proven identical to AR generation using greedy decoding&lt;/a&gt;. Jacobi decoding reformulates the sequential generation process into a system of $n$ non-linear equations with $n$ variables solvable in parallel based on Jacobi iteration. Each iteration step might predict more than one correct token (By &amp;ldquo;correct&amp;rdquo;, we mean alignment with the AR decoding
+result under a greedy sampling strategy), thereby accelerating AR decoding potentially.
+&lt;/div&gt;
+
+
+
+&lt;style&gt;
+  .gray-text {
+    color: #808080;
+  }
+&lt;/style&gt;
+
+
+  &lt;figure&gt;
+	  &lt;div style=&#34;display: grid; place-items: center;&#34;&gt;
+      &lt;img src=&#34;img/jacobi_objective.png&#34; alt=&#34;jacobi&#34; style=&#34;width: 60%; height: auto;&#34;&gt;
+      &lt;figcaption style=&#34;font-size: 16px;&#34; class=&#34;gray-text&#34;&gt;Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.&lt;/figcaption&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+
+
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    To be specific, Jacobi decoding method first randomly guesses the next $n$ tokens in a sequence (referred to as $n$-token sequence hereinafter unless specified otherwise) from an input prompt. The $n$-token sequence, along with the prompt, is then fed to the LLM to iteratively update itself. This process continues until the $n$-token sequence stabilizes and no further changes occur, reaching a fixed point. Notably, Jacobi decoding requires no more queries to the LLM than auto-regressive (AR) decoding. Eventually, the $n$-token sequence converges to the output that would be generated by AR decoding under a greedy strategy. This progression from an initial random guess to the final AR generation outcome traces what is known as a Jacobi trajectory. An instance of Jacobi decoding iteration process and &lt;strong&gt;Jacobi trajectory&lt;/strong&gt; is illustrated in Figure 2.
+&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;limitations-of-jacobi-decoding&#34;&gt;Limitations of Jacobi Decoding&lt;/h3&gt;
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., &lt;a href=&#34;https://arxiv.org/abs/2305.10427&#34;&gt;an average of $1.05\times$ speedup&lt;/a&gt;. This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 3.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
