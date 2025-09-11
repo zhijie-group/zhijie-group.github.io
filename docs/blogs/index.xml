@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blogs on DENG Lab @ SJTU</title><link>https://zhijie-group.github.io/blogs/</link><description>Recent content in Blogs on DENG Lab @ SJTU</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 08 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhijie-group.github.io/blogs/index.xml" rel="self" type="application/rss+xml"/><item><title>AdaMoE: Token-Adaptive Routing with Null Experts for MoE</title><link>https://zhijie-group.github.io/blogs/adamoe/</link><pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate><guid>https://zhijie-group.github.io/blogs/adamoe/</guid><description>&lt;div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
+&lt;a href="https://arxiv.org/pdf/2406.13233" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;a href="https://github.com/zhijie-group/AdaMoE" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;/div>
+&lt;div style="text-align: left;">
+&lt;p>LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts + 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics.&lt;/p></description></item><item><title>AdaMoE: 借助“空专家”实现Token级别的动态路由选择</title><link>https://zhijie-group.github.io/blogs/adamoe_zh/</link><pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate><guid>https://zhijie-group.github.io/blogs/adamoe_zh/</guid><description>&lt;div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
+&lt;a href="https://arxiv.org/pdf/2406.13233" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;a href="https://github.com/zhijie-group/AdaMoE" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;/div>
+&lt;div style="text-align: left;">
+&lt;p>LongCat-Flash[1] 近期展示了一种token级别自适应的MoE的大规模部署方案。该方案利用零计算（恒等）专家，在560B MoE模型中，每个token激活18.6B~31.3B的参数量（平均约27B）。每一层混合了512个真专家和256个零计算专家，每次选择top-12的专家，并且由于采用了PID式预算控制器，平均真专家选择数量稳定在约8个。设备级负载均衡和ScMoE保证了系统的效率。他们将该模型呈现为一个具有强大吞吐量/成本指标的非思考模型。&lt;/p>
+&lt;p>这种设计——添加空专家并增加top-k值，从而使每个token使用可变数量的真实专家——正是AdaMoE背后的核心思想。&lt;/p>
+&lt;/div>
+&lt;h2 id="太长不看版">太长不看版&lt;/h2>
+&lt;div style="text-align: left;">
+&lt;p>AdaMoE 通过向专家池中添加一组 &lt;strong>“空专家”&lt;/strong>（null experts）（其计算开销为零），为混合专家模型（MoE）带来了Token级别的自适应专家选择能力。&lt;/p>
+&lt;ul>
+&lt;li>在 &lt;code>top-k&lt;/code>路由范式下，当一个Token被路由到“空专家”时，它实际上激活了更少的真实专家。这使得&lt;strong>每个Token所激活的真实专家数量，在保持平均计算预算不变的前提下，实现了自适应&lt;/strong>。&lt;/li>
+&lt;li>我们对负载均衡损失函数（load‑balancing loss）进行了微调（将所有“空专家”视为一个聚合的计算单元），并采用了一个简单的退火策略。AdaMoE在降低了计算量（FLOPs）的同时，保持甚至提升了模型的准确率。例如，在Mixtral‑8×7B模型和ARC‑C数据集上的实验显示：计算量降低了14.55%，而准确率提升了1.69%。&lt;/li>
+&lt;/ul>
+&lt;/div>
+&lt;h2 id="为何专家选择需要token级别的自适应">为何专家选择需要Token级别的自适应？&lt;/h2>
+&lt;div style="text-align: left;">
+我们将混合专家模型的路由机制从固定的 &lt;strong>&lt;code>top-k&lt;/code>&lt;/strong> 模式转向Token级别的自适应模式，其根本原因在于一个关键的观察：&lt;strong>并非所有Token在计算上都生而平等&lt;/strong>。在一段文本中，不同Token所蕴含的信息量和处理的复杂度存在巨大差异。传统的MoE模型强制每个Token激活固定数量的专家，这种统一的计算分配方式忽略了Token间的差异，从而导致了计算资源的低效分配。
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="image/pre.png" alt="Pre-Experiment" style="width: 55%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">在 SocialIQA 数据集上，不同Token的累积路由概率超过50%所需的Top专家数量分布。每一条柱状图代表Mixtral-8x7B模型中，对应MoE层内不同专家数量的Token占比。&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;div style="text-align: left;">
+&lt;p>我们为此提供了实验性的证据。我们分析了Mixtral-8x7B（一个采用固定top-2路由的模型）的路由概率分布，并发现了两种关键模式：&lt;/p>
+&lt;ol>
+&lt;li>大量Token的路由概率高度集中于单个专家，这表明激活第二个专家通常是多余的；&lt;/li>
+&lt;li>另有相当一部分Token的概率更均匀地分布在多个专家上，这意味着它们可能需要两个甚至更多专家的计算能力才能被有效处理。&lt;/li>
+&lt;/ol>
+&lt;p>这一发现有力地证明，固定的 &lt;code>top-k&lt;/code>策略是次优的，它对简单的Token造成了过度计算，而对复杂的Token则可能计算不足。&lt;/p>
+&lt;/div>
+&lt;h2 id="借助空专家实现自适应路由">借助“空专家”实现自适应路由&lt;/h2>
+&lt;div style="text-align: left;">
+&lt;p>AdaMoE 通过引入 &lt;strong>“空专家”&lt;/strong>（null experts）来实现Token级别的自适应专家选择。我们将其定义为一种不执行任何操作的单元，处理Token特征所需的&lt;strong>计算量（FLOPs）为零&lt;/strong>。在大型语言模型的实践中，常见的零计算操作包括常数零映射和恒等映射（为简化起见，我们在后续讨论中默认采用零映射作为“空专家”的实现）。&lt;/p>
+&lt;p>我们的机制运行如下：&lt;/p>
+&lt;ol>
+&lt;li>在原有的 &lt;code>n&lt;/code>个真实专家之外，将&lt;strong>专家集合扩展&lt;/strong> &lt;code>m&lt;/code>个“空专家”。&lt;/li>
+&lt;li>&lt;strong>略微增加&lt;/strong>路由器的 &lt;strong>&lt;code>top-k&lt;/code>&lt;/strong> 值（例如，从 2 增加到 3 或 4）。这样，每个Token选出的 &lt;code>top-k&lt;/code>专家中就可能包含一部分“空专家”。&lt;/li>
+&lt;li>&lt;strong>实现计算的自适应&lt;/strong>：如果 &lt;code>top-k&lt;/code>专家中包含 &lt;code>r&lt;/code>个“空专家”，那么该Token实际上只使用了 &lt;code>k-r&lt;/code>个真实专家。&lt;/li>
+&lt;li>&lt;strong>进行合理的负载均衡&lt;/strong>：在计算负载均衡损失时，我们将&lt;strong>所有“空专家”聚合为单一的计算单元&lt;/strong>（因为没有必要在完全等价的“空专家”之间强制实现均衡）。&lt;/li>
+&lt;li>在 &lt;code>top-k&lt;/code>选择之后，&lt;strong>仅对真实专家进行归一化&lt;/strong>，以确保输出的尺度与标准的MoE模型保持一致。&lt;/li>
+&lt;/ol>
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="image/vs.png" alt="DeepSeek" style="width: 85%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">固定的 top-2 路由与 AdaMoE 对比。左图：标准的 top-2 路由，每个Token精确激活2个真实专家。右图：AdaMoE，从4个真实专家和5个“空专家”中选择 top-4，使得某些Token激活了3个真实专家，而另一些只激活了1个。&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;h2 id="主要实验结果">主要实验结果&lt;/h2>
+&lt;div style="text-align: left;">
+在对 Mixtral‑8×7B 进行微调时，AdaMoE 在多个基准测试中，既降低了FFN层的计算量（FLOPs），又保持甚至提升了模型的准确率。例如，在 ARC‑Challenge 数据集上，&lt;strong>总FLOPs下降了约14.55%，而准确率提升了1.69%&lt;/strong>。同时，每层每个Token激活的平均专家数从 2.0 降至约 1.67。
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="image/res.png" alt="venn" style="width: 80%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">AdaMoE在多个数据集上的性能表现，展示了准确率（Acc.）、FLOPs降低百分比（%FLOPs）和平均专家负载（Load）的对比。&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;h2 id="从论文走向实践">从论文走向实践&lt;/h2>
+&lt;div style="text-align: left;">
+&lt;p>我们备受鼓舞地看到，“空专家”这一概念并非仅仅停留在理论层面，它已被业界前沿的大型语言模型所采纳和实现。&lt;strong>LongCat-Flash&lt;/strong>的技术报告中，就将 &lt;strong>“零计算专家”&lt;/strong>（zero-computation experts）列为一项关键的架构创新，并引用了我们的论文。&lt;/p></description></item><item><title>SIFT: Grounding LLM Reasoning in Contexts via Stickers</title><link>https://zhijie-group.github.io/blogs/sift/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><guid>https://zhijie-group.github.io/blogs/sift/</guid><description>&lt;div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
+&lt;a href="https://github.com/zhijie-group/SIFT/blob/main/paper.pdf" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/📃 Paper Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;a href="https://github.com/zhijie-group/SIFT" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/💻 Code Link--1abc9c.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;/div>
+&lt;h2 id="introduction--motivation">Introduction &amp;amp; Motivation&lt;/h2>
+&lt;div style="text-align: left;">
+&lt;p>Techniques including Chain-of-Thought (CoT) Prompting [1,2] and Self-Consistency [3], as well as reasoning-enhanced models, e.g., OpenAI-o1, DeepSeek-R1, and KIMI-k1.5 [4-6], have all contributed to improvements in multi-step reasoning for solving hard problems.&lt;/p>
+&lt;p>Discussions in the community suggest that advanced reasoning capabilities in LLMs mainly stem from two factors:&lt;/p>
+&lt;ol>
+&lt;li>foundational knowledge acquisition through massive pretraining on diverse data;&lt;/li>
+&lt;li>strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL).&lt;/li>
+&lt;/ol>
+&lt;p>In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art DeepSeek-R1, suffer from systematical &lt;strong>misinterpretation of the original problem&lt;/strong> during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.&lt;/p></description></item><item><title>Consistency Large Language Models: A Family of Efficient Parallel Decoders</title><link>https://zhijie-group.github.io/blogs/cllm/</link><pubDate>Mon, 06 May 2024 12:00:00 -0800</pubDate><guid>https://zhijie-group.github.io/blogs/cllm/</guid><description>&lt;div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
+&lt;a href="https://arxiv.org/abs/2403.00835" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/badge/arXiv-2403.00835-white.svg?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;a href="https://github.com/hao-ai-lab/Consistency_LLM" target="_blank" rel="noopener noreferrer">
+&lt;img src="https://img.shields.io/github/stars/hao-ai-lab/Consistency_LLM?style=social" style="transform: scale(1.5);">
+&lt;/a>
+&lt;/div>
+&lt;div style="text-align: left;">
+&lt;strong>TL;DR:&lt;/strong> LLMs have been traditionally regarded as sequential decoders, decoding one token after another. In this blog, we show pretrained LLMs can be easily taught to operate as efficient parallel decoders. We introduce &lt;strong>Consistency Large Language Models (CLLMs)&lt;/strong>, a new family of parallel decoders capable of reducing inference latency by efficiently decoding an $n$-token sequence per inference step. Our research shows this process &amp;ndash; mimicking human cognitive process of forming complete sentences in mind before articulating word by word &amp;ndash; can be effectively learned by simply finetuning pretrained LLMs. Specifically, CLLMs are trained to perform parallel decoding by mapping any randomly initialized $n$-token sequence to the same result yielded by autoregressive (AR) decoding in as few steps as possible. Experiment results show CLLMs obtained using our proposed method are highly effective, showing $2.4\times$ to $3.4\times$ improvements in generation speed, in par with or even beter than other fast inference techniques like Medusa2 and Eagle, yet require no additional memory cost to accomodate auxiliary model components at inference time.
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="img/baseline_vs_cllm_gsm8k_best_acc_demo.gif" alt="cllm-gsm8k-acc-demo" style="width: 120%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">Figure 1: Demo of $\sim 3 \times$ speedup by CLLM-ABEL-7B-001 in comparison with baseline &lt;a href="https://github.com/GAIR-NLP/abel">ABEL-7B-001&lt;/a> using Jacobi decoding on GSM8K.&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;h2 id="background-jacobi-decoding">Background: Jacobi Decoding&lt;/h2>
+&lt;div style="text-align: left;">
+Large language models (LLMs) are transforming the landscape of human lives, from programming to offering legal and health advice. However, during inference, LLMs generate responses token by token using AR decoding as shown in Figure 1, leading to high latency for longer responses. Using AR decoding, it often necessitates architectural modifications, auxiliary components, or draft models, to speed up inference by generating more than one token at a time.
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="img/clm_objective.png" alt="autoregressive" style="width: 60%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">Figure 2: illustration of conventional AR decoding: one token is generated at a time.&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;div style="text-align: left;">
+&lt;a href="https://arxiv.org/abs/2305.10427">Jacobi decoding&lt;/a> originates from the Jacobi and Gauss-Seidel fixed-point iteration for solving nonlinear equations, and &lt;a href="https://proceedings.mlr.press/v139/song21a.html">is proven identical to AR generation using greedy decoding&lt;/a>. Jacobi decoding reformulates the sequential generation process into a system of $n$ non-linear equations with $n$ variables solvable in parallel based on Jacobi iteration. Each iteration step might predict more than one correct token (By &amp;ldquo;correct&amp;rdquo;, we mean alignment with the AR decoding
+result under a greedy sampling strategy), thereby accelerating AR decoding potentially.
+&lt;/div>
+&lt;style>
+.gray-text {
+color: #808080;
+}
+&lt;/style>
+&lt;figure>
+&lt;div style="display: grid; place-items: center;">
+&lt;img src="img/jacobi_objective.png" alt="jacobi" style="width: 60%; height: auto;">
+&lt;figcaption style="font-size: 16px;" class="gray-text">Figure 3: illustration of Jacobi decoding: $n$-token sequence is fed into the LLM and iterates until convergence.&lt;/figcaption>
+&lt;/div>
+&lt;/figure>
+&lt;div style="text-align: left;">
+To be specific, Jacobi decoding method first randomly guesses the next $n$ tokens in a sequence (referred to as $n$-token sequence hereinafter unless specified otherwise) from an input prompt. The $n$-token sequence, along with the prompt, is then fed to the LLM to iteratively update itself. This process continues until the $n$-token sequence stabilizes and no further changes occur, reaching a fixed point. Notably, Jacobi decoding requires no more queries to the LLM than auto-regressive (AR) decoding. Eventually, the $n$-token sequence converges to the output that would be generated by AR decoding under a greedy strategy. This progression from an initial random guess to the final AR generation outcome traces what is known as a Jacobi trajectory. An instance of Jacobi decoding iteration process and &lt;strong>Jacobi trajectory&lt;/strong> is illustrated in Figure 2.
+&lt;/div>
+&lt;h3 id="limitations-of-jacobi-decoding">Limitations of Jacobi Decoding&lt;/h3>
+&lt;div style="text-align: left;">
+&lt;p>However, vanilla Jacobi decoding for LLMs shows only marginal speedup over AR decoding in practice, e.g., &lt;a href="https://arxiv.org/abs/2305.10427">an average of $1.05\times$ speedup&lt;/a>. This is because an AR-trained LLM can rarely yield a correct token when there are incorrections in its preceding tokens. Thereby, most Jacobi iterations gain only one correction for the $n$-token sequence, resulting in a longer trajectory as illustrated on the left side of Figure 3.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,24 @@
+.post-content a {
+    text-decoration: underline;
+    color: blue;
+}
+
+.post-content a:hover {
+    opacity: 100%;
+    transition: opacity 200ms;
+}
+
+.post-content a:hover {
+    opacity: 75%;
+}
+
+.post-content {
+	/* font-size: 32px; */
+    /* line-height: 1.2em; */
+	color: var(--content);
+    font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Oxygen, Ubuntu, Cantarell, open sans, helvetica neue, sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+    /* max-width: 800px; 设置最大宽度 */
+    margin: 0 auto; /* 居中对齐 */
+}
