@@ -17,15 +17,20 @@ draft = false
 
 Paper: https://github.com/zhijie-group/SIFT/blob/main/paper.pdf -->
 
+{{< justify >}}
+LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts + 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics.
+
+That design—adding null experts and bumping top-k so each token uses a variable number of true experts—is precisely the idea behind AdaMoE.
+{{< /justify >}}
+
 ## TL; DR
 
 {{< justify >}}
 AdaMoE adds a set of **null experts** (with zero compute) to the expert pool to enable token-adaptive expert choice for MoE.
 
 * Under the top-k routing paradigm, tokens that route to null experts effectively use fewer true experts, making the number of **true experts per token adaptive** under the same average budget.
-
 * With a minor tweak to the load‑balancing loss (treat all nulls as one averaged bucket) and a simple annealing schedule, AdaMoE reduces FLOPs while maintaining or improving accuracy (e.g., on Mixtral‑8×7B/ARC‑C: −14.55% FLOPs with +1.69% accuracy).
-{{< /justify >}}
+  {{< /justify >}}
 
 ## Why Expert Selection Should Be Adaptive at the Token Level
 
@@ -41,7 +46,6 @@ The rationale for shifting from a fixed **top-k** routing mechanism to a token-a
 We provide empirical evidence for this variance. We analyzed the routing probability distributions in Mixtral-8x7B, a model with a fixed top-2 router. Our analysis revealed two key patterns:
 
 1. A large fraction of tokens had routing probabilities that were highly concentrated on a single expert, indicating that the activation of a second expert was often superfluous;
-
 2. A significant portion of other tokens had their probabilities distributed more evenly across multiple experts, suggesting that they required the computational capacity of two or even more experts for effective processing.
 
 This finding demonstrates that a static top-k strategy is suboptimal, leading to computationally excessive allocations for simple tokens and potentially insufficient allocations for complex ones.
@@ -55,15 +59,11 @@ AdaMoE achieves token-adaptive expert selection by incorporating **null experts*
 Our mechanism operates as follows:
 
 1. **Extends the expert set** with m null experts (besides n true experts).
-
 2. **Slightly increases** the router’s **top‑k** (e.g., from 2 → 3/4). Now each token’s top‑k may include some nulls.
-
 3. **Makes compute adaptive:** if top‑k includes r nulls, the token uses only k-r true experts.
-
 4. **Balances sensibly** by **aggregating all nulls into a single bucket** in the load‑balance loss (don’t force balance between identical nulls).
-
 5. **Normalizes over true experts only** after top‑k so the output scale matches vanilla MoE.
-  {{< /justify >}}
+   {{< /justify >}}
 
 {{< image src="image/vs.png" alt="DeepSeek" width="85%" title="Fixed top-2 vs. AdaMoE. Left: vanilla top‑2 where every token activates exactly 2 true experts. Right: AdaMoE where top‑4 is chosen from 4 true experts + 5 null experts; some tokens hit 3 true experts, others only 1.">}}
 
@@ -78,9 +78,9 @@ On Mixtral‑8×7B fine‑tuning, AdaMoE reduces FFN FLOPs while keeping or impr
 ## From Paper to Production
 
 {{< justify >}}
-We are also encouraged to see that the concept of null experts is not merely theoretical, but has been implemented in state-of-the-art LLMs. The technical report for **LongCat-Flash** [1], a 560-billion-parameter model, identifies **zero-computation experts** as a key architectural innovation and cites our paper.
+We are also encouraged to see that the concept of null experts is not merely theoretical, but has been implemented in state-of-the-art LLMs. The technical report for **LongCat-Flash** identifies **zero-computation experts** as a key architectural innovation and cites our paper.
 
-The report explains that this mechanism enables the model to “allocate a dynamic computation budget to important tokens based on their significance,” activating a variable range of parameters (18.6B to 31.3B) for each token depending on context. This direct industrial application underscores the practicality and scalability of the adaptive routing strategy we proposed.
+The report explains that this mechanism enables the model to “allocate a dynamic computation budget to important tokens based on their significance,” activating a variable range of parameters for each token depending on context. This direct industrial application underscores the practicality and scalability of the adaptive routing strategy we proposed.
 
 In addition, LongCat-Flash introduces several optimization techniques to address communication and load-balancing challenges associated with adaptive expert selection—further demonstrating the viability of our approach in large-scale systems.
 {{< /justify >}}
@@ -91,7 +91,7 @@ If you find our work useful, please cite our paper:
 
 ```
 @inproceedings{zeng-etal-2024-adamoe,
-    title = "{A}da{M}o{E}: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models",
+    title = "AdaMoE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models",
     author = "Zeng, Zihao  and
       Miao, Yibo  and
       Gao, Hongcheng  and

@@ -28,15 +28,8 @@
     
 &lt;/div&gt;
 
-&lt;h2 id=&#34;tl-dr&#34;&gt;TL; DR&lt;/h2&gt;
 &lt;div style=&#34;text-align: left;&#34;&gt;
-    &lt;p&gt;AdaMoE adds a set of &lt;strong&gt;null experts&lt;/strong&gt; (with zero compute) to the expert pool to enable token-adaptive expert choice for MoE.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Under the top-k routing paradigm, tokens that route to null experts effectively use fewer true experts, making the number of &lt;strong&gt;true experts per token adaptive&lt;/strong&gt; under the same average budget.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;With a minor tweak to the load‑balancing loss (treat all nulls as one averaged bucket) and a simple annealing schedule, AdaMoE reduces FLOPs while maintaining or improving accuracy (e.g., on Mixtral‑8×7B/ARC‑C: −14.55% FLOPs with +1.69% accuracy).&lt;/p&gt;</description>
+    &lt;p&gt;LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts + 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics.&lt;/p&gt;</description>
     </item>
     <item>
       <title>AdaMoE: 借助“空专家”实现Token级别的动态路由选择</title>
@@ -58,11 +51,19 @@
     
 &lt;/div&gt;
 
+&lt;div style=&#34;text-align: left;&#34;&gt;
+    &lt;p&gt;LongCat-Flash[1] 近期展示了一种token级别自适应的MoE的大规模部署方案。该方案利用零计算（恒等）专家，在560B MoE模型中，每个token激活18.6B~31.3B的参数量（平均约27B）。每一层混合了512个真专家和256个零计算专家，每次选择top-12的专家，并且由于采用了PID式预算控制器，平均真专家选择数量稳定在约8个。设备级负载均衡和ScMoE保证了系统的效率。他们将该模型呈现为一个具有强大吞吐量/成本指标的非思考模型。&lt;/p&gt;
+&lt;p&gt;这种设计——添加空专家并增加top-k值，从而使每个token使用可变数量的真实专家——正是AdaMoE背后的核心思想。&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+
 &lt;h2 id=&#34;太长不看版&#34;&gt;太长不看版&lt;/h2&gt;
 &lt;div style=&#34;text-align: left;&#34;&gt;
     &lt;p&gt;AdaMoE 通过向专家池中添加一组 &lt;strong&gt;“空专家”&lt;/strong&gt;（null experts）（其计算开销为零），为混合专家模型（MoE）带来了Token级别的自适应专家选择能力。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;在&lt;code&gt;top-k&lt;/code&gt;路由范式下，当一个Token被路由到“空专家”时，它实际上激活了更少的真实专家。这使得&lt;strong&gt;每个Token所激活的真实专家数量，在保持平均计算预算不变的前提下，实现了自适应&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;top-k&lt;/code&gt;路由范式下，当一个Token被路由到“空专家”时，它实际上激活了更少的真实专家。这使得&lt;strong&gt;每个Token所激活的真实专家数量，在保持平均计算预算不变的前提下，实现了自适应&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;我们对负载均衡损失函数（load‑balancing loss）进行了微调（将所有“空专家”视为一个聚合的计算单元），并采用了一个简单的退火策略。AdaMoE在降低了计算量（FLOPs）的同时，保持甚至提升了模型的准确率。例如，在Mixtral‑8×7B模型和ARC‑C数据集上的实验显示：计算量降低了14.55%，而准确率提升了1.69%。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -97,7 +98,7 @@
 &lt;li&gt;大量Token的路由概率高度集中于单个专家，这表明激活第二个专家通常是多余的；&lt;/li&gt;
 &lt;li&gt;另有相当一部分Token的概率更均匀地分布在多个专家上，这意味着它们可能需要两个甚至更多专家的计算能力才能被有效处理。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这一发现有力地证明，固定的&lt;code&gt;top-k&lt;/code&gt;策略是次优的，它对简单的Token造成了过度计算，而对复杂的Token则可能计算不足。&lt;/p&gt;
+&lt;p&gt;这一发现有力地证明，固定的 &lt;code&gt;top-k&lt;/code&gt;策略是次优的，它对简单的Token造成了过度计算，而对复杂的Token则可能计算不足。&lt;/p&gt;
 
 &lt;/div&gt;
 
@@ -108,11 +109,11 @@
     &lt;p&gt;AdaMoE 通过引入 &lt;strong&gt;“空专家”&lt;/strong&gt;（null experts）来实现Token级别的自适应专家选择。我们将其定义为一种不执行任何操作的单元，处理Token特征所需的&lt;strong&gt;计算量（FLOPs）为零&lt;/strong&gt;。在大型语言模型的实践中，常见的零计算操作包括常数零映射和恒等映射（为简化起见，我们在后续讨论中默认采用零映射作为“空专家”的实现）。&lt;/p&gt;
 &lt;p&gt;我们的机制运行如下：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;在原有的&lt;code&gt;n&lt;/code&gt;个真实专家之外，将&lt;strong&gt;专家集合扩展&lt;/strong&gt;&lt;code&gt;m&lt;/code&gt;个“空专家”。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;略微增加&lt;/strong&gt;路由器的 &lt;strong&gt;&lt;code&gt;top-k&lt;/code&gt;&lt;/strong&gt; 值（例如，从 2 增加到 3 或 4）。这样，每个Token选出的&lt;code&gt;top-k&lt;/code&gt;专家中就可能包含一部分“空专家”。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;实现计算的自适应&lt;/strong&gt;：如果&lt;code&gt;top-k&lt;/code&gt;专家中包含&lt;code&gt;r&lt;/code&gt;个“空专家”，那么该Token实际上只使用了&lt;code&gt;k-r&lt;/code&gt;个真实专家。&lt;/li&gt;
+&lt;li&gt;在原有的 &lt;code&gt;n&lt;/code&gt;个真实专家之外，将&lt;strong&gt;专家集合扩展&lt;/strong&gt; &lt;code&gt;m&lt;/code&gt;个“空专家”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;略微增加&lt;/strong&gt;路由器的 &lt;strong&gt;&lt;code&gt;top-k&lt;/code&gt;&lt;/strong&gt; 值（例如，从 2 增加到 3 或 4）。这样，每个Token选出的 &lt;code&gt;top-k&lt;/code&gt;专家中就可能包含一部分“空专家”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;实现计算的自适应&lt;/strong&gt;：如果 &lt;code&gt;top-k&lt;/code&gt;专家中包含 &lt;code&gt;r&lt;/code&gt;个“空专家”，那么该Token实际上只使用了 &lt;code&gt;k-r&lt;/code&gt;个真实专家。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;进行合理的负载均衡&lt;/strong&gt;：在计算负载均衡损失时，我们将&lt;strong&gt;所有“空专家”聚合为单一的计算单元&lt;/strong&gt;（因为没有必要在完全等价的“空专家”之间强制实现均衡）。&lt;/li&gt;
-&lt;li&gt;在&lt;code&gt;top-k&lt;/code&gt;选择之后，&lt;strong&gt;仅对真实专家进行归一化&lt;/strong&gt;，以确保输出的尺度与标准的MoE模型保持一致。&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;top-k&lt;/code&gt;选择之后，&lt;strong&gt;仅对真实专家进行归一化&lt;/strong&gt;，以确保输出的尺度与标准的MoE模型保持一致。&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;/div&gt;
@@ -158,7 +159,7 @@
 
 &lt;h2 id=&#34;从论文走向实践&#34;&gt;从论文走向实践&lt;/h2&gt;
 &lt;div style=&#34;text-align: left;&#34;&gt;
-    &lt;p&gt;我们备受鼓舞地看到，“空专家”这一概念并非仅仅停留在理论层面，它已被业界前沿的大型语言模型所采纳和实现。&lt;strong&gt;LongCat-Flash&lt;/strong&gt; [1]（一个5600亿参数的模型）的技术报告中，就将 &lt;strong&gt;“零计算专家”&lt;/strong&gt;（zero-computation experts）列为一项关键的架构创新，并引用了我们的论文。&lt;/p&gt;</description>
+    &lt;p&gt;我们备受鼓舞地看到，“空专家”这一概念并非仅仅停留在理论层面，它已被业界前沿的大型语言模型所采纳和实现。&lt;strong&gt;LongCat-Flash&lt;/strong&gt;的技术报告中，就将 &lt;strong&gt;“零计算专家”&lt;/strong&gt;（zero-computation experts）列为一项关键的架构创新，并引用了我们的论文。&lt;/p&gt;</description>
     </item>
     <item>
       <title>SIFT: Grounding LLM Reasoning in Contexts via Stickers</title>
