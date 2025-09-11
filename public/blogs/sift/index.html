@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="stylesheet" href="/css/style.css">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/custom.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -36,16 +36,16 @@ strategic refinement via post-training interventions like supervised fine-tuning
 
 In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical misinterpretation of the original problem during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.">
 <meta name="author" content="Zihao Zeng, Xuyao Huang*, Boxiu Li*, Zhijie Deng†">
-<link rel="canonical" href="https://zhijie-group.github.io/blogs/sift/">
+<link rel="canonical" href="http://localhost:1313/blogs/sift/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.c0b173c8753dc0cb5a0e3b2c0cd5a4fa0869fbd82e03d31553bf8232b3914c61.css" integrity="sha256-wLFzyHU9wMtaDjssDNWk&#43;ghp&#43;9guA9MVU7&#43;CMrORTGE=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://zhijie-group.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://zhijie-group.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://zhijie-group.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://zhijie-group.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://zhijie-group.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://zhijie-group.github.io/blogs/sift/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/blogs/sift/">
 <noscript>
     <style>
         #theme-toggle,
@@ -122,13 +122,13 @@ strategic refinement via post-training interventions like supervised fine-tuning
 
 In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art  DeepSeek-R1, suffer from systematical misinterpretation of the original problem during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://zhijie-group.github.io/blogs/sift/" />
-<meta property="og:image" content="https://zhijie-group.github.io/blogs/sift/image/fig45.png" /><meta property="article:section" content="blogs" />
+<meta property="og:url" content="http://localhost:1313/blogs/sift/" />
+<meta property="og:image" content="http://localhost:1313/blogs/sift/image/fig45.png" /><meta property="article:section" content="blogs" />
 <meta property="article:published_time" content="2025-02-21T00:00:00+00:00" />
 <meta property="article:modified_time" content="2025-02-21T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://zhijie-group.github.io/blogs/sift/image/fig45.png" />
+<meta name="twitter:image" content="http://localhost:1313/blogs/sift/image/fig45.png" />
 <meta name="twitter:title" content="SIFT: Grounding LLM Reasoning in Contexts via Stickers"/>
 <meta name="twitter:description" content="
     
@@ -166,13 +166,13 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
       "@type": "ListItem",
       "position":  1 ,
       "name": "Blogs",
-      "item": "https://zhijie-group.github.io/blogs/"
+      "item": "http://localhost:1313/blogs/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "SIFT: Grounding LLM Reasoning in Contexts via Stickers",
-      "item": "https://zhijie-group.github.io/blogs/sift/"
+      "item": "http://localhost:1313/blogs/sift/"
     }
   ]
 }
@@ -190,7 +190,7 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
   "articleBody": " Introduction \u0026 Motivation Techniques including Chain-of-Thought (CoT) Prompting [1,2] and Self-Consistency [3], as well as reasoning-enhanced models, e.g., OpenAI-o1, DeepSeek-R1, and KIMI-k1.5 [4-6], have all contributed to improvements in multi-step reasoning for solving hard problems.\nDiscussions in the community suggest that advanced reasoning capabilities in LLMs mainly stem from two factors:\nfoundational knowledge acquisition through massive pretraining on diverse data; strategic refinement via post-training interventions like supervised fine-tuning (SFT) or reinforcement learning (RL). In recent weeks, much attention has been focused on reproducing R1, i.e., improving the reasoning abilities of LLMs of varying scales. However, our investigations reveal a critical lacuna of this paradigm: we observe that diverse models, from the small Llama3.2-3B-Instruct to the state-of-the-art DeepSeek-R1, suffer from systematical misinterpretation of the original problem during the reasoning process. The errors in foundational comprehension, rather than faulty logical sequencing, constitute a substantial proportion of inaccuracies in final outcomes.\nHere are two examples:\nLLMs suffer from misinterpretation of the original problem during reasoning process. As shown, Qwen2.5 makes errors because of misunderstanding the fact “restart the download” and DeepSeek-R1 fails due to assuming the distribution of cubic residues, which is not mentioned in the question.\nTo be more rigorous, we conduct a study of Qwen2.5-7B-Instruct on Gsm8k. We collect the incorrect reasoning outcomes on the Gsm8k testset and classify the cause for the error into two categories: “Misinterpretation of the Original Problem” and “Logical Reasoning Errors”, with the help of GLM-4-Plus. The plot below displays the statistics:\nError Distribution To our surprise, over 30 percent of reasoning errors stem from “Misinterpretation of the Original Problem” in this case. This finding makes us realize that many times, the failure to achieve correct reasoning results is probably not due to insufficient reasoning capability, but rather because the model is not reasoning on the correct problem.\nWe refer to this type of failure as “Factual Drift.” It means LLMs misinterpret, overlook, or hallucinate key contextual information during reasoning, thus making errors despite logically sound steps.\nWhen shifting from small models to cutting-edge ones like DeepSeek-R1, we delightedly observe that the factual drift issue is alleviated to some extent, with an example listed below:\nSelf-verification occurs during DeepSeek-R1’s reasoning. By dynamically paraphrasing critical constraints and conditions, DeepSeek-R1 implicitly performs error-checking to correct prior misunderstandings of the context. We refer to such a phenomenon as Self-Verification, which is also acknowledged by many other researchers in the community. However, such self-verification operates as a stochastic safeguard rather than a systematic protocol—it is not guaranteed to be triggered in various reasoning scenarios. Namely, the risk of factual drift remains and it can be significant considering the notable performance improvements made by our proposed SIFT (see below).\nGiven all these discussions, we finally arrive at the conclusion that\nattention should be shifted from reasoning capacities to reasoning fidelity.\nNamely, it is equally important to care about whether LLMs are reasoning about the correct problem.\nThe SIFT Framework Inspired by that humans usually use sticky notes to externalize critical elements when handling complex tasks, we introduce SIFT (Stick to the Facts) to explicitly ground LLM reasoning in contextual facts using dynamically generated query summaries called Stickers. Left: A sticky note (generated by Doubao). Right: An example of a query and its Sticker. SIFT is a post-training approach, leveraging inference-time compute to improve generation quality yet without reliance on reward models as in Best-of-N (BoN) and Monte-Carlo tree search (MCTS). Concretely, SIFT lets the target LLM summarize key facts within the input query, including essential conditions and the core question, into a structured Sticker (see above), and make two predictions based on the Sticker alone and the query augmented with the Sticker, respectively.\nIf the predictions are the same, SIFT returns the prediction; otherwise, the Sticker is refined through bidirectional optimization—a forward one to better align the Sticker with the query and an inverse one to conform to the model’s reasoning preference—for more faithful reasoning.\nThe whole algorithmic procedure is exhibited below:\nSIFT Algorithm Namely, there are four core operations in SIFT:\nSticker Generation (SG): The model extracts key facts (e.g., conditions, core questions) from the query and makes a structured Sticker. Consensus Prediction (CP): Predictions are generated from both the Sticker alone and the original query augmented with the Sticker. If they disagree, the Sticker will be refined. Forward Optimization (FO): The Sticker are adjusted to better align with the query’s semantics. Inverse Generation (IG): A new Sticker from the model’s prediction is inferred to match its reasoning preferences. Their illustration is provided below:\nIllustration of the four core operations in SIFT. Refer to the appendix of our paper for the details of the used prompts. Key Results Experiments across models (3B to 100B+ parameters) and benchmarks (GSM8K, MATH-500, AIME2024) demonstrate SIFT’s effectiveness:\nImproves DeepSeek-R1’s accuracy to 85.67% on AIME2024 (vs. 78.33% baseline) and 77.33% on AIME2025 (vs. 69.80% baseline), setting a new SOTA in open-source models. Improves Llama3.2-3B-Instruct’s accuracy by 8.80% on MATH-500. SIFT shows consistent gains across architectures (dense/MoE) and scales, which proves its versatility. Applying SIFT to DeepSeek-R1 demonstrates highly competitive reasoning performance on AIME2024, AIME2025, and MATH-500 (pass@1 accuracy). SIFT consistently improves reasoning performance across different models and datasets. Note that the 3 stages in the above results mean:\nStage 1: Only SG and CP are used. Stage 2: Building upon Stage 1, FO is used to optimize the Sticker. Stage 3: The complete process outlined in Algorithm 1. Besides, compared to self-consistency, another well-known baseline for verifier-free inference-time scaling, SIFT enjoys a better accuracy versus tokens scaling curve:\nLlama3.2-3B-Instruct on GSM8K (temperature = 0.6, top-p = 0.9) SIFT can also embrace self-consistency to form the SIFT-Consistency approach to further improve self-consistency: Llama3.2-3B-Instruct on GSM8K (temperature = 0.6, top-p = 0.9) More experimental details and results can be found in our paper (including iterative optimization, sample augmentation, and some ablation studies). Why Does SIFT Work? Explicit Fact Highlights：Stickers externalize critical information, mimicking human sticky-note practices. Bidirectional Alignment: FO anchors Stickers to source semantics, while IG aligns them with the model’s reasoning style. Consensus Validation: It refers to that disagreements between Sticker-only and augmented predictions can trigger refinement so as to ensure factual fidelity. Read better to reason better: SIFT helps models better understand a query, align more accurately with the true intent, and fully leverage their capabilities. As shown in the figure below, iterative optimization progressively improves prediction alignment, reducing factual drift.\nVenn diagrams illustrating the accuracy of predictions obtained from the “Only Sticker” and “Query + Sticker” representations at each stage. The percentages represent the accuracy where both methods correctly predict the same outcomes. Conclusion SIFT provides a systematic solution to factual drift, enabling LLMs to “stick to the facts” without costly retraining. By bridging the gap between contextual understanding and reasoning, it pushes the boundaries of reliable AI problem-solving. Citation If you find our paper or codebase useful, please consider citing:\n@article{zeng2025sift, title={SIFT: Grounding LLM Reasoning in Contexts via Stickers}, author={Zeng, Zihao and Huang, Xuyao and Li, Boxiu and Deng, Zhijie}, year={2025}, url={https://github.com/zhijie-group/SIFT/blob/main/paper.pdf} } Reference [1] Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yutaka Matsuo, and Yusuke Iwasawa. 2022. Large language models are zero-shot reasoners. Advances in neural information processing systems.\n[2] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V Le, Denny Zhou, et al. 2022b. Chain-of-thought prompting elicits reasoning in large language models. Advances in neural information processing systems.\n[3] Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. 2023. Self-consistency improves chain of thought reasoning in language models. The Eleventh International Conference on Learning Representations.\n[4] Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et al. 2024. Openai o1 system card.\n[5] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et al. 2025. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning.\n[6] Kimi Team, Angang Du, Bofei Gao, Bowei Xing, Changjiu Jiang, Cheng Chen, Cheng Li, Chenjun Xiao, Chenzhuang Du, Chonghua Liao, et al. 2025. Kimi k1. 5: Scaling reinforcement learning with llms.\n",
   "wordCount" : "1360",
   "inLanguage": "en",
-  "image":"https://zhijie-group.github.io/blogs/sift/image/fig45.png","datePublished": "2025-02-21T00:00:00Z",
+  "image":"http://localhost:1313/blogs/sift/image/fig45.png","datePublished": "2025-02-21T00:00:00Z",
   "dateModified": "2025-02-21T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -198,14 +198,14 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://zhijie-group.github.io/blogs/sift/"
+    "@id": "http://localhost:1313/blogs/sift/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DENG Lab @ SJTU",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://zhijie-group.github.io/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -239,7 +239,7 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://zhijie-group.github.io/" accesskey="h" title="DENG Lab @ SJTU (Alt + H)">
+            <a href="http://localhost:1313/" accesskey="h" title="DENG Lab @ SJTU (Alt + H)">
                 <img id="logo-image" src="/img/logo-new.png" alt="DENG Lab @ SJTU" height="40">
                 
             </a>
@@ -272,27 +272,27 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
               </button>
             </div>
             <li>
-                  <a href="https://zhijie-group.github.io/home/" title="Home">
+                  <a href="http://localhost:1313/home/" title="Home">
                       <span>Home</span>
                   </a>
             </li>
             <li>
-                  <a href="https://zhijie-group.github.io/blogs/" title="Blogs">
+                  <a href="http://localhost:1313/blogs/" title="Blogs">
                       <span>Blogs</span>
                   </a>
             </li>
             <li>
-                  <a href="https://zhijie-group.github.io/people/" title="People">
+                  <a href="http://localhost:1313/people/" title="People">
                       <span>People</span>
                   </a>
             </li>
             <li>
-                  <a href="https://zhijie-group.github.io/publications/" title="Publications">
+                  <a href="http://localhost:1313/publications/" title="Publications">
                       <span>Publications</span>
                   </a>
             </li>
             <li>
-                  <a href="https://zhijie-group.github.io/contact/" title="Contact">
+                  <a href="http://localhost:1313/contact/" title="Contact">
                       <span>Contact</span>
                   </a>
             </li>
@@ -393,7 +393,7 @@ In recent weeks, much attention has been focused on reproducing R1, i.e., improv
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="https://zhijie-group.github.io/blogs/sift/image/fig45.png" alt="Stickers">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/blogs/sift/image/fig45.png" alt="Stickers">
         <p><strong>Left</strong>: A sticky note (generated by Doubao). <strong>Right</strong>: An example of a query and its Sticker.</p>
 </figure>
   <div class="post-content"><div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
@@ -740,7 +740,7 @@ lets the target LLM summarize key facts within the input query, including essent
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://zhijie-group.github.io/">DENG Lab @ SJTU</a></span>
+    <span>&copy; 2025 <a href="http://localhost:1313/">DENG Lab @ SJTU</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
