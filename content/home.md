@@ -35,6 +35,11 @@ Current research interests focus on:
 ### News 
 
 <!-- 🎉 -->
+
+{{< newsEntry >}}
+**01/2025**: Three papers are accepted to NeurIPS 25! Check out: [Infra](https://arxiv.org/pdf/2505.19949), [Lookahead Reasoning](https://arxiv.org/pdf/2506.19830), and [Adaptive Discretization for Consistency Models](#)! 🎉 
+{{< /newsEntry >}}
+
 {{< newsEntry >}}
 **09/2025**: Zhijie will serve as an area chair of CVPR 2026! 🎉 
 {{< /newsEntry >}}

@@ -7,6 +7,19 @@ summary: publications
 
 ### 2025
 
+
+{{< publication title="Which Data Attributes Stimulate Math and Code Reasoning? An Investigation via Influence Functions" venue="NeurIPS 2025" paperLink="https://arxiv.org/pdf/2505.19949" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Siqi Kou, Qingyuan Tian, Hanwen Xu, Zihao Zeng, Zhijie Deng†
+{{< /publication >}}
+
+{{< publication title="Scaling Speculative Decoding with Lookahead Reasoning" venue="NeurIPS 2025" paperLink="https://arxiv.org/pdf/2506.19830" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Yichao Fu, Rui Ge, Zelei Shao, Zhijie Deng†, Hao Zhang†
+{{< /publication >}}
+
+{{< publication title="Adaptive Discretization for Consistency Models" venue="NeurIPS 2025" paperLink="#" codeLink="" award="" project="" data-topic="Generative Models, Diffusion Models" >}}
+Jiayu Bai, Zhanbo Feng, Zhijie Deng, TianQi Hou, Robert C Qiu, Zenan Ling
+{{< /publication >}}
+
 {{< publication title="LOVECon: Text-driven Training-free Long Video Editing with ControlNet" venue="SCIS 2025" paperLink="https://arxiv.org/pdf/2310.09711.pdf" codeLink="" award="" project="" data-topic="Generative Models, Diffusion Models" >}}
 Zhenyi Liao, Qingsong Xie, Zhijie Deng†
 {{< /publication >}}
