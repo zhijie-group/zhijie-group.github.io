@@ -7,6 +7,9 @@ summary: publications
 
 ### 2025
 
+{{< publication title="Neural Eigenfunctions Are Structured Representation Learners" venue="TPAMI 2025" paperLink="https://arxiv.org/pdf/2210.12637.pdf" codeLink="" award="" project="" data-topic="Large Language Models" >}}
+Zhijie Deng*, Jiaxin Shi*, Hao Zhang, Peng Cui, Cewu Lu, Jun Zhu
+{{< /publication >}}
 
 {{< publication title="Which Data Attributes Stimulate Math and Code Reasoning? An Investigation via Influence Functions" venue="NeurIPS 2025" paperLink="https://arxiv.org/pdf/2505.19949" codeLink="" award="" project="" data-topic="Large Language Models" >}}
 Siqi Kou, Qingyuan Tian, Hanwen Xu, Zihao Zeng, Zhijie Deng†

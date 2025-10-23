@@ -1,5 +1,16 @@
 [
     {
+        "title": "Neural Eigenfunctions Are Structured Representation Learners",
+        "authors": "Zhijie Deng*, Jiaxin Shi*, Hao Zhang, Peng Cui, Cewu Lu, Jun Zhu",
+        "venue": "TPAMI 2025",
+        "pdf": "https://arxiv.org/pdf/2210.12637.pdf",
+        "presentation": "",
+        "award": "",
+        "project": "",
+        "tag": "Large Language Models",
+        "date": "11/2025"
+    },
+    {
         "title": "Which Data Attributes Stimulate Math and Code Reasoning? An Investigation via Influence Functions",
         "authors": "Siqi Kou, Qingyuan Tian, Hanwen Xu, Zihao Zeng, Zhijie Deng†",
         "venue": "NeurIPS 2025",

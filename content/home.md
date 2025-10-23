@@ -37,7 +37,11 @@ Current research interests focus on:
 <!-- 🎉 -->
 
 {{< newsEntry >}}
-**10/2025**: Zhijie will serve as an area chair of ACL Rolloing Review! 🎉 
+**10/2025**: [Neural Eigenmap](https://arxiv.org/pdf/2210.12637) is accepted by TPAMI!
+{{< /newsEntry >}}
+
+{{< newsEntry >}}
+**10/2025**: Zhijie will serve as an area chair of ACL Rolling Review! 🎉 
 {{< /newsEntry >}}
 
 {{< newsEntry >}}
