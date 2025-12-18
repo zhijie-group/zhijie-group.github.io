@@ -1,142 +1,339 @@
----
-title: "LoPA: Scaling dLLM Inference via Lookahead Parallel Decoding"
-date: 2025-12-18
-author: "Chenkai Xu*, Yijie Jin*, Jiajun Li, Yi Tu, Guoping Long, Dandan Tu, Tianqi Hou, Junchi Yan, Zhijie Deng †"
-summary: "We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference, enabling up to 10.1 tokens per forward pass."
-tags: ["LLM", "Diffusion Model", "Inference"]
-cover:
-    image: "image/figure4.png"
-    alt: "LoPA Performance"
-    relative: true
----
+<!doctype html><html lang=en dir=auto><head><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/custom.css><link href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css rel=stylesheet><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow">
+<title>LoPA: Scaling dLLM Inference via Lookahead Parallel Decoding | DENG Lab @ SJTU</title>
+<meta name=keywords content><meta name=description content="LoPA: Scaling dLLM Inference"><meta name=author content="Chenkai Xu*, Yijie Jin*, Jiajun Li, Yi Tu, Guoping Long, Dandan Tu, Tianqi Hou, Junchi Yan, Zhijie Deng †"><link rel=canonical href=https://zhijie-group.github.io/blogs/LoPA/><link crossorigin=anonymous href=/assets/css/stylesheet.c0b173c8753dc0cb5a0e3b2c0cd5a4fa0869fbd82e03d31553bf8232b3914c61.css integrity="sha256-wLFzyHU9wMtaDjssDNWk+ghp+9guA9MVU7+CMrORTGE=" rel="preload stylesheet" as=style><link rel=icon href=https://zhijie-group.github.io/favicon.ico><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33">
+<script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script>
+<script>MathJax={tex:{displayMath:[["\\[","\\]"],["$$","$$"]],inlineMath:[["\\(","\\)"],["$","$"]]}}</script>
+<style>
+    /* 针对本页面的表格和图片样式优化 */
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9em; overflow-x: auto; display: block; }
+    th, td { border: 1px solid #444; padding: 8px; text-align: center; }
+    th { background-color: #f2f2f2; color: #333; }
+    .dark th { background-color: #333; color: #eee; border-color: #555; }
+    .dark td { border-color: #555; }
+    .post-content img { margin: 20px auto; display: block; max-width: 100%; border-radius: 8px; }
+    .caption { text-align: center; font-size: 0.9em; color: #888; margin-top: -10px; margin-bottom: 20px; }
+</style>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script>
+<header class=header><nav class=nav><div class=logo><a href=https://zhijie-group.github.io/ accesskey=h title="DENG Lab @ SJTU (Alt + H)"><img id=logo-image src=/img/logo-new.png alt="DENG Lab @ SJTU" height=40></a><div class=logo-switches><ul class=lang-switch></ul></div></div><ul id=menu><li><a href=https://zhijie-group.github.io/home/ title=Home><span>Home</span></a></li><li><a href=https://zhijie-group.github.io/blogs/ title=Blogs><span>Blogs</span></a></li><li><a href=https://zhijie-group.github.io/people/ title=People><span>People</span></a></li><li><a href=https://zhijie-group.github.io/publications/ title=Publications><span>Publications</span></a></li><li><a href=https://zhijie-group.github.io/contact/ title=Contact><span>Contact</span></a></li></ul></nav></header>
 
-[**Github: https://github.com/zhijie-group/LoPA**](https://github.com/zhijie-group/LoPA)
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<h1 class="post-title">LoPA: Scaling dLLM Inference via Lookahead Parallel Decoding</h1>
+<div class=post-meta><span title='2025-12-18 00:00:00 +0000 UTC'>December 18, 2025</span>&nbsp;·&nbsp;Chenkai Xu*, Yijie Jin*, Jiajun Li, Yi Tu, Guoping Long, Dandan Tu, Tianqi Hou, Junchi Yan, Zhijie Deng †</div>
+</header>
 
-We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference. LoPA enables up to 10.1 tokens per forward pass (TPF) for state-of-the-art dLLMs—without compromising predictive performance. This represents an unprecedented degree of parallelism, a capability unmatched by previous dLLM decoding methods. Under multi-device deployment, our specialized system LoPA-Dist achieves a single-sample throughput of 1073.9 tokens per second.
+<div class=post-content>
 
-![Figure 1 Placeholder](image/figure1.png)
-*Figure 1: Illustration of diffusion LLM inference challenges.*
+<p><strong>Github:</strong> <a href="https://github.com/zhijie-group/LoPA">https://github.com/zhijie-group/LoPA</a></p>
 
-## Background
+<p>We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference. LoPA enables up to 10.1 tokens per forward pass (TPF) for state-of-the-art dLLMs—without compromising predictive performance. This represents an unprecedented degree of parallelism, a capability unmatched by previous dLLM decoding methods. Under multi-device deployment, our specialized system LoPA-Dist achieves a single-sample throughput of 1073.9 tokens per second.</p>
 
-DLLMs show significant potential for high-speed inference, yet current confidence-driven decoding strategies are constrained by limited parallelism—typically achieving only 1-3 TPF on math and coding tasks [2, 3]. Our investigation identifies a key insight: during dLLM inference, the degree of parallelism fluctuates sharply with the prediction confidence, which is heavily influenced by the Token Filling Order (TFO). Consequently, standard strategies that greedily prioritize currently high-confidence positions may lead to suboptimal trajectories. To address this, we propose Lookahead Parallel Decoding (LoPA), a training-free, plug-and-play algorithm designed to actively explore superior TFOs to unlock higher parallelism.
+<img src="image/figure1.png" alt="Illustration of diffusion LLM inference challenges">
+<div class="caption">Figure 1: Illustration of diffusion LLM inference challenges.</div>
 
-## Methodology
+<h2>Background</h2>
 
-This section first explains the foundational Confidence-Driven Sampling used in regular dLLM inference [2, 3, 4] and then elaborates on LoPA.
+<p>DLLMs show significant potential for high-speed inference, yet current confidence-driven decoding strategies are constrained by limited parallelism—typically achieving only 1-3 TPF on math and coding tasks [2, 3]. Our investigation identifies a key insight: during dLLM inference, the degree of parallelism fluctuates sharply with the prediction confidence, which is heavily influenced by the Token Filling Order (TFO). Consequently, standard strategies that greedily prioritize currently high-confidence positions may lead to suboptimal trajectories. To address this, we propose Lookahead Parallel Decoding (LoPA), a training-free, plug-and-play algorithm designed to actively explore superior TFOs to unlock higher parallelism.</p>
 
-![Figure 2 Placeholder](image/figure2.png)
-*Figure 2: The architecture of standard confidence-driven sampling.*
+<h2>Methodology</h2>
+<p>This section first explains the foundational Confidence-Driven Sampling used in regular dLLM inference~[2, 3, 4] and then elaborates on LoPA.</p>
 
-### Preliminary: Confidence-Driven Sampling for dLLMs
+<img src="image/figure2.png" alt="The architecture of standard confidence-driven sampling">
+<div class="caption">Figure 2: The architecture of standard confidence-driven sampling.</div>
 
-Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence $x_t$ with a set of masked positions $M_t$, the dLLM model $p_\theta$ outputs a predictive distribution $p_\theta(\cdot | x_t)$. A candidate sequence $\hat{x}_0 \sim p_\theta(\cdot | x_t)$ is sampled, and a confidence function, $\text{Conf}(\cdot)$, assigns a score to each position $i \in M_t$. The set of positions to fill, $I_{fill}$, is then determined as:
+<h3>Preliminary: Confidence-Driven Sampling for dLLMs</h3>
 
-$$
-I_{fill} = \begin{cases} \{i \in M_t \mid \text{Conf}(i) > \tau\} & \text{if } \{i \in M_t \mid \text{Conf}(i) > \tau\} \neq \emptyset \\ \{\arg\max_{i \in M_t} \text{Conf}(i)\} & \text{otherwise} \end{cases}
-$$
+<p>Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence $x_t$ with a set of masked positions $M_t$, the dLLM model $p_\theta$ outputs a predictive distribution $p_\theta(\cdot | x_t)$. A candidate sequence $\hat{x}_0 \sim p_\theta(\cdot | x_t)$ is sampled, and a confidence function, $\text{Conf}(\cdot)$, assigns a score to each position $i \in M_t$. The set of positions to fill, $I_{fill}$, is then determined as:</p>
 
-The algorithm then accepts the predictions according to $I_{fill}$ and moves to the next iteration.
+$$I_{fill} = \begin{cases} \{i \in M_t \mid \text{Conf}(i) > \tau\} & \text{if } \{i \in M_t \mid \text{Conf}(i) > \tau\} \neq \emptyset \\ \{\arg\max_{i \in M_t} \text{Conf}(i)\} & \text{otherwise} \end{cases}$$
 
-## LoPA
+<p>The algorithm then accepts the predictions according to $I_{fill}$ and moves to the next iteration.</p>
 
-![Overview of LoPA](image/figure3.png)
-*Figure 3: Overview of the LoPA algorithm and TFO exploration.*
+<h2>LoPA</h2>
 
-As shown in Figure 3, in every decoding iteration, LoPA looks ahead at multiple TFOs, yielding multiple sampling branches, and then identifies the branch with superior future parallel decoding potential.
+<img src="image/figure3.png" alt="Overview of LoPA">
+<div class="caption">Figure 3: Overview of the LoPA algorithm and TFO exploration.</div>
 
-### Look ahead Multiple TFOs in Parallel
+<p>As shown in Figure 3, in every decoding iteration, LoPA looks ahead at multiple TFOs, yielding multiple sampling branches, and then identifies the branch with superior future parallel decoding potential.</p>
 
-LoPA operates by generating multiple branches. First, it constructs an Anchor Branch ($B_0$) using the standard confidence-driven strategy (filling positions in $I_{fill}$).
+<h3>Look ahead Multiple TFOs in Parallel</h3>
 
-LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to $B_0$, we generate $k$ competitive Lookahead Branches. We identify the top-$k$ positions from the anchor branch's unfilled set $M_{B_0}$ that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of $k$ new branches $\{B_1, \dots, B_k\}$, each with its own sequence $x_{B_j}$ and unfilled set $M_{B_j}$.
+<p>LoPA operates by generating multiple branches. First, it constructs an Anchor Branch ($B_0$) using the standard confidence-driven strategy (filling positions in $I_{fill}$).</p>
 
-### Branch Confidence-based Verification
+<p>LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to $B_0$, we generate $k$ competitive Lookahead Branches. We identify the top-$k$ positions from the anchor branch's unfilled set $M_{B_0}$ that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of $k$ new branches $\{B_1, \dots, B_k\}$, each with its own sequence $x_{B_j}$ and unfilled set $M_{B_j}$.</p>
 
-Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch $B_j$ is defined as the average prediction confidence over its remaining unfilled positions $M_{B_j}$:
+<h3>Branch Confidence-based Verification</h3>
 
-$$
-C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)
-$$
+<p>Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch $B_j$ is defined as the average prediction confidence over its remaining unfilled positions $M_{B_j}$:</p>
 
-A higher branch confidence indicates that more unfilled positions are likely to be accepted in the very next decoding step. This directly increases the number of tokens filled per iteration, thereby enhancing the overall parallelism. Beyond this mean confidence, branch confidence can also be quantified by other methods [5], such as applying a sliding window to assess local quality or averaging confidence over the least confident segment to identify weak links.
+$$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 
-This verification mechanism offers distinct advantages. First, all candidate branches (Anchor + Lookahead) can be packed and verified within a single forward pass, with custom attention masks ensuring independent computation for each branch. Second, the logits computed during branch evaluation are directly reused in the next decoding step, eliminating the need for additional forward passes.
+<p>A higher branch confidence indicates that more unfilled positions are likely to be accepted in the very next decoding step. This directly increases the number of tokens filled per iteration, thereby enhancing the overall parallelism. Beyond this mean confidence, branch confidence can also be quantified by other methods [5], such as applying a sliding window to assess local quality or averaging confidence over the least confident segment to identify weak links.</p>
 
-### Application: integration with D2F
+<p>This verification mechanism offers distinct advantages. First, all candidate branches (Anchor + Lookahead) can be packed and verified within a single forward pass, with custom attention masks ensuring independent computation for each branch. Second, the logits computed during branch evaluation are directly reused in the next decoding step, eliminating the need for additional forward passes.</p>
 
-LoPA integrates seamlessly with D2F [3], the first open-source diffusion language model whose inference throughput surpasses that of autoregressive (AR) models. Our application of LoPA to D2F incorporates two key enhancements:
+<h3>Application: integration with D2F</h3>
 
-* **Parallel Exploration in a Decoding Window:** We treat all active blocks in D2F's pipeline as a single window where LoPA's branch exploration and lookahead verification operate. Replacing the original block-level causal attention with a full attention mechanism within this window reduces implementation complexity and enhances computational performance.
-* **System Integration and Performance:** On the D2F-Dream model, LoPA achieves a TPF of up to 10.1. To leverage this parallelism, we developed a specialized multi-device inference system where LoPA achieves a throughput of 1073.86 tokens per second.
+<p>LoPA integrates seamlessly with D2F [3], the first open-source diffusion language model whose inference throughput surpasses that of autoregressive (AR) models. Our application of LoPA to D2F incorporates two key enhancements:</p>
+<ul>
+    <li><strong>Parallel Exploration in a Decoding Window:</strong> We treat all active blocks in D2F's pipeline as a single window where LoPA's branch exploration and lookahead verification operate. Replacing the original block-level causal attention with a full attention mechanism within this window reduces implementation complexity and enhances computational performance.</li>
+    <li><strong>System Integration and Performance:</strong> On the D2F-Dream model, LoPA achieves a TPF of up to 10.1. To leverage this parallelism, we developed a specialized multi-device inference system where LoPA achieves a throughput of 1073.86 tokens per second.</li>
+</ul>
 
-## Results
+<h2>Results</h2>
+<h3>Scaling Analysis of Branch Count</h3>
+<p>We analyzed the impact of the competitive branch count (k) on TPF and quality using D2F models fine-tuned on Dream[6] and DiffuCoder[7]. Results show TPF consistently improves with k; however, excessive k introduces fluctuations, attributed to the model prioritizing future confidence over local optimality. These results point to an optimal trade-off, where a carefully chosen k can maximize TPF while preserving quality.</p>
 
-### Scaling Analysis of Branch Count
+<img src="image/figure4.png" alt="TPF Scaling and Accuracy Performance">
+<div class="caption">Figure 4: TPF Scaling and Accuracy Performance on GSM8K and HumanEval+.</div>
 
-We analyzed the impact of the competitive branch count (k) on TPF and quality using D2F models fine-tuned on Dream[6] and DiffuCoder[7]. Results show TPF consistently improves with k; however, excessive k introduces fluctuations, attributed to the model prioritizing future confidence over local optimality. These results point to an optimal trade-off, where a carefully chosen k can maximize TPF while preserving quality.
+<p>As shown in the Figure 4, on GSM8K, LoPA scales the TPF of D2F-Dream to 10.1 while maintaining a score (73.8) superior to the Dream baseline (72.6). on HumanEval+, LoPA scales the TPF of D2F-DiffuCoder to 8.3 with marginal performance degradation, demonstrating a clear speed-accuracy trade-off.</p>
 
-![TPF Scaling and Accuracy Performance](image/figure4.png)
-*Figure 4: TPF Scaling and Accuracy Performance on GSM8K and HumanEval+.*
+<p>Tables 1 and 2 below confirm this efficacy across multiple benchmarks.</p>
 
-As shown in the Figure 4, on GSM8K, LoPA scales the TPF of D2F-Dream to 10.1 while maintaining a score (73.8) superior to the Dream baseline (72.6). on HumanEval+, LoPA scales the TPF of D2F-DiffuCoder to 8.3 with marginal performance degradation, demonstrating a clear speed-accuracy trade-off.
+<table>
+    <caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches. TPF denotes Tokens Per Forward pass. LoPA significantly scales the TPF of D2F-Dream while maintaining or exceeding baseline scores.</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">Model</th>
+            <th rowspan="2">Decoding algo</th>
+            <th colspan="2">MBPP 3-shot</th>
+            <th colspan="2">Math 4-shot</th>
+            <th colspan="2">HumanEval 0-shot</th>
+            <th colspan="2">GSM8K 4-shot</th>
+        </tr>
+        <tr>
+            <th>TPF</th>
+            <th>Score</th>
+            <th>TPF</th>
+            <th>Score</th>
+            <th>TPF</th>
+            <th>Score</th>
+            <th>TPF</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dream</td>
+            <td>vanilla</td>
+            <td>1</td>
+            <td>56.2</td>
+            <td>1</td>
+            <td>33.7</td>
+            <td>1</td>
+            <td>55.5</td>
+            <td>1</td>
+            <td>72.6</td>
+        </tr>
+        <tr>
+            <td>Dream</td>
+            <td>Fast-dLLM</td>
+            <td>1.9</td>
+            <td>55.6</td>
+            <td>1.9</td>
+            <td>37.6</td>
+            <td>1.8</td>
+            <td>55.5</td>
+            <td>2.1</td>
+            <td>72.6</td>
+        </tr>
+        <tr>
+            <td>Dream</td>
+            <td>LoPA</td>
+            <td>3.3</td>
+            <td>54.8</td>
+            <td>3.4</td>
+            <td>37.0</td>
+            <td>2.9</td>
+            <td>53</td>
+            <td>3.1</td>
+            <td>73.3</td>
+        </tr>
+        <tr>
+            <td>D2F-Dream</td>
+            <td>vanilla</td>
+            <td>2.3</td>
+            <td>53.8</td>
+            <td>2.6</td>
+            <td>36.8</td>
+            <td>2.5</td>
+            <td>56.1</td>
+            <td>3.1</td>
+            <td>78.5</td>
+        </tr>
+        <tr>
+            <td>D2F-Dream</td>
+            <td>LoPA</td>
+            <td>5.4</td>
+            <td>56.0</td>
+            <td>8.0</td>
+            <td>35.2</td>
+            <td>6.3</td>
+            <td>56.1</td>
+            <td>10.1</td>
+            <td>73.8</td>
+        </tr>
+    </tbody>
+</table>
 
-Tables 1 and 2 below confirm this efficacy across multiple benchmarks.
+<table>
+    <caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks. LoPA boosts TPF by nearly 4× compared to the vanilla D2F baseline with minimal impact on generation quality.</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">Model</th>
+            <th rowspan="2">Decoding algo</th>
+            <th colspan="2">MBPP++ 0-shot</th>
+            <th colspan="2">HumanEval++ 0-shot</th>
+        </tr>
+        <tr>
+            <th>TPF</th>
+            <th>Score</th>
+            <th>TPF</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>DiffuCoder</td>
+            <td>vanilla</td>
+            <td>1</td>
+            <td>61.9</td>
+            <td>1</td>
+            <td>65.2</td>
+        </tr>
+        <tr>
+            <td>D2F-Diffucoder</td>
+            <td>vanilla</td>
+            <td>2.2</td>
+            <td>61.9</td>
+            <td>2.2</td>
+            <td>65.9</td>
+        </tr>
+        <tr>
+            <td>D2F-Diffucoder</td>
+            <td>LoPA</td>
+            <td>6.7</td>
+            <td>61.6</td>
+            <td>8.3</td>
+            <td>64.0</td>
+        </tr>
+    </tbody>
+</table>
 
-**Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches.**
+<img src="image/figure5.png" alt="Additional Results">
+<div class="caption">Figure 5: Additional experimental results and analysis.</div>
 
-| Model | Decoding algo | MBPP 3-shot TPF | MBPP 3-shot Score | Math 4-shot TPF | Math 4-shot Score | HumanEval 0-shot TPF | HumanEval 0-shot Score | GSM8K 4-shot TPF | GSM8K 4-shot Score |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Dream | vanilla | 1 | 56.2 | 1 | 33.7 | 1 | 55.5 | 1 | 72.6 |
-| Dream | Fast-dLLM | 1.9 | 55.6 | 1.9 | 37.6 | 1.8 | 55.5 | 2.1 | 72.6 |
-| Dream | LoPA | 3.3 | 54.8 | 3.4 | 37.0 | 2.9 | 53 | 3.1 | 73.3 |
-| D2F-Dream | vanilla | 2.3 | 53.8 | 2.6 | 36.8 | 2.5 | 56.1 | 3.1 | 78.5 |
-| D2F-Dream | LoPA | **5.4** | **56.0** | **8.0** | **35.2** | **6.3** | **56.1** | **10.1** | **73.8** |
+<h2>System Throughput and Scalability</h2>
 
-**Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks.**
+<p>To fully exploit LoPA’s parallelism, we designed LoPA-Dist, a distributed inference system utilizing Branch Parallelism (BP).</p>
 
-| Model | Decoding algo | MBPP++ 0-shot TPF | MBPP++ 0-shot Score | HumanEval++ 0-shot TPF | HumanEval++ 0-shot Score |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| DiffuCoder | vanilla | 1 | 61.9 | 1 | 65.2 |
-| D2F-Diffucoder | vanilla | 2.2 | 61.9 | 2.2 | 65.9 |
-| D2F-Diffucoder | LoPA | **6.7** | 61.6 | **8.3** | 64.0 |
+<p>The system distributes candidate branches across multiple GPUs for concurrent processing. We provide two specialized implementations:</p>
+<ul>
+    <li>LoPA-Dist-NV (CUDA): Optimized for low latency using static KV cache and a two-phase update protocol (Pre-Write and Commit-Winner-Cache) to ensure consistency.</li>
+    <li>LoPA-Dist-Ascend (Ascend 910C): Optimized for high throughput using hybrid parallelism and graph compilation to fuse element-wise operations.</li>
+</ul>
 
-## System Throughput and Scalability
+<p>As shown in Table 3, this design achieves near-linear scalability. On the Ascend platform, LoPA-Dist achieves a peak throughput of 1073.86 tokens/s.</p>
 
-To fully exploit LoPA’s parallelism, we designed LoPA-Dist, a distributed inference system utilizing Branch Parallelism (BP).
+<table>
+    <caption>Table 3. System performance of D2F-Dream under guaranteed inference speed. The results demonstrate that our system efficiently translates algorithmic parallelism (high TPF) into significant wall-clock acceleration, achieving high Parallelism Utilization (PU) and average throughputs exceeding 1000 tokens/s on the specialized LoPA-Dist-Ascend engine.</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">Model</th>
+            <th rowspan="2">Platform</th>
+            <th colspan="5">MBPP</th>
+            <th colspan="5">GSM8K</th>
+        </tr>
+        <tr>
+            <th>Avg TPS</th>
+            <th>Max TPS</th>
+            <th>TPF</th>
+            <th>Latency</th>
+            <th>PU</th>
+            <th>Avg TPS</th>
+            <th>Max TPS</th>
+            <th>TPF</th>
+            <th>Latency</th>
+            <th>PU</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">D2F-Dream-Base</td>
+            <td>LoPA-Dist-NV</td>
+            <td>630.28</td>
+            <td>1472.37</td>
+            <td>15.69</td>
+            <td>0.84</td>
+            <td>0.69</td>
+            <td>566.97</td>
+            <td>1305.86</td>
+            <td>13.31</td>
+            <td>0.93</td>
+            <td>0.74</td>
+        </tr>
+        <tr>
+            <td>LoPA-Dist-Ascend</td>
+            <td>1073.86</td>
+            <td>2400.12</td>
+            <td>11.92</td>
+            <td>0.78</td>
+            <td>0.72</td>
+            <td>856.46</td>
+            <td>2751.61</td>
+            <td>9.34</td>
+            <td>0.75</td>
+            <td>0.76</td>
+        </tr>
+        <tr>
+            <td rowspan="2">D2F-Dream-Instruct</td>
+            <td>LoPA-Dist-NV</td>
+            <td>543.32</td>
+            <td>1531.64</td>
+            <td>9.45</td>
+            <td>0.16</td>
+            <td>0.87</td>
+            <td>536.71</td>
+            <td>1141.71</td>
+            <td>11.41</td>
+            <td>0.29</td>
+            <td>0.76</td>
+        </tr>
+        <tr>
+            <td>LoPA-Dist-Ascend</td>
+            <td>896.21</td>
+            <td>2586.73</td>
+            <td>8.64</td>
+            <td>0.11</td>
+            <td>0.74</td>
+            <td>897.10</td>
+            <td>1868.16</td>
+            <td>9.30</td>
+            <td>0.21</td>
+            <td>0.76</td>
+        </tr>
+    </tbody>
+</table>
 
-The system distributes candidate branches across multiple GPUs for concurrent processing. We provide two specialized implementations:
+<h2>Future Works</h2>
+<p>We will explore adapting LoPA to SDAR and other confidence-driven diffusion language models to further demonstrate its generalizability and effectiveness across diverse model architectures.</p>
 
-* **LoPA-Dist-NV (CUDA):** Optimized for low latency using static KV cache and a two-phase update protocol (Pre-Write and Commit-Winner-Cache) to ensure consistency.
-* **LoPA-Dist-Ascend (Ascend 910C):** Optimized for high throughput using hybrid parallelism and graph compilation to fuse element-wise operations.
+<h2>Reference</h2>
+<p>[1] Nie, Shen, et al. "Large language diffusion models." arXiv preprint arXiv:2502.09992 (2025).</p>
+<p>[2] Wu, Chengyue, et al. "Fast-dllm: Training-free acceleration of diffusion llm by enabling kv cache and parallel decoding." arXiv preprint arXiv:2505.22618 (2025).</p>
+<p>[3] Wang, Xu, et al. "Diffusion llms can do faster-than-ar inference via discrete diffusion forcing." arXiv preprint arXiv:2508.09192 (2025).</p>
+<p>[4] Cheng, Shuang, et al. "SDAR: A Synergistic Diffusion-AutoRegression Paradigm for Scalable Sequence Generation." arXiv preprint arXiv:2510.06303 (2025).</p>
+<p>[5] Fu, Yichao, et al. "Deep think with confidence." arXiv preprint arXiv:2508.15260 (2025).</p>
+<p>[6] Ye, Jiacheng, et al. "Dream 7b: Diffusion large language models." arXiv preprint arXiv:2508.15487 (2025).</p>
+<p>[7] Gong, Shansan, et al. "DiffuCoder: Understanding and Improving Masked Diffusion Models for Code Generation." arXiv preprint arXiv:2506.20639 (2025).</p>
 
-As shown in Table 3, this design achieves near-linear scalability. On the Ascend platform, LoPA-Dist achieves a peak throughput of 1073.86 tokens/s.
-
-**Table 3. System performance of D2F-Dream under guaranteed inference speed.**
-
-| Model | Platform | MBPP Avg TPS | MBPP Max TPS | MBPP TPF | MBPP Latency | MBPP PU | GSM8K Avg TPS | GSM8K Max TPS | GSM8K TPF | GSM8K Latency | GSM8K PU |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| D2F-Dream-Base | LoPA-Dist-NV | 630.28 | 1472.37 | 15.69 | 0.84 | 0.69 | 566.97 | 1305.86 | 13.31 | 0.93 | 0.74 |
-| | LoPA-Dist-Ascend | 1073.86 | 2400.12 | 11.92 | 0.78 | 0.72 | 856.46 | 2751.61 | 9.34 | 0.75 | 0.76 |
-| D2F-Dream-Instruct | LoPA-Dist-NV | 543.32 | 1531.64 | 9.45 | 0.16 | 0.87 | 536.71 | 1141.71 | 11.41 | 0.29 | 0.76 |
-| | LoPA-Dist-Ascend | 896.21 | 2586.73 | 8.64 | 0.11 | 0.74 | 897.10 | 1868.16 | 9.30 | 0.21 | 0.76 |
-
-## Future Works
-
-We will explore adapting LoPA to SDAR and other confidence-driven diffusion language models to further demonstrate its generalizability and effectiveness across diverse model architectures.
-
-## Reference
-
-[1] Nie, Shen, et al. "Large language diffusion models." arXiv preprint arXiv:2502.09992 (2025).
-
-[2] Wu, Chengyue, et al. "Fast-dllm: Training-free acceleration of diffusion llm by enabling kv cache and parallel decoding." arXiv preprint arXiv:2505.22618 (2025).
-
-[3] Wang, Xu, et al. "Diffusion llms can do faster-than-ar inference via discrete diffusion forcing." arXiv preprint arXiv:2508.09192 (2025).
-
-[4] Cheng, Shuang, et al. "SDAR: A Synergistic Diffusion-AutoRegression Paradigm for Scalable Sequence Generation." arXiv preprint arXiv:2510.06303 (2025).
-
-[5] Fu, Yichao, et al. "Deep think with confidence." arXiv preprint arXiv:2508.15260 (2025).
-
-[6] Ye, Jiacheng, et al. "Dream 7b: Diffusion large language models." arXiv preprint arXiv:2508.15487 (2025).
-
-[7] Gong, Shansan, et al. "DiffuCoder: Understanding and Improving Masked Diffusion Models for Code Generation." arXiv preprint arXiv:2506.20639 (2025).
+</div>
+<footer class=post-footer><ul class=post-tags></ul></footer>
+</article>
+</main>
+<footer class=footer><span>&copy; 2025 <a href=https://zhijie-group.github.io/>DENG Lab @ SJTU</a></span></footer>
+</body></html>
