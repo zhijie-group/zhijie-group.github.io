@@ -17,7 +17,7 @@ summary = "We introduce the Lookahead Parallel Decoding (LoPA) algorithm for dif
 
 <p>We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference. LoPA enables up to 10.1 tokens per forward pass (TPF) for state-of-the-art dLLMs—without compromising predictive performance. This represents an unprecedented degree of parallelism, a capability unmatched by previous dLLM decoding methods. Under multi-device deployment, our specialized system LoPA-Dist achieves a single-sample throughput of 1073.9 tokens per second.</p>
 
-<img src="image/figure1.png" alt="Illustration of diffusion LLM inference challenges" style="width:100%; margin: 20px auto;">
+<img src="image/figure1.png" alt="Illustration of diffusion LLM inference challenges" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
 <div style="text-align: center; color: gray; font-size: 0.9em; margin-bottom: 20px;">Figure 1. Throughput performance of LoPA under guaranteed inference speed. LoPA accelerates the single-sample throughput for D2F-Dream to up to 1073.9 and 774.1 tokens/s on MBPP and GSM8K respectively, significantly outperforming baselines.</div>
 
 <h2>Background</h2>
@@ -28,7 +28,7 @@ summary = "We introduce the Lookahead Parallel Decoding (LoPA) algorithm for dif
 
 <p>This section first explains the foundational Confidence-Driven Sampling used in regular dLLM inference [2, 3, 4] and then elaborates on LoPA.</p>
 
-<img src="image/figure2.png" alt="The architecture of standard confidence-driven sampling" style="width:100%; margin: 20px auto;">
+<img src="image/figure2.png" alt="The architecture of standard confidence-driven sampling" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
 <div style="text-align: center; color: gray; font-size: 0.9em; margin-bottom: 20px;">Figure 2. Scaling analysis of LoPA on D2F-Dream with varying branch counts. The results illustrate that LoPA effectively scales the TPF of D2F to a peak exceeding 10, thereby significantly reducing the total number of decoding steps.</div>
 
 <h3>Preliminary: Confidence-Driven Sampling for dLLMs</h3>
@@ -45,7 +45,7 @@ $$
 
 <h2>LoPA</h2>
 
-<img src="image/figure3.png" alt="Overview of LoPA" style="width:100%; margin: 20px auto;">
+<img src="image/figure3.png" alt="Overview of LoPA" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
 <div style="text-align: center; color: gray; font-size: 0.9em; margin-bottom: 20px;">Figure 3. Overview of Lookahead Parallel Decoding (LoPA). In each iteration, LoPA generates a anchor branch alongside multiple lookahead branches (e.g., B1, . . . , Bk ) by independently sampling high-confidence positions from the baseline’s unfilled set. A branch confidence verification mechanism then evaluates all branches in parallel within a single forward pass, selecting the optimal path to maximize future parallelism.</div>
 
 <p>As shown in Figure 3, in every decoding iteration, LoPA looks ahead at multiple TFOs, yielding multiple sampling branches, and then identifies the branch with superior future parallel decoding potential.</p>
@@ -84,144 +84,144 @@ $$
 <h3>Scaling Analysis of Branch Count</h3>
 <p>We analyzed the impact of the competitive branch count (k) on TPF and quality using D2F models fine-tuned on Dream[6] and DiffuCoder[7]. Results show TPF consistently improves with k; however, excessive k introduces fluctuations, attributed to the model prioritizing future confidence over local optimality. These results point to an optimal trade-off, where a carefully chosen k can maximize TPF while preserving quality.</p>
 
-<img src="image/figure4.png" alt="TPF Scaling and Accuracy Performance" style="width:100%; margin: 20px auto;">
+<img src="image/figure4.png" alt="TPF Scaling and Accuracy Performance" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
 <div style="text-align: center; color: gray; font-size: 0.9em; margin-bottom: 20px;">Figure 4. Scaling Curves of LoPA. LoPA scales the tokens per forward pass (TPS) for D2F-Dream and D2F-DiffuCoder to up to 10.1 and 8.3 on GSM8k and HumanEval+ respectively, with comparable performance.</div>
 
 <p>As shown in the Figure 4, on GSM8K, LoPA scales the TPF of D2F-Dream to 10.1 while maintaining a score (73.8) superior to the Dream baseline (72.6). on HumanEval+, LoPA scales the TPF of D2F-DiffuCoder to 8.3 with marginal performance degradation, demonstrating a clear speed-accuracy trade-off.</p>
 
 <p>Tables 1 and 2 below confirm this efficacy across multiple benchmarks.</p>
 
-<table>
+<table style="width: 100%; text-align: center; border-collapse: collapse;">
     <caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches.</caption>
     <thead>
-        <tr>
-            <th rowspan="2">Model</th>
-            <th rowspan="2">Decoding algo</th>
-            <th colspan="2">MBPP 3-shot</th>
-            <th colspan="2">Math 4-shot</th>
-            <th colspan="2">HumanEval 0-shot</th>
-            <th colspan="2">GSM8K 4-shot</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th rowspan="2" style="padding: 10px;">Model</th>
+            <th rowspan="2" style="padding: 10px;">Decoding algo</th>
+            <th colspan="2" style="padding: 10px;">MBPP 3-shot</th>
+            <th colspan="2" style="padding: 10px;">Math 4-shot</th>
+            <th colspan="2" style="padding: 10px;">HumanEval 0-shot</th>
+            <th colspan="2" style="padding: 10px;">GSM8K 4-shot</th>
         </tr>
-        <tr>
-            <th>TPF</th>
-            <th>Score</th>
-            <th>TPF</th>
-            <th>Score</th>
-            <th>TPF</th>
-            <th>Score</th>
-            <th>TPF</th>
-            <th>Score</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>Dream</td>
-            <td>vanilla</td>
-            <td>1</td>
-            <td>56.2</td>
-            <td>1</td>
-            <td>33.7</td>
-            <td>1</td>
-            <td>55.5</td>
-            <td>1</td>
-            <td>72.6</td>
+            <td style="padding: 8px;">Dream</td>
+            <td style="padding: 8px;">vanilla</td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;"><b>56.2</b></td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;">33.7</td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;">55.5</td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;">72.6</td>
         </tr>
         <tr>
-            <td>Dream</td>
-            <td>Fast-dLLM</td>
-            <td>1.9</td>
-            <td>55.6</td>
-            <td>1.9</td>
-            <td>37.6</td>
-            <td>1.8</td>
-            <td>55.5</td>
-            <td>2.1</td>
-            <td>72.6</td>
+            <td style="padding: 8px;">Dream</td>
+            <td style="padding: 8px;">Fast-dLLM</td>
+            <td style="padding: 8px;">1.9</td>
+            <td style="padding: 8px;">55.6</td>
+            <td style="padding: 8px;">1.9</td>
+            <td style="padding: 8px;"><b>37.6</b></td>
+            <td style="padding: 8px;">1.8</td>
+            <td style="padding: 8px;">55.5</td>
+            <td style="padding: 8px;">2.1</td>
+            <td style="padding: 8px;">72.6</td>
         </tr>
         <tr>
-            <td>Dream</td>
-            <td>LoPA</td>
-            <td>3.3</td>
-            <td>54.8</td>
-            <td>3.4</td>
-            <td>37.0</td>
-            <td>2.9</td>
-            <td>53</td>
-            <td>3.1</td>
-            <td>73.3</td>
+            <td style="padding: 8px;">Dream</td>
+            <td style="padding: 8px;">LoPA</td>
+            <td style="padding: 8px;">3.3</td>
+            <td style="padding: 8px;">54.8</td>
+            <td style="padding: 8px;">3.4</td>
+            <td style="padding: 8px;">37.0</td>
+            <td style="padding: 8px;">2.9</td>
+            <td style="padding: 8px;">53</td>
+            <td style="padding: 8px;">3.1</td>
+            <td style="padding: 8px;">73.3</td>
         </tr>
         <tr>
-            <td>D2F-Dream</td>
-            <td>vanilla</td>
-            <td>2.3</td>
-            <td>53.8</td>
-            <td>2.6</td>
-            <td>36.8</td>
-            <td>2.5</td>
-            <td>56.1</td>
-            <td>3.1</td>
-            <td>78.5</td>
+            <td style="padding: 8px;">D2F-Dream</td>
+            <td style="padding: 8px;">vanilla</td>
+            <td style="padding: 8px;">2.3</td>
+            <td style="padding: 8px;">53.8</td>
+            <td style="padding: 8px;">2.6</td>
+            <td style="padding: 8px;">36.8</td>
+            <td style="padding: 8px;">2.5</td>
+            <td style="padding: 8px;"><b>56.1</b></td>
+            <td style="padding: 8px;">3.1</td>
+            <td style="padding: 8px;"><b>78.5</b></td>
         </tr>
-        <tr>
-            <td>D2F-Dream</td>
-            <td>LoPA</td>
-            <td><b>5.4</b></td>
-            <td><b>56.0</b></td>
-            <td><b>8.0</b></td>
-            <td><b>35.2</b></td>
-            <td><b>6.3</b></td>
-            <td><b>56.1</b></td>
-            <td><b>10.1</b></td>
-            <td><b>73.8</b></td>
+        <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 8px;">D2F-Dream</td>
+            <td style="padding: 8px;">LoPA</td>
+            <td style="padding: 8px;"><b>5.4</b></td>
+            <td style="padding: 8px;">56.0</td>
+            <td style="padding: 8px;"><b>8.0</b></td>
+            <td style="padding: 8px;">35.2</td>
+            <td style="padding: 8px;"><b>6.3</b></td>
+            <td style="padding: 8px;"><b>56.1</b></td>
+            <td style="padding: 8px;"><b>10.1</b></td>
+            <td style="padding: 8px;">73.8</td>
         </tr>
     </tbody>
 </table>
 
-<table>
+<table style="width: 100%; text-align: center; border-collapse: collapse; margin-top: 20px;">
     <caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks.</caption>
     <thead>
-        <tr>
-            <th rowspan="2">Model</th>
-            <th rowspan="2">Decoding algo</th>
-            <th colspan="2">MBPP++ 0-shot</th>
-            <th colspan="2">HumanEval++ 0-shot</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th rowspan="2" style="padding: 10px;">Model</th>
+            <th rowspan="2" style="padding: 10px;">Decoding algo</th>
+            <th colspan="2" style="padding: 10px;">MBPP++ 0-shot</th>
+            <th colspan="2" style="padding: 10px;">HumanEval++ 0-shot</th>
         </tr>
-        <tr>
-            <th>TPF</th>
-            <th>Score</th>
-            <th>TPF</th>
-            <th>Score</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Score</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>DiffuCoder</td>
-            <td>vanilla</td>
-            <td>1</td>
-            <td>61.9</td>
-            <td>1</td>
-            <td>65.2</td>
+            <td style="padding: 8px;">DiffuCoder</td>
+            <td style="padding: 8px;">vanilla</td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;"><b>61.9</b></td>
+            <td style="padding: 8px;">1</td>
+            <td style="padding: 8px;">65.2</td>
         </tr>
         <tr>
-            <td>D2F-Diffucoder</td>
-            <td>vanilla</td>
-            <td>2.2</td>
-            <td>61.9</td>
-            <td>2.2</td>
-            <td>65.9</td>
+            <td style="padding: 8px;">D2F-Diffucoder</td>
+            <td style="padding: 8px;">vanilla</td>
+            <td style="padding: 8px;">2.2</td>
+            <td style="padding: 8px;"><b>61.9</b></td>
+            <td style="padding: 8px;">2.2</td>
+            <td style="padding: 8px;"><b>65.9</b></td>
         </tr>
-        <tr>
-            <td>D2F-Diffucoder</td>
-            <td>LoPA</td>
-            <td><b>6.7</b></td>
-            <td>61.6</td>
-            <td><b>8.3</b></td>
-            <td>64.0</td>
+        <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 8px;">D2F-Diffucoder</td>
+            <td style="padding: 8px;">LoPA</td>
+            <td style="padding: 8px;"><b>6.7</b></td>
+            <td style="padding: 8px;">61.6</td>
+            <td style="padding: 8px;"><b>8.3</b></td>
+            <td style="padding: 8px;">64.0</td>
         </tr>
     </tbody>
 </table>
 
-<img src="image/figure5.png" alt="Additional Results" style="width:100%; margin: 20px auto;">
+<img src="image/figure5.png" alt="Additional Results" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
 <div style="text-align: center; color: gray; font-size: 0.9em; margin-bottom: 20px;">Figure 5. Overview of LoPA Branch Parallel Distributed Inference System Design. A key distinction lies in the KV cache management protocol tailored for different backends: LoPA-Dist-NV utilizes a robust two-phase update mechanism to ensure consistency, whereas LoPA-Dist-Ascend adopts a streamlined single-phase update strategy for optimized serving efficiency.</div>
 
 <h2>System Throughput and Scalability</h2>
@@ -236,82 +236,72 @@ $$
 
 <p>As shown in Table 3, this design achieves near-linear scalability. On the Ascend platform, LoPA-Dist achieves a peak throughput of 1073.86 tokens/s.</p>
 
-<table>
+<table style="width: 100%; text-align: center; border-collapse: collapse;">
     <caption>Table 3. System performance of D2F-Dream under guaranteed inference speed.</caption>
     <thead>
-        <tr>
-            <th rowspan="2">Model</th>
-            <th rowspan="2">Platform</th>
-            <th colspan="5">MBPP</th>
-            <th colspan="5">GSM8K</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th rowspan="2" style="padding: 10px;">Model</th>
+            <th rowspan="2" style="padding: 10px;">Platform</th>
+            <th colspan="4" style="padding: 10px;">MBPP</th>
+            <th colspan="4" style="padding: 10px;">GSM8K</th>
         </tr>
-        <tr>
-            <th>Avg TPS</th>
-            <th>Max TPS</th>
-            <th>TPF</th>
-            <th>Latency</th>
-            <th>PU</th>
-            <th>Avg TPS</th>
-            <th>Max TPS</th>
-            <th>TPF</th>
-            <th>Latency</th>
-            <th>PU</th>
+        <tr style="border-bottom: 2px solid #ddd;">
+            <th style="padding: 10px;">Avg TPS</th>
+            <th style="padding: 10px;">Max TPS</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Latency</th>
+            <th style="padding: 10px;">Avg TPS</th>
+            <th style="padding: 10px;">Max TPS</th>
+            <th style="padding: 10px;">TPF</th>
+            <th style="padding: 10px;">Latency</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td rowspan="2">D2F-Dream-Base</td>
-            <td>LoPA-Dist-NV</td>
-            <td>630.28</td>
-            <td>1472.37</td>
-            <td>15.69</td>
-            <td>0.84</td>
-            <td>0.69</td>
-            <td>566.97</td>
-            <td>1305.86</td>
-            <td>13.31</td>
-            <td>0.93</td>
-            <td>0.74</td>
+            <td rowspan="2" style="padding: 8px;">D2F-Dream-Base</td>
+            <td style="padding: 8px;">LoPA-Dist-NV</td>
+            <td style="padding: 8px;">630.28</td>
+            <td style="padding: 8px;">1472.37</td>
+            <td style="padding: 8px;"><b>15.69</b></td>
+            <td style="padding: 8px;">0.84</td>
+            <td style="padding: 8px;">566.97</td>
+            <td style="padding: 8px;">1305.86</td>
+            <td style="padding: 8px;"><b>13.31</b></td>
+            <td style="padding: 8px;">0.93</td>
         </tr>
         <tr>
-            <td>LoPA-Dist-Ascend</td>
-            <td>1073.86</td>
-            <td>2400.12</td>
-            <td>11.92</td>
-            <td>0.78</td>
-            <td>0.72</td>
-            <td>856.46</td>
-            <td>2751.61</td>
-            <td>9.34</td>
-            <td>0.75</td>
-            <td>0.76</td>
+            <td style="padding: 8px;">LoPA-Dist-Ascend</td>
+            <td style="padding: 8px;"><b>1073.86</b></td>
+            <td style="padding: 8px;">2400.12</td>
+            <td style="padding: 8px;">11.92</td>
+            <td style="padding: 8px;">0.78</td>
+            <td style="padding: 8px;">856.46</td>
+            <td style="padding: 8px;"><b>2751.61</b></td>
+            <td style="padding: 8px;">9.34</td>
+            <td style="padding: 8px;">0.75</td>
         </tr>
         <tr>
-            <td rowspan="2">D2F-Dream-Instruct</td>
-            <td>LoPA-Dist-NV</td>
-            <td>543.32</td>
-            <td>1531.64</td>
-            <td>9.45</td>
-            <td>0.16</td>
-            <td>0.87</td>
-            <td>536.71</td>
-            <td>1141.71</td>
-            <td>11.41</td>
-            <td>0.29</td>
-            <td>0.76</td>
+            <td rowspan="2" style="padding: 8px;">D2F-Dream-Instruct</td>
+            <td style="padding: 8px;">LoPA-Dist-NV</td>
+            <td style="padding: 8px;">543.32</td>
+            <td style="padding: 8px;">1531.64</td>
+            <td style="padding: 8px;">9.45</td>
+            <td style="padding: 8px;">0.16</td>
+            <td style="padding: 8px;">536.71</td>
+            <td style="padding: 8px;">1141.71</td>
+            <td style="padding: 8px;">11.41</td>
+            <td style="padding: 8px;">0.29</td>
         </tr>
-        <tr>
-            <td>LoPA-Dist-Ascend</td>
-            <td>896.21</td>
-            <td>2586.73</td>
-            <td>8.64</td>
-            <td>0.11</td>
-            <td>0.74</td>
-            <td>897.10</td>
-            <td>1868.16</td>
-            <td>9.30</td>
-            <td>0.21</td>
-            <td>0.76</td>
+        <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 8px;">LoPA-Dist-Ascend</td>
+            <td style="padding: 8px;">896.21</td>
+            <td style="padding: 8px;"><b>2586.73</b></td>
+            <td style="padding: 8px;">8.64</td>
+            <td style="padding: 8px;"><b>0.11</b></td>
+            <td style="padding: 8px;"><b>897.10</b></td>
+            <td style="padding: 8px;">1868.16</td>
+            <td style="padding: 8px;">9.30</td>
+            <td style="padding: 8px;"><b>0.21</b></td>
         </tr>
     </tbody>
 </table>
