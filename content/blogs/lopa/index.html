@@ -2,7 +2,7 @@
 title = "LoPA: Scaling dLLM Inference via Lookahead Parallel Decoding"
 date = 2025-12-18
 authors = ["Chenkai Xu*", "Yijie Jin*", "Jiajun Li", "Yi Tu", "Guoping Long", "Dandan Tu", "Tianqi Hou", "Junchi Yan", "Zhijie Deng †"]
-author = "Chenkai Xu*, Yijie Jin*, Jiajun Li", "Yi Tu", "Guoping Long", "Dandan Tu", "Tianqi Hou", "Junchi Yan", "Zhijie Deng †"
+author = "Chenkai Xu*, Yijie Jin*, Jiajun Li, Yi Tu, Guoping Long, Dandan Tu, Tianqi Hou, Junchi Yan, Zhijie Deng †"
 ShowReadingTime = true
 draft = false
 summary = "We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference, enabling up to 10.1 tokens per forward pass."
@@ -99,7 +99,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
 <caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches.</caption>
 <thead>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
 <th rowspan="2" style="padding: 10px;">Decoding algo</th>
 <th colspan="2" style="padding: 10px;">MBPP 3-shot</th>
@@ -107,7 +107,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 <th colspan="2" style="padding: 10px;">HumanEval 0-shot</th>
 <th colspan="2" style="padding: 10px;">GSM8K 4-shot</th>
 </tr>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th style="padding: 10px;">TPF</th>
 <th style="padding: 10px;">Score</th>
 <th style="padding: 10px;">TPF</th>
@@ -187,13 +187,13 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
 <caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks.</caption>
 <thead>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
 <th rowspan="2" style="padding: 10px;">Decoding algo</th>
 <th colspan="2" style="padding: 10px;">MBPP++ 0-shot</th>
 <th colspan="2" style="padding: 10px;">HumanEval++ 0-shot</th>
 </tr>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th style="padding: 10px;">TPF</th>
 <th style="padding: 10px;">Score</th>
 <th style="padding: 10px;">TPF</th>
@@ -250,13 +250,13 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
 <caption>Table 3. System performance of D2F-Dream under guaranteed inference speed.</caption>
 <thead>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
 <th rowspan="2" style="padding: 10px;">Platform</th>
 <th colspan="4" style="padding: 10px;">MBPP</th>
 <th colspan="4" style="padding: 10px;">GSM8K</th>
 </tr>
-<tr style="border-bottom: 2px solid #ddd; background-color: #f9f9f9;">
+<tr style="border-bottom: 2px solid #ddd;">
 <th style="padding: 10px;">Avg TPS</th>
 <th style="padding: 10px;">Max TPS</th>
 <th style="padding: 10px;">TPF</th>
