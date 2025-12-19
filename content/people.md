@@ -26,9 +26,9 @@ summary: people
 
 {{< lab_member name="Yijie Jin" role="Incoming PhD Student" image="unknown.jpg" academic="https://drewjin.github.io/">}}
 
-{{< lab_member name="Yugang Wang" role="Incoming PhD Student" image="unknown.jpg" academic="https://drewjin.github.io/">}}
+{{< lab_member name="Yugang Wang" role="Incoming PhD Student" image="unknown.jpg" academic="#">}}
 
-{{< lab_member name="Zetong Zhou" role="Incoming PhD Student" image="unknown.jpg" academic="https://drewjin.github.io/">}}
+{{< lab_member name="Zetong Zhou" role="Incoming PhD Student" image="unknown.jpg" academic="#">}}
 
 {{< lab_member name="Zihao Zeng" role="Master Student" image="zzh.jpg" academic="https://cengzihao.github.io/">}}
 
