@@ -13,7 +13,7 @@ alt = "LoPA Performance"
 caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 +++
 
-<p><strong>Github:</strong> <a href="[https://github.com/zhijie-group/LoPA](https://github.com/zhijie-group/LoPA)">[https://github.com/zhijie-group/LoPA](https://github.com/zhijie-group/LoPA)</a></p>
+<p><strong>Github:</strong> <a href="https://github.com/zhijie-group/LoPA">https://github.com/zhijie-group/LoPA</a></p>
 
 <p>We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference. LoPA enables up to 10.1 tokens per forward pass (TPF) for state-of-the-art dLLMs—without compromising predictive performance. This represents an unprecedented degree of parallelism, a capability unmatched by previous dLLM decoding methods. Under multi-device deployment, our specialized system LoPA-Dist achieves a single-sample throughput of 1073.9 tokens per second.</p>
 
@@ -37,15 +37,13 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <h3>Preliminary: Confidence-Driven Sampling for dLLMs</h3>
 
-<p>Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence x<sub>t</sub> with a set of masked positions M<sub>t</sub>, the dLLM model p<sub>θ</sub> outputs a predictive distribution p<sub>θ</sub>(· | x<sub>t</sub>). A candidate sequence x&#770;<sub>0</sub> ~ p<sub>θ</sub>(· | x<sub>t</sub>) is sampled, and a confidence function, Conf(·), assigns a score to each position i ∈ M<sub>t</sub>. The set of positions to fill, I<sub>fill</sub>, is then determined as:</p>
+<p>Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence $x_t$ with a set of masked positions $M_t$, the dLLM model $p_{\theta}$ outputs a predictive distribution $p_{\theta}(\cdot \mid x_t)$. A candidate sequence $\hat{x}_0 \sim p_{\theta}(\cdot \mid x_t)$ is sampled, and a confidence function, $\text{Conf}(\cdot)$, assigns a score to each position $i \in M_t$. The set of positions to fill, $I_{fill}$, is then determined as:</p>
 
 <p>
-
-
-
+$$I_{fill} = \begin{cases} \{i \in M_t \mid \text{Conf}(i) > \tau\} & \text{if } \{i \in M_t \mid \text{Conf}(i) > \tau\} \neq \emptyset \\ \{\arg\max_{i \in M_t} \text{Conf}(i)\} & \text{otherwise} \end{cases}$$
 </p>
 
-<p>The algorithm then accepts the predictions according to I<sub>fill</sub> and moves to the next iteration.</p>
+<p>The algorithm then accepts the predictions according to $I_{fill}$ and moves to the next iteration.</p>
 
 <h2>LoPA</h2>
 
@@ -58,18 +56,16 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <h3>Look ahead Multiple TFOs in Parallel</h3>
 
-<p>LoPA operates by generating multiple branches. First, it constructs an Anchor Branch (B<sub>0</sub>) using the standard confidence-driven strategy (filling positions in I<sub>fill</sub>).</p>
+<p>LoPA operates by generating multiple branches. First, it constructs an Anchor Branch ($B_0$) using the standard confidence-driven strategy (filling positions in $I_{fill}$).</p>
 
-<p>LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to B<sub>0</sub>, we generate k competitive Lookahead Branches. We identify the top-k positions from the anchor branch's unfilled set M<sub>B<sub>0</sub></sub> that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of k new branches {B<sub>1</sub>, ..., B<sub>k</sub>}, each with its own sequence x<sub>B<sub>j</sub></sub> and unfilled set M<sub>B<sub>j</sub></sub>.</p>
+<p>LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to $B_0$, we generate $k$ competitive Lookahead Branches. We identify the top-$k$ positions from the anchor branch's unfilled set $M_{B_0}$ that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of $k$ new branches $\{B_1, \dots, B_k\}$, each with its own sequence $x_{B_j}$ and unfilled set $M_{B_j}$.</p>
 
 <h3>Branch Confidence-based Verification</h3>
 
-<p>Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch B<sub>j</sub> is defined as the average prediction confidence over its remaining unfilled positions M<sub>B<sub>j</sub></sub>:</p>
+<p>Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch $B_j$ is defined as the average prediction confidence over its remaining unfilled positions $M_{B_j}$:</p>
 
 <p>
-
-
-
+$$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 </p>
 
 <p>A higher branch confidence indicates that more unfilled positions are likely to be accepted in the very next decoding step. This directly increases the number of tokens filled per iteration, thereby enhancing the overall parallelism. Beyond this mean confidence, branch confidence can also be quantified by other methods [5], such as applying a sliding window to assess local quality or averaging confidence over the least confident segment to identify weak links.</p>
@@ -101,7 +97,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <div style="overflow-x: auto; margin: 20px 0;">
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
-<caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches.</caption>
+<caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches. TPF denotes Tokens Per Forward pass. LoPA significantly scales the TPF of D2F-Dream while maintaining or exceeding baseline scores.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
@@ -189,7 +185,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <div style="overflow-x: auto; margin: 20px 0;">
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
-<caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks.</caption>
+<caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks. LoPA boosts TPF by nearly 4× compared to the vanilla D2F baseline with minimal impact on generation quality.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
@@ -252,7 +248,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <div style="overflow-x: auto; margin: 20px 0;">
 <table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
-<caption>Table 3. System performance of D2F-Dream under guaranteed inference speed.</caption>
+<caption>Table 3. System performance of D2F-Dream under guaranteed inference speed. The results demonstrate that our system efficiently translates algorithmic parallelism (high TPF) into significant wall-clock acceleration, achieving high Parallelism Utilization (PU) and average throughputs exceeding 1000 tokens/s on the specialized LoPA-Dist-Ascend engine.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">
 <th rowspan="2" style="padding: 10px;">Model</th>
