@@ -37,7 +37,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <h3>Preliminary: Confidence-Driven Sampling for dLLMs</h3>
 
-<p>Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence  with a set of masked positions , the dLLM model  outputs a predictive distribution . A candidate sequence  is sampled, and a confidence function, , assigns a score to each position . The set of positions to fill, , is then determined as:</p>
+<p>Confidence-driven sampling is a prevalent paradigm for current dLLMs to boost parallelism, adopted in models such as Fast-dLLM [2], D2F [3], and SDAR [4]. Specifically, given a sequence x<sub>t</sub> with a set of masked positions M<sub>t</sub>, the dLLM model p<sub>θ</sub> outputs a predictive distribution p<sub>θ</sub>(· | x<sub>t</sub>). A candidate sequence x&#770;<sub>0</sub> ~ p<sub>θ</sub>(· | x<sub>t</sub>) is sampled, and a confidence function, Conf(·), assigns a score to each position i ∈ M<sub>t</sub>. The set of positions to fill, I<sub>fill</sub>, is then determined as:</p>
 
 <p>
 
@@ -45,7 +45,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 </p>
 
-<p>The algorithm then accepts the predictions according to  and moves to the next iteration.</p>
+<p>The algorithm then accepts the predictions according to I<sub>fill</sub> and moves to the next iteration.</p>
 
 <h2>LoPA</h2>
 
@@ -58,13 +58,13 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 
 <h3>Look ahead Multiple TFOs in Parallel</h3>
 
-<p>LoPA operates by generating multiple branches. First, it constructs an Anchor Branch () using the standard confidence-driven strategy (filling positions in ).</p>
+<p>LoPA operates by generating multiple branches. First, it constructs an Anchor Branch (B<sub>0</sub>) using the standard confidence-driven strategy (filling positions in I<sub>fill</sub>).</p>
 
-<p>LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to , we generate  competitive Lookahead Branches. We identify the top- positions from the anchor branch's unfilled set  that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of  new branches , each with its own sequence  and unfilled set .</p>
+<p>LoPA is designed to explore one step further than this anchor branch. To ensure effective and reliable exploration, we prioritize sampling tokens with higher confidence, a strategy that has been proved in Fast-dLLM [2] to yield more stable predictions. Specifically, in addition to B<sub>0</sub>, we generate k competitive Lookahead Branches. We identify the top-k positions from the anchor branch's unfilled set M<sub>B<sub>0</sub></sub> that possess the highest confidence scores. For each identified position, we sample it independently to create a distinct branch. This results in a set of k new branches {B<sub>1</sub>, ..., B<sub>k</sub>}, each with its own sequence x<sub>B<sub>j</sub></sub> and unfilled set M<sub>B<sub>j</sub></sub>.</p>
 
 <h3>Branch Confidence-based Verification</h3>
 
-<p>Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch  is defined as the average prediction confidence over its remaining unfilled positions :</p>
+<p>Inspired by DeepConf [5], we design a branch confidence metric to guide the selection among candidate decoding paths. Formally, the confidence of a branch B<sub>j</sub> is defined as the average prediction confidence over its remaining unfilled positions M<sub>B<sub>j</sub></sub>:</p>
 
 <p>
 
@@ -88,7 +88,7 @@ caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 <h2>Results</h2>
 
 <h3>Scaling Analysis of Branch Count</h3>
-<p>We analyzed the impact of the competitive branch count () on TPF and quality using D2F models fine-tuned on Dream[6] and DiffuCoder[7]. Results show TPF consistently improves with ; however, excessive  introduces fluctuations, attributed to the model prioritizing future confidence over local optimality. These results point to an optimal trade-off, where a carefully chosen  can maximize TPF while preserving quality.</p>
+<p>We analyzed the impact of the competitive branch count (k) on TPF and quality using D2F models fine-tuned on Dream[6] and DiffuCoder[7]. Results show TPF consistently improves with k; however, excessive k introduces fluctuations, attributed to the model prioritizing future confidence over local optimality. These results point to an optimal trade-off, where a carefully chosen k can maximize TPF while preserving quality.</p>
 
 <div style="text-align: center; margin: 30px 0;">
 <img src="image/figure4.png" alt="TPF Scaling and Accuracy Performance" style="display: block; margin: 0 auto; max-width: 85%; height: auto; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
