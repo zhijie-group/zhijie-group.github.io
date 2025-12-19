@@ -95,8 +95,8 @@ $$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 
 <p>Tables 1 and 2 below confirm this efficacy across multiple benchmarks.</p>
 
-<div style="overflow-x: auto; margin: 20px 0;">
-<table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+<div style="text-align: center; overflow-x: auto; margin: 20px 0;">
+<table style="margin: 0 auto; text-align: center; border-collapse: collapse; display: inline-table; width: auto !important;">
 <caption>Table 1. Accuracy-preserving parallelism scaling of Dream on multiple benchmarks across multiple branches. TPF denotes Tokens Per Forward pass. LoPA significantly scales the TPF of D2F-Dream while maintaining or exceeding baseline scores.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">
@@ -183,8 +183,8 @@ $$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 </table>
 </div>
 
-<div style="overflow-x: auto; margin: 20px 0;">
-<table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+<div style="text-align: center; overflow-x: auto; margin: 20px 0;">
+<table style="margin: 0 auto; text-align: center; border-collapse: collapse; display: inline-table; width: auto !important;">
 <caption>Table 2. Accuracy-preserving parallelism scaling of DiffuCoder on MBPP+ and HumanEval+ benchmarks. LoPA boosts TPF by nearly 4× compared to the vanilla D2F baseline with minimal impact on generation quality.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">
@@ -246,8 +246,8 @@ $$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 
 <p>As shown in Table 3, this design achieves near-linear scalability. On the Ascend platform, LoPA-Dist achieves a peak throughput of 1073.86 tokens/s.</p>
 
-<div style="overflow-x: auto; margin: 20px 0;">
-<table style="width: 100%; text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+<div style="text-align: center; overflow-x: auto; margin: 20px 0;">
+<table style="margin: 0 auto; text-align: center; border-collapse: collapse; display: inline-table; width: auto !important;">
 <caption>Table 3. System performance of D2F-Dream under guaranteed inference speed. The results demonstrate that our system efficiently translates algorithmic parallelism (high TPF) into significant wall-clock acceleration, achieving high Parallelism Utilization (PU) and average throughputs exceeding 1000 tokens/s on the specialized LoPA-Dist-Ascend engine.</caption>
 <thead>
 <tr style="border-bottom: 2px solid #ddd;">

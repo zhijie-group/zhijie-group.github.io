@@ -2,17 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Blogs on DENG Lab @ SJTU</title>
-    <link>http://localhost:1313/blogs/</link>
+    <link>http://localhost:60299/blogs/</link>
     <description>Recent content in Blogs on DENG Lab @ SJTU</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:60299/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LoPA: Scaling dLLM Inference via Lookahead Parallel Decoding</title>
+      <link>http://localhost:60299/blogs/lopa/</link>
+      <pubDate>Thu, 18 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:60299/blogs/lopa/</guid>
+      <description>We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference, enabling up to 10.1 tokens per forward pass.</description>
+    </item>
     <item>
       <title>AdaMoE: Token-Adaptive Routing with Null Experts for MoE</title>
-      <link>http://localhost:1313/blogs/adamoe/</link>
+      <link>http://localhost:60299/blogs/adamoe/</link>
       <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/adamoe/</guid>
+      <guid>http://localhost:60299/blogs/adamoe/</guid>
       <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
     
     
@@ -33,9 +40,9 @@
     </item>
     <item>
       <title>AdaMoE: 借助“空专家”实现Token级别的动态路由选择</title>
-      <link>http://localhost:1313/blogs/adamoe_zh/</link>
+      <link>http://localhost:60299/blogs/adamoe_zh/</link>
       <pubDate>Mon, 08 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/adamoe_zh/</guid>
+      <guid>http://localhost:60299/blogs/adamoe_zh/</guid>
       <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
     
     
@@ -163,9 +170,9 @@
     </item>
     <item>
       <title>SIFT: Grounding LLM Reasoning in Contexts via Stickers</title>
-      <link>http://localhost:1313/blogs/sift/</link>
+      <link>http://localhost:60299/blogs/sift/</link>
       <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/sift/</guid>
+      <guid>http://localhost:60299/blogs/sift/</guid>
       <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
     
     
@@ -193,9 +200,9 @@
     </item>
     <item>
       <title>Consistency Large Language Models: A Family of Efficient Parallel Decoders</title>
-      <link>http://localhost:1313/blogs/cllm/</link>
+      <link>http://localhost:60299/blogs/cllm/</link>
       <pubDate>Mon, 06 May 2024 12:00:00 -0800</pubDate>
-      <guid>http://localhost:1313/blogs/cllm/</guid>
+      <guid>http://localhost:60299/blogs/cllm/</guid>
       <description>&lt;div style=&#34;padding-left: 30px; display: flex !important; gap: 60px !important;&#34;&gt;
     
         &lt;a href=&#34;https://arxiv.org/abs/2403.00835&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;

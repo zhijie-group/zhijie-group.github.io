@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><link rel="stylesheet" href="/css/style.css">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=60299&amp;path=livereload" data-no-instant defer></script><link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/custom.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -29,16 +29,16 @@
 
     LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts &#43; 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics.">
 <meta name="author" content="Zihao Zeng*, Yibo Miao*, Hongcheng Gao, Hao Zhang, Zhijie Deng†">
-<link rel="canonical" href="http://localhost:1313/blogs/adamoe/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.c0b173c8753dc0cb5a0e3b2c0cd5a4fa0869fbd82e03d31553bf8232b3914c61.css" integrity="sha256-wLFzyHU9wMtaDjssDNWk&#43;ghp&#43;9guA9MVU7&#43;CMrORTGE=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:60299/blogs/adamoe/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.837ac33c823a8f688dfc8b7aef7512e6689232044af865072a1a239a998c0e57.css" integrity="sha256-g3rDPII6j2iN/It673US5miSMgRK&#43;GUHKhojmpmMDlc=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:60299/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:60299/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:60299/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:60299/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:60299/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/blogs/adamoe/">
+<link rel="alternate" hreflang="en" href="http://localhost:60299/blogs/adamoe/">
 <noscript>
     <style>
         #theme-toggle,
@@ -108,13 +108,13 @@
 
     LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts &#43; 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/blogs/adamoe/" />
-<meta property="og:image" content="http://localhost:1313/blogs/adamoe/image/vs.png" /><meta property="article:section" content="blogs" />
+<meta property="og:url" content="http://localhost:60299/blogs/adamoe/" />
+<meta property="og:image" content="http://localhost:60299/blogs/adamoe/image/vs.png" /><meta property="article:section" content="blogs" />
 <meta property="article:published_time" content="2025-09-08T00:00:00+00:00" />
 <meta property="article:modified_time" content="2025-09-08T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://localhost:1313/blogs/adamoe/image/vs.png" />
+<meta name="twitter:image" content="http://localhost:60299/blogs/adamoe/image/vs.png" />
 <meta name="twitter:title" content="AdaMoE: Token-Adaptive Routing with Null Experts for MoE"/>
 <meta name="twitter:description" content="
     
@@ -145,13 +145,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Blogs",
-      "item": "http://localhost:1313/blogs/"
+      "item": "http://localhost:60299/blogs/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "AdaMoE: Token-Adaptive Routing with Null Experts for MoE",
-      "item": "http://localhost:1313/blogs/adamoe/"
+      "item": "http://localhost:60299/blogs/adamoe/"
     }
   ]
 }
@@ -169,7 +169,7 @@
   "articleBody": " LongCat-Flash[1] just showed a clean, large-scale deployment of token-adaptive MoE with zero-computation (identity) experts—-activating 18.6–31.3B parameters per token (~27B on average) inside a 560B MoE. Each layer mixes 512 FFN experts + 256 zero-compute experts, the router selects Top-12, and the average true-expert picks settle around ~8 thanks to a PID-style budget controller; device-level load balancing and ScMoE (shortcut-connected MoE) keep the system efficient. They present the model as a non-thinking foundation model with strong throughput/cost metrics.\nThat design—adding null experts and bumping top-k so each token uses a variable number of true experts—is precisely the idea behind AdaMoE.\nTL; DR AdaMoE adds a set of null experts (with zero compute) to the expert pool to enable token-adaptive expert choice for MoE.\nUnder the top-k routing paradigm, tokens that route to null experts effectively use fewer true experts, making the number of true experts per token adaptive under the same average budget. With a minor tweak to the load‑balancing loss (treat all nulls as one averaged bucket) and a simple annealing schedule, AdaMoE reduces FLOPs while maintaining or improving accuracy (e.g., on Mixtral‑8×7B/ARC‑C: −14.55% FLOPs with +1.69% accuracy). Why Expert Selection Should Be Adaptive at the Token Level The rationale for shifting from a fixed top-k routing mechanism to a token-adaptive one is based on a critical observation: not all tokens are computationally equal. The information content and processing complexity vary dramatically across different tokens within a text. A traditional MoE model, which compels every token to activate a fixed number of experts, allocates computation uniformly, irrespective of this variance. This static approach can lead to inefficient resource distribution. Proportions of the number of top experts with cumulative routing probabilities exceeding 50% for tokens in the SocialIQA dataset. Each bar represents the proportion of different counts of tokens at the corresponding MoE layer in Mixtral-8x7B. We provide empirical evidence for this variance. We analyzed the routing probability distributions in Mixtral-8x7B, a model with a fixed top-2 router. Our analysis revealed two key patterns:\nA large fraction of tokens had routing probabilities that were highly concentrated on a single expert, indicating that the activation of a second expert was often superfluous; A significant portion of other tokens had their probabilities distributed more evenly across multiple experts, suggesting that they required the computational capacity of two or even more experts for effective processing. This finding demonstrates that a static top-k strategy is suboptimal, leading to computationally excessive allocations for simple tokens and potentially insufficient allocations for complex ones.\n“Null Experts” for Adaptive Routing AdaMoE achieves token-adaptive expert selection by incorporating null experts, which are defined as an empty operation requiring zero FLOPs to process the token feature. In the context of LLMs, common operations satisfying this requirement include a constant zero mapping and an identity mapping (we take the zero mappings null expert as the default choice in the following just for simplicity).\nOur mechanism operates as follows:\nExtends the expert set with m null experts (besides n true experts). Slightly increases the router’s top‑k (e.g., from 2 → 3/4). Now each token’s top‑k may include some nulls. Makes compute adaptive: if top‑k includes r nulls, the token uses only k-r true experts. Balances sensibly by aggregating all nulls into a single bucket in the load‑balance loss (don’t force balance between identical nulls). Normalizes over true experts only after top‑k so the output scale matches vanilla MoE. Fixed top-2 vs. AdaMoE. Left: vanilla top‑2 where every token activates exactly 2 true experts. Right: AdaMoE where top‑4 is chosen from 4 true experts + 5 null experts; some tokens hit 3 true experts, others only 1. Main Results On Mixtral‑8×7B fine‑tuning, AdaMoE reduces FFN FLOPs while keeping or improving accuracy on multiple benchmarks. For example, on ARC‑Challenge, FLOPs drop by ~14.55% with +1.69% accuracy, and the layer‑wise average experts/token falls from 2.0 → ~1.67. From Paper to Production We are also encouraged to see that the concept of null experts is not merely theoretical, but has been implemented in state-of-the-art LLMs. The technical report for LongCat-Flash identifies zero-computation experts as a key architectural innovation and cites our paper.\nThe report explains that this mechanism enables the model to “allocate a dynamic computation budget to important tokens based on their significance,” activating a variable range of parameters for each token depending on context. This direct industrial application underscores the practicality and scalability of the adaptive routing strategy we proposed.\nIn addition, LongCat-Flash introduces several optimization techniques to address communication and load-balancing challenges associated with adaptive expert selection—further demonstrating the viability of our approach in large-scale systems.\nCite Our Work If you find our work useful, please cite our paper:\n@inproceedings{zeng-etal-2024-adamoe, title = \"AdaMoE: Token-Adaptive Routing with Null Experts for Mixture-of-Experts Language Models\", author = \"Zeng, Zihao and Miao, Yibo and Gao, Hongcheng and Zhang, Hao and Deng, Zhijie\", editor = \"Al-Onaizan, Yaser and Bansal, Mohit and Chen, Yun-Nung\", booktitle = \"Findings of the Association for Computational Linguistics: EMNLP 2024\", month = nov, year = \"2024\", address = \"Miami, Florida, USA\", publisher = \"Association for Computational Linguistics\", url = \"https://aclanthology.org/2024.findings-emnlp.361/\", doi = \"10.18653/v1/2024.findings-emnlp.361\", pages = \"6223--6235\" } Reference [1] Team, Meituan LongCat, et al. “LongCat-Flash Technical Report.” arXiv preprint arXiv:2509.01322 (2025).\n",
   "wordCount" : "866",
   "inLanguage": "en",
-  "image":"http://localhost:1313/blogs/adamoe/image/vs.png","datePublished": "2025-09-08T00:00:00Z",
+  "image":"http://localhost:60299/blogs/adamoe/image/vs.png","datePublished": "2025-09-08T00:00:00Z",
   "dateModified": "2025-09-08T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -177,14 +177,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/blogs/adamoe/"
+    "@id": "http://localhost:60299/blogs/adamoe/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DENG Lab @ SJTU",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/favicon.ico"
+      "url": "http://localhost:60299/favicon.ico"
     }
   }
 }
@@ -218,7 +218,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="DENG Lab @ SJTU (Alt + H)">
+            <a href="http://localhost:60299/" accesskey="h" title="DENG Lab @ SJTU (Alt + H)">
                 <img id="logo-image" src="/img/logo-new.png" alt="DENG Lab @ SJTU" height="40">
                 
             </a>
@@ -251,27 +251,27 @@
               </button>
             </div>
             <li>
-                  <a href="http://localhost:1313/home/" title="Home">
+                  <a href="http://localhost:60299/home/" title="Home">
                       <span>Home</span>
                   </a>
             </li>
             <li>
-                  <a href="http://localhost:1313/blogs/" title="Blogs">
+                  <a href="http://localhost:60299/blogs/" title="Blogs">
                       <span>Blogs</span>
                   </a>
             </li>
             <li>
-                  <a href="http://localhost:1313/people/" title="People">
+                  <a href="http://localhost:60299/people/" title="People">
                       <span>People</span>
                   </a>
             </li>
             <li>
-                  <a href="http://localhost:1313/publications/" title="Publications">
+                  <a href="http://localhost:60299/publications/" title="Publications">
                       <span>Publications</span>
                   </a>
             </li>
             <li>
-                  <a href="http://localhost:1313/contact/" title="Contact">
+                  <a href="http://localhost:60299/contact/" title="Contact">
                       <span>Contact</span>
                   </a>
             </li>
@@ -372,7 +372,7 @@
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/blogs/adamoe/image/vs.png" alt="AdaMoE">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:60299/blogs/adamoe/image/vs.png" alt="AdaMoE">
         <p><strong>Left</strong>: vanilla top-2 MoE. <strong>Right</strong>: AdaMoE with null experts.</p>
 </figure>
   <div class="post-content"><div style="padding-left: 30px; display: flex !important; gap: 60px !important;">
@@ -536,7 +536,7 @@
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="http://localhost:1313/">DENG Lab @ SJTU</a></span>
+    <span>&copy; 2025 <a href="http://localhost:60299/">DENG Lab @ SJTU</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
