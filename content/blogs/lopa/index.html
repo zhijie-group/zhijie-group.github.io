@@ -271,46 +271,46 @@ $$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 <tr>
 <td rowspan="2" style="padding: 8px;">D2F-Dream-Base</td>
 <td style="padding: 8px;">LoPA-Dist-NV</td>
-<td style="padding: 8px;">630.28</td>
-<td style="padding: 8px;">1472.37</td>
-<td style="padding: 8px;"><b>15.69</b></td>
-<td style="padding: 8px;">0.84</td>
-<td style="padding: 8px;">566.97</td>
-<td style="padding: 8px;">1305.86</td>
-<td style="padding: 8px;"><b>13.31</b></td>
-<td style="padding: 8px;">0.93</td>
+<td style="padding: 8px;">708.48</td>
+<td style="padding: 8px;">1470.95</td>
+<td style="padding: 8px;"><b>15.55</b></td>
+<td style="padding: 8px;">0.74</td>
+<td style="padding: 8px;">619.33</td>
+<td style="padding: 8px;">1299.25</td>
+<td style="padding: 8px;"><b>13.16</b></td>
+<td style="padding: 8px;">0.85</td>
 </tr>
 <tr>
 <td style="padding: 8px;">LoPA-Dist-Ascend</td>
 <td style="padding: 8px;"><b>1073.86</b></td>
-<td style="padding: 8px;">2400.12</td>
+<td style="padding: 8px;"><b>2400.12</b></td>
 <td style="padding: 8px;">11.92</td>
-<td style="padding: 8px;">0.78</td>
-<td style="padding: 8px;">856.46</td>
+<td style="padding: 8px;"><b>0.78</b></td>
+<td style="padding: 8px;"><b>856.46</b></td>
 <td style="padding: 8px;"><b>2751.61</b></td>
 <td style="padding: 8px;">9.34</td>
-<td style="padding: 8px;">0.75</td>
+<td style="padding: 8px;"><b>0.75</b></td>
 </tr>
 <tr>
 <td rowspan="2" style="padding: 8px;">D2F-Dream-Instruct</td>
 <td style="padding: 8px;">LoPA-Dist-NV</td>
-<td style="padding: 8px;">543.32</td>
-<td style="padding: 8px;">1531.64</td>
-<td style="padding: 8px;">9.45</td>
-<td style="padding: 8px;">0.16</td>
-<td style="padding: 8px;">536.71</td>
-<td style="padding: 8px;">1141.71</td>
-<td style="padding: 8px;">11.41</td>
-<td style="padding: 8px;">0.29</td>
+<td style="padding: 8px;">636.55</td>
+<td style="padding: 8px;">1811.71</td>
+<td style="padding: 8px;"><b>9.52</b></td>
+<td style="padding: 8px;">0.14</td>
+<td style="padding: 8px;">609.90</td>
+<td style="padding: 8px;">1407.56</td>
+<td style="padding: 8px;"><b>11.42</b></td>
+<td style="padding: 8px;">0.26</td>
 </tr>
 <tr style="border-bottom: 1px solid #ddd;">
 <td style="padding: 8px;">LoPA-Dist-Ascend</td>
-<td style="padding: 8px;">896.21</td>
+<td style="padding: 8px;"><b>896.21</b></td>
 <td style="padding: 8px;"><b>2586.73</b></td>
 <td style="padding: 8px;">8.64</td>
 <td style="padding: 8px;"><b>0.11</b></td>
 <td style="padding: 8px;"><b>897.10</b></td>
-<td style="padding: 8px;">1868.16</td>
+<td style="padding: 8px;"><b>1868.16</b></td>
 <td style="padding: 8px;">9.30</td>
 <td style="padding: 8px;"><b>0.21</b></td>
 </tr>
@@ -319,6 +319,9 @@ $$C(B_j) = \frac{1}{|M_{B_j}|} \sum_{i \in M_{B_j}} \text{Conf}(i)$$
 </div>
 
 <h2>Future Works</h2>
+
+<p>We are working on a new inference framework for dLLMs named Diffulex, which is flexible and easy to extend. Diffulex supports multiple decoding strategies including D2F, BlockDiffusion, and Fast-dLLM-v2, which is soon to be released. <strong>You can find the code <a href="https://github.com/zhijie-group/Diffulex">here</a>.</strong></p>
+
 <p>We will explore adapting LoPA to SDAR and other confidence-driven diffusion language models to further demonstrate its generalizability and effectiveness across diverse model architectures.</p>
 
 <h2>Reference</h2>
