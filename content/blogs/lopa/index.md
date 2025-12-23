@@ -8,9 +8,9 @@ draft = false
 summary = "We introduce the Lookahead Parallel Decoding (LoPA) algorithm for diffusion large language models (dLLMs) inference, enabling up to 10.1 tokens per forward pass."
 
 [cover]
-image = "blogs/lopa/image/figure3.png"
-alt = "LoPA Performance"
-caption = "Overview of Lookahead Parallel Decoding (LoPA)."
+      image = "blogs/lopa/image/figure3.png"
+      alt = "LoPA Performance"
+      caption = "Overview of Lookahead Parallel Decoding (LoPA)."
 +++
 
 <p><strong>Github:</strong> <a href="https://github.com/zhijie-group/LoPA">https://github.com/zhijie-group/LoPA</a></p>
