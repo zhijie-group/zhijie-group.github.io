@@ -13,6 +13,8 @@ timeout: 90 # seconds
 
 markup:
   goldmark:
+    renderer:
+      unsafe: true
     extensions:
       passthrough:
         delimiters:
